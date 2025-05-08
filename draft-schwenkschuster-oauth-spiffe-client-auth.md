@@ -19,35 +19,34 @@
 # Change the file extension to match the format (.xml for XML, etc...)
 #
 ###
-title: "TODO - Your title"
-abbrev: "TODO - Abbreviation"
+title: "OAuth SPIFFE Client Authentication"
 category: info
 
-docname: draft-todo-yourname-protocol-latest
-submissiontype: IETF  # also: "independent", "editorial", "IAB", or "IRTF"
+docname: draft-schwenkschuster-oauth-spiffe-client-auth-latest
+submissiontype: IETF
 number:
 date:
-consensus: true
+consensus: false
 v: 3
 area: AREA
-workgroup: WG Working Group
+workgroup: "Web Authorization Protocol"
 keyword:
- - next generation
- - unicorn
- - sparkling distributed ledger
+ - workload
+ - identity
+ - credential
+ - exchange
 venue:
-  group: WG
-  type: Working Group
-  mail: WG@example.com
-  arch: https://example.com/WG
-  github: USER/REPO
-  latest: https://example.com/LATEST
+  group: "Web Authorization Protocol"
+  type: "Working Group"
+  mail: "oauth@ietf.org"
+  arch: "https://mailarchive.ietf.org/arch/browse/oauth/"
+  github: "arndt-s/oauth-spiffe-client-authentication"
 
 author:
- -
-    fullname: Your Name Here
-    organization: Your Organization Here
-    email: your.email@example.com
+ -  fullname: Arndt Schwenkschuster
+    organization: SPIRL
+    email: arndts.ietf@gmail.com
+    role: editor
 
 normative:
 
