@@ -1,0 +1,97 @@
+{
+  "magic": "E!vIA5L86J2I",
+  "timestamp": "2025-05-11T01:05:43.039861+00:00",
+  "repo": "arndt-s/oauth-spiffe-client-authentication",
+  "labels": [
+    {
+      "name": "bug",
+      "description": "Something isn't working",
+      "color": "d73a4a"
+    },
+    {
+      "name": "documentation",
+      "description": "Improvements or additions to documentation",
+      "color": "0075ca"
+    },
+    {
+      "name": "duplicate",
+      "description": "This issue or pull request already exists",
+      "color": "cfd3d7"
+    },
+    {
+      "name": "enhancement",
+      "description": "New feature or request",
+      "color": "a2eeef"
+    },
+    {
+      "name": "good first issue",
+      "description": "Good for newcomers",
+      "color": "7057ff"
+    },
+    {
+      "name": "help wanted",
+      "description": "Extra attention is needed",
+      "color": "008672"
+    },
+    {
+      "name": "invalid",
+      "description": "This doesn't seem right",
+      "color": "e4e669"
+    },
+    {
+      "name": "question",
+      "description": "Further information is requested",
+      "color": "d876e3"
+    },
+    {
+      "name": "wontfix",
+      "description": "This will not be worked on",
+      "color": "ffffff"
+    }
+  ],
+  "issues": [],
+  "pulls": [
+    {
+      "number": 1,
+      "id": "PR_kwDOOml42M6VbFYa",
+      "title": "Fix naming, add title, makefile",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/1",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "See title.",
+      "createdAt": "2025-05-08T11:54:52Z",
+      "updatedAt": "2025-05-08T11:55:38Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "a7978f346875067a6c4ae70f874acf50c032cb1f",
+      "headRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "headRefName": "arndt/fix_naming",
+      "headRefOid": "ff46e9552093ebe53dd7ada88b685306ddb3068d",
+      "closedAt": "2025-05-08T11:55:25Z",
+      "mergedAt": "2025-05-08T11:55:25Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "3e28e36ee1cdf7b7ebd4e3f7ad5da5a227dfeb13"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M6oYFdi",
+          "commit": {
+            "abbreviatedOid": "ff46e95"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## Pull Request Overview\n\nThis PR updates the metadata in the draft document for improved naming and clarity, and adds a Makefile for managing dependencies via submodules and symbolic links.\n- Updated document metadata including title, docname, workgroup, and keywords.\n- Changed the consensus flag from true to false.\n- Added a Makefile to conditionally sync submodules or clone a template repository.\n\n### Reviewed Changes\n\nCopilot reviewed 3 out of 3 changed files in this pull request and generated no comments.\n\n| File                                                        | Description                                                      |\n| ----------------------------------------------------------- | ---------------------------------------------------------------- |\n| draft-schwenkschuster-oauth-spiffe-client-auth.md            | Updated metadata fields to reflect accurate document naming, title, and contact information. |\n| Makefile                                                    | Introduces dependency management via submodules, symlink creation, or repository cloning.       |\n\n\n\n",
+          "createdAt": "2025-05-08T11:55:14Z",
+          "updatedAt": "2025-05-08T11:55:14Z",
+          "comments": []
+        }
+      ]
+    }
+  ]
+}
