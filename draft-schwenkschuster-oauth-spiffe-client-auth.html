@@ -1052,7 +1052,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">Schwenkschuster &amp; Kasselmann</td>
-<td class="center">Expires 14 November 2025</td>
+<td class="center">Expires 15 November 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-schwenkschuster-oauth-spiffe-client-auth-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-05-13" class="published">13 May 2025</time>
+<time datetime="2025-05-14" class="published">14 May 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-11-14">14 November 2025</time></dd>
+<dd class="expires"><time datetime="2025-11-15">15 November 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1123,7 +1123,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 14 November 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 15 November 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1191,16 +1191,19 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-spiffe-bundle-validation" class="internal xref">SPIFFE Bundle Validation</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
-                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-manual-configuration" class="internal xref">Manual configuration</a></p>
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-spiffe-workload-api" class="internal xref">SPIFFE Workload API</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
-                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-spiffe-workload-api" class="internal xref">SPIFFE Workload API</a></p>
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-spiffe-bundle-endpoint" class="internal xref">SPIFFE Bundle Endpoint</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.3">
-                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="auto internal xref">5.3</a>.  <a href="#name-spiffe-bundle-endpoint" class="internal xref">SPIFFE Bundle Endpoint</a></p>
+                <p id="section-toc.1-1.5.2.3.1"><a href="#section-5.3" class="auto internal xref">5.3</a>.  <a href="#name-alternative-validation-meth" class="internal xref">Alternative validation methods to avoid</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.4">
-                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="auto internal xref">5.4</a>.  <a href="#name-a-note-on-jwt-svid-carrying" class="internal xref">A note on JWT-SVID carrying <code>iss</code> claims</a></p>
+                <p id="section-toc.1-1.5.2.4.1"><a href="#section-5.4" class="auto internal xref">5.4</a>.  <a href="#name-manual-configuration" class="internal xref">Manual configuration</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.5">
+                <p id="section-toc.1-1.5.2.5.1"><a href="#section-5.5" class="auto internal xref">5.5</a>.  <a href="#name-using-the-jwt-svid-iss-clai" class="internal xref">Using the JWT-SVID <code>iss</code> claim</a></p>
 </li>
             </ul>
 </li>
@@ -1228,7 +1231,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">Traditional OAuth client authentication typically relies on client secrets or private key JWT authentication, both require an out of band distribution of secret material to the OAuth client. In modern cloud-native architectures where identity is managed by SPIFFE (Secure Production Identity Framework for Everyone), there is a need to provision additional secret material for OAuth clients when verifyable credentials such as SVIDs are already available.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">Traditional OAuth client authentication typically relies on client secrets or private key JWT authentication, both require an out of band distribution of secret material to the OAuth client. In modern cloud-native architectures where identity is managed by SPIFFE (Secure Production Identity Framework for Everyone), there is a need to provision additional secret material for OAuth clients when verifiable credentials such as SVIDs are already available.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">This specification profiles the Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span> to allow SPIFFE-enabled workloads to use their SPIFFE Verifiable Identity Documents (SVIDs) — either X.509 certificates or JWT tokens — as client credentials for OAuth 2.0 client authentication. JWT tokens make use of the profiled version of <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span> - the JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span>.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">This profile focuses specifically on client authentication rather than authorization grants. This focus is deliberate for several reasons:<a href="#section-1-3" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-1-4">
@@ -1236,7 +1239,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
           <p id="section-1-4.1.1">In modern service-oriented architectures, services often need to authenticate as themselves to OAuth authorization servers.<a href="#section-1-4.1.1" class="pilcrow">¶</a></p>
 </li>
         <li id="section-1-4.2">
-          <p id="section-1-4.2.1">Using SPIFFE as client authentication towards OAuth 2.0 authorization servers is a great bridge between SPIFFE, which covers workload identity and OAuth, which covers human identity.<a href="#section-1-4.2.1" class="pilcrow">¶</a></p>
+          <p id="section-1-4.2.1">Using SPIFFE as client authentication towards OAuth 2.0 authorization servers is a bridge between SPIFFE, which covers workload identity and OAuth, which covers human identity.<a href="#section-1-4.2.1" class="pilcrow">¶</a></p>
 </li>
         <li id="section-1-4.3">
           <p id="section-1-4.3.1">Using SPIFFE as authorization grants for authorization requests where the workload itself is the resource owner is covered by other specifications, such as <span>[<a href="#Headless_JWT" class="cite xref">Headless_JWT</a>]</span>.<a href="#section-1-4.3.1" class="pilcrow">¶</a></p>
@@ -1296,7 +1299,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 urn:ietf:params:oauth:client-assertion-type:jwt-spiffe
 </pre><a href="#section-3.1-3" class="pilcrow">¶</a>
 </div>
-<p id="section-3.1-4">Based on <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span> the following request parameters <span class="bcp14">MUST</span> be present to perform client authenticated in context of this specification:<a href="#section-3.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1-4">Based on <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span> the following request parameters <span class="bcp14">MUST</span> be present to perform client authentication in the context of this specification:<a href="#section-3.1-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.1-5.1">
             <p id="section-3.1-5.1.1">client_assertion_type: <span class="bcp14">MUST</span> be set to <code>urn:ietf:params:oauth:client-assertion-type:jwt-spiffe</code>.<a href="#section-3.1-5.1.1" class="pilcrow">¶</a></p>
@@ -1370,7 +1373,7 @@ client_assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjR2QzhhZ3ljSHU2cm5rRUVKWUFINlZ1Q2U
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-client-authentication-using" class="section-name selfRef">Client Authentication using X509-SVID</a>
         </h3>
 <p id="section-3.2-1">X.509-SVID based authentication uses mutual TLS as defined in OAuth 2.0 Mutual-TLS Client Authentication <span>[<a href="#RFC8705" class="cite xref">RFC8705</a>]</span>, with specific adaptations for SPIFFE X.509-SVIDs.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<p id="section-3.2-2">To authenticate using an X.509-SVID, the client establishes a mutual TLS connection with the authorization server using its X.509-SVID as the client certificate. The authorization server validates the client certificate as an X.509-SVID and extracts the SPIFFE ID from the URI SAN. The server certificate <span class="bcp14">MUST</span> be validated by the client using its system trust store and NOT the SPIFFE trust bundle.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.2-2">To authenticate using an X.509-SVID, the client establishes a mutual TLS connection with the authorization server using its X.509-SVID as the client certificate. The authorization server validates the client certificate as an X.509-SVID and extracts the SPIFFE ID from the URI SAN. The server certificate <span class="bcp14">MUST</span> be validated by the client using its system trust store, and NOT the SPIFFE trust bundle.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
 <p id="section-3.2-3">The request <span class="bcp14">MUST</span> include the <code>client_id</code> parameter containing the SPIFFE-ID of the client. It <span class="bcp14">MUST</span> match the URI SAN of the presented X509-SVID client credential.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 <p id="section-3.2-4">The server validates the client certificates according the following rules<a href="#section-3.2-4" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-3.2-5">
@@ -1473,7 +1476,7 @@ Certificate:
       <h2 id="name-spiffe-bundle-validation">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-spiffe-bundle-validation" class="section-name selfRef">SPIFFE Bundle Validation</a>
       </h2>
-<p id="section-5-1">This section describes how an authorization server verifies the signature of an X509 or JWT-SVID. It offers 2 approaches, both SPIFFE-native.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<p id="section-5-1">This section describes how an authorization server verifies the signature of an X509 or JWT-SVID. It recommends two SPIFFE-native approaches.<a href="#section-5-1" class="pilcrow">¶</a></p>
 <p id="section-5-2">Trust bundles in general <span class="bcp14">MUST</span> be keyed by the trust domain identifier to prevent mix up between trust domain and their corresponding bundles. The 2 approaches can be used in conjunction, for instance:<a href="#section-5-2" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-5-3">
 <pre>
@@ -1481,44 +1484,51 @@ Trust domain "example.org": Workload API at unix:///var/secrets/spiffe/agent.soc
 Trust domain "production": SPIFFE Bundle Endpoint at https://example.com/auth/spiffe/bundle.json
 </pre><a href="#section-5-3" class="pilcrow">¶</a>
 </div>
-<div id="manual-configuration">
-<section id="section-5.1">
-        <h3 id="name-manual-configuration">
-<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-manual-configuration" class="section-name selfRef">Manual configuration</a>
-        </h3>
-<p id="section-5.1-1">In small, static environments the authorization server <span class="bcp14">MAY</span> be configured with the SPIFFE bundles manually. This approach requires human interaction to set up, rotate and manage keying material and is thus generally <span class="bcp14">NOT RECOMMENDED</span>.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
-</section>
-</div>
 <div id="spiffe-workload-api">
-<section id="section-5.2">
+<section id="section-5.1">
         <h3 id="name-spiffe-workload-api">
-<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-spiffe-workload-api" class="section-name selfRef">SPIFFE Workload API</a>
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-spiffe-workload-api" class="section-name selfRef">SPIFFE Workload API</a>
         </h3>
-<p id="section-5.2-1">OAuth 2.0 Authorization Servers that have access to a SPIFFE Workload API <span class="bcp14">SHOULD</span> leverage said Workload API to retrieve the trust bundle. It is able to actively notify the authorization server of a change in the keying material in the bundle and can reduce the time to distribute updates significantly.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
-<p id="section-5.2-2">This requires the authorization server to be part of a SPIFFE trust domain and allows for retrieving the trust bundle of said trust domain. Additional trust domains <span class="bcp14">MAY</span> be made available via federated bundles that are part of the bundle. See <span>[<a href="#SPIFFE_FEDERATION" class="cite xref">SPIFFE_FEDERATION</a>]</span> for details.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
-<p id="section-5.2-3">Authorization Servers <span class="bcp14">MAY</span> choose to automatically trust bundles coming from the SPIFFE Workload API. However, this is <span class="bcp14">NOT RECOMMENDED</span> and more explicit configuration which trust domains to trust <span class="bcp14">SHOULD</span> be maintained.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.1-1">OAuth 2.0 Authorization Servers that have access to a SPIFFE Workload API <span class="bcp14">SHOULD</span> leverage said Workload API to retrieve the trust bundle. It is able to actively notify the authorization server of a change in the keying material in the bundle and can reduce the time to distribute updates significantly.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-2">This requires the authorization server to be part of a SPIFFE trust domain and allows for retrieving the trust bundle of said trust domain. Additional trust domains <span class="bcp14">MAY</span> be made available via federated bundles that are part of the bundle. See <span>[<a href="#SPIFFE_FEDERATION" class="cite xref">SPIFFE_FEDERATION</a>]</span> for details.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
+<p id="section-5.1-3">Authorization Servers <span class="bcp14">MAY</span> choose to automatically trust bundles coming from the SPIFFE Workload API. However, this is <span class="bcp14">NOT RECOMMENDED</span> and more explicit configuration which trust domains to trust <span class="bcp14">SHOULD</span> be maintained.<a href="#section-5.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="spiffe-bundle-endpoint">
-<section id="section-5.3">
+<section id="section-5.2">
         <h3 id="name-spiffe-bundle-endpoint">
-<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-spiffe-bundle-endpoint" class="section-name selfRef">SPIFFE Bundle Endpoint</a>
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-spiffe-bundle-endpoint" class="section-name selfRef">SPIFFE Bundle Endpoint</a>
         </h3>
-<p id="section-5.3-1">Compared to the Workload API the SPIFFE Bundle Endpoint allows for key distribution over the web. The bundle endpoint exposes the signing keys for X509 and JWT-SVIDs via a JSON Web Key Set according to <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> over HTTPS.<a href="#section-5.3-1" class="pilcrow">¶</a></p>
-<p id="section-5.3-2">Server authentication on this endpoint is available in 2 flavors, for the sake of interopability in context of this specification the WebPKI flavor <span class="bcp14">MUST</span> be used. This effectively means that the server certificate of the bundle endpoint is trusted by the authorization server accessing it. See Sec 5.2.1 of <span>[<a href="#SPIFFE_FEDERATION" class="cite xref">SPIFFE_FEDERATION</a>]</span> for details.<a href="#section-5.3-2" class="pilcrow">¶</a></p>
-<p id="section-5.3-3">The authorization server <span class="bcp14">SHOULD</span> periodically poll the bundle endpoint to retrieve updated trust bundles, following the refresh hint and period provided in the bundle. See <span>[<a href="#SPIFFE_FEDERATION" class="cite xref">SPIFFE_FEDERATION</a>]</span> for details.<a href="#section-5.3-3" class="pilcrow">¶</a></p>
-<p id="section-5.3-4">The bundle endpoint is not discoverable from the JWT-SVID and X509-SVID and <span class="bcp14">MUST</span> be configured manually out of band. Bundle endpoints <span class="bcp14">MUST</span> be keyed by the trust domain identifier.<a href="#section-5.3-4" class="pilcrow">¶</a></p>
+<p id="section-5.2-1">Compared to the Workload API the SPIFFE Bundle Endpoint allows for key distribution over the web. The bundle endpoint exposes the signing keys for X509 and JWT-SVIDs via a JSON Web Key Set according to <span>[<a href="#RFC7517" class="cite xref">RFC7517</a>]</span> over HTTPS.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-2">Server authentication on this endpoint is available in 2 flavors, for the sake of interopability in context of this specification the WebPKI flavor <span class="bcp14">MUST</span> be used. This effectively means that the server certificate of the bundle endpoint is trusted by the authorization server accessing it. See Sec 5.2.1 of <span>[<a href="#SPIFFE_FEDERATION" class="cite xref">SPIFFE_FEDERATION</a>]</span> for details.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.2-3">The authorization server <span class="bcp14">SHOULD</span> periodically poll the bundle endpoint to retrieve updated trust bundles, following the refresh hint and period provided in the bundle. See <span>[<a href="#SPIFFE_FEDERATION" class="cite xref">SPIFFE_FEDERATION</a>]</span> for details.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2-4">The bundle endpoint is not discoverable from the JWT-SVID and X509-SVID and <span class="bcp14">MUST</span> be configured manually out of band. Bundle endpoints <span class="bcp14">MUST</span> be keyed by the trust domain identifier.<a href="#section-5.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="a-note-on-jwt-svid-carrying-iss-claims">
+<div id="alternative-validation-methods-to-avoid">
+<section id="section-5.3">
+        <h3 id="name-alternative-validation-meth">
+<a href="#section-5.3" class="section-number selfRef">5.3. </a><a href="#name-alternative-validation-meth" class="section-name selfRef">Alternative validation methods to avoid</a>
+      </h3>
+</section>
+</div>
+<div id="manual-configuration">
 <section id="section-5.4">
-        <h3 id="name-a-note-on-jwt-svid-carrying">
-<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-a-note-on-jwt-svid-carrying" class="section-name selfRef">A note on JWT-SVID carrying <code>iss</code> claims</a>
+        <h3 id="name-manual-configuration">
+<a href="#section-5.4" class="section-number selfRef">5.4. </a><a href="#name-manual-configuration" class="section-name selfRef">Manual configuration</a>
         </h3>
-<p id="section-5.4-1">JWT-SVIDs carrying <code>iss</code> claims could technically be validated by retrieving the signing keys via OpenID Connect Discovery or OAuth 2.0 Authorization Server Metadata. In the context of this specification these key distribution mechanisms <span class="bcp14">MUST NOT</span> be used.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+<p id="section-5.4-1">In small, static environments the authorization server <span class="bcp14">MAY</span> be configured with the SPIFFE bundles manually. This approach requires human interaction to set up, rotate and manage keying material and is thus generally <span class="bcp14">NOT RECOMMENDED</span>.<a href="#section-5.4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="using-the-jwt-svid-iss-claim">
+<section id="section-5.5">
+        <h3 id="name-using-the-jwt-svid-iss-clai">
+<a href="#section-5.5" class="section-number selfRef">5.5. </a><a href="#name-using-the-jwt-svid-iss-clai" class="section-name selfRef">Using the JWT-SVID <code>iss</code> claim</a>
+        </h3>
+<p id="section-5.5-1">JWT-SVIDs carrying <code>iss</code> claims could technically be validated by retrieving the signing keys via OpenID Connect Discovery or OAuth 2.0 Authorization Server Metadata. In the context of this specification these key distribution mechanisms <span class="bcp14">MUST NOT</span> be used.<a href="#section-5.5-1" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-5.4-2.1">
-            <p id="section-5.4-2.1.1">Arndt: Should we point people that want to pursue this approach to raw RFC7523?<a href="#section-5.4-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal ulEmpty" id="section-5.5-2.1">
+            <p id="section-5.5-2.1.1">Arndt: Should we point people that want to pursue this approach to raw RFC7523?<a href="#section-5.5-2.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>

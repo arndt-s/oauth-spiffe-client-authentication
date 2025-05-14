@@ -5,7 +5,7 @@
 Web Authorization Protocol                            A. Schwenkschuster
 Internet-Draft                                             P. Kasselmann
 Intended status: Standards Track                                   SPIRL
-Expires: 14 November 2025                                    13 May 2025
+Expires: 15 November 2025                                    14 May 2025
 
 
                    OAuth SPIFFE Client Authentication
@@ -54,7 +54,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 November 2025.
+   This Internet-Draft will expire on 15 November 2025.
 
 Copyright Notice
 
@@ -82,10 +82,11 @@ Table of Contents
        3.2.1.  X509-SVID Example
    4.  SPIFFE Trust Establishment and Client Registration
    5.  SPIFFE Bundle Validation
-     5.1.  Manual configuration
-     5.2.  SPIFFE Workload API
-     5.3.  SPIFFE Bundle Endpoint
-     5.4.  A note on JWT-SVID carrying iss claims
+     5.1.  SPIFFE Workload API
+     5.2.  SPIFFE Bundle Endpoint
+     5.3.  Alternative validation methods to avoid
+     5.4.  Manual configuration
+     5.5.  Using the JWT-SVID iss claim
    6.  Security Considerations
    7.  IANA Considerations
    8.  Normative References
@@ -100,7 +101,7 @@ Table of Contents
    cloud-native architectures where identity is managed by SPIFFE
    (Secure Production Identity Framework for Everyone), there is a need
    to provision additional secret material for OAuth clients when
-   verifyable credentials such as SVIDs are already available.
+   verifiable credentials such as SVIDs are already available.
 
    This specification profiles the Assertion Framework for OAuth 2.0
    Client Authentication and Authorization Grants [RFC7521] to allow
@@ -118,8 +119,8 @@ Table of Contents
        authenticate as themselves to OAuth authorization servers.
 
    2.  Using SPIFFE as client authentication towards OAuth 2.0
-       authorization servers is a great bridge between SPIFFE, which
-       covers workload identity and OAuth, which covers human identity.
+       authorization servers is a bridge between SPIFFE, which covers
+       workload identity and OAuth, which covers human identity.
 
    3.  Using SPIFFE as authorization grants for authorization requests
        where the workload itself is the resource owner is covered by
@@ -194,7 +195,8 @@ Table of Contents
    urn:ietf:params:oauth:client-assertion-type:jwt-spiffe
 
    Based on [RFC7523] the following request parameters MUST be present
-   to perform client authenticated in context of this specification:
+   to perform client authentication in the context of this
+   specification:
 
    *  client_assertion_type: MUST be set to
       urn:ietf:params:oauth:client-assertion-type:jwt-spiffe.
@@ -262,7 +264,7 @@ client_assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjR2QzhhZ3ljSHU2cm5rRUVKWUFINlZ1Q2U
    the client certificate.  The authorization server validates the
    client certificate as an X.509-SVID and extracts the SPIFFE ID from
    the URI SAN.  The server certificate MUST be validated by the client
-   using its system trust store and NOT the SPIFFE trust bundle.
+   using its system trust store, and NOT the SPIFFE trust bundle.
 
    The request MUST include the client_id parameter containing the
    SPIFFE-ID of the client.  It MUST match the URI SAN of the presented
@@ -363,8 +365,8 @@ Certificate:
 5.  SPIFFE Bundle Validation
 
    This section describes how an authorization server verifies the
-   signature of an X509 or JWT-SVID.  It offers 2 approaches, both
-   SPIFFE-native.
+   signature of an X509 or JWT-SVID.  It recommends two SPIFFE-native
+   approaches.
 
    Trust bundles in general MUST be keyed by the trust domain identifier
    to prevent mix up between trust domain and their corresponding
@@ -373,14 +375,7 @@ Certificate:
 Trust domain "example.org": Workload API at unix:///var/secrets/spiffe/agent.sock
 Trust domain "production": SPIFFE Bundle Endpoint at https://example.com/auth/spiffe/bundle.json
 
-5.1.  Manual configuration
-
-   In small, static environments the authorization server MAY be
-   configured with the SPIFFE bundles manually.  This approach requires
-   human interaction to set up, rotate and manage keying material and is
-   thus generally NOT RECOMMENDED.
-
-5.2.  SPIFFE Workload API
+5.1.  SPIFFE Workload API
 
    OAuth 2.0 Authorization Servers that have access to a SPIFFE Workload
    API SHOULD leverage said Workload API to retrieve the trust bundle.
@@ -399,7 +394,7 @@ Trust domain "production": SPIFFE Bundle Endpoint at https://example.com/auth/sp
    RECOMMENDED and more explicit configuration which trust domains to
    trust SHOULD be maintained.
 
-5.3.  SPIFFE Bundle Endpoint
+5.2.  SPIFFE Bundle Endpoint
 
    Compared to the Workload API the SPIFFE Bundle Endpoint allows for
    key distribution over the web.  The bundle endpoint exposes the
@@ -421,7 +416,16 @@ Trust domain "production": SPIFFE Bundle Endpoint at https://example.com/auth/sp
    X509-SVID and MUST be configured manually out of band.  Bundle
    endpoints MUST be keyed by the trust domain identifier.
 
-5.4.  A note on JWT-SVID carrying iss claims
+5.3.  Alternative validation methods to avoid
+
+5.4.  Manual configuration
+
+   In small, static environments the authorization server MAY be
+   configured with the SPIFFE bundles manually.  This approach requires
+   human interaction to set up, rotate and manage keying material and is
+   thus generally NOT RECOMMENDED.
+
+5.5.  Using the JWT-SVID iss claim
 
    JWT-SVIDs carrying iss claims could technically be validated by
    retrieving the signing keys via OpenID Connect Discovery or OAuth 2.0
