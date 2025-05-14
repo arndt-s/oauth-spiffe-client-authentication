@@ -87,7 +87,7 @@ This specification profiles the OAuth Assertion Framework (RFC 7521) to enable t
 
 # Introduction
 
-Traditional OAuth client authentication typically relies on client secrets or private key JWT authentication, both require an out of band distribution of secret material to the OAuth client. In modern cloud-native architectures where identity is managed by SPIFFE (Secure Production Identity Framework for Everyone), there is a need to provision additional secret material for OAuth clients when verifyable credentials such as SVIDs are already available.
+Traditional OAuth client authentication typically relies on client secrets or private key JWT authentication, both require an out of band distribution of secret material to the OAuth client. In modern cloud-native architectures where identity is managed by SPIFFE (Secure Production Identity Framework for Everyone), there is a need to provision additional secret material for OAuth clients when verifiable credentials such as SVIDs are already available.
 
 This specification profiles the Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants {{RFC7521}} to allow SPIFFE-enabled workloads to use their SPIFFE Verifiable Identity Documents (SVIDs) — either X.509 certificates or JWT tokens — as client credentials for OAuth 2.0 client authentication. JWT tokens make use of the profiled version of {{RFC7523}} - the JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants {{RFC7523}}.
 
@@ -95,7 +95,7 @@ This profile focuses specifically on client authentication rather than authoriza
 
 1. In modern service-oriented architectures, services often need to authenticate as themselves to OAuth authorization servers.
 
-2. Using SPIFFE as client authentication towards OAuth 2.0 authorization servers is a great bridge between SPIFFE, which covers workload identity and OAuth, which covers human identity.
+2. Using SPIFFE as client authentication towards OAuth 2.0 authorization servers is a bridge between SPIFFE, which covers workload identity and OAuth, which covers human identity.
 
 3. Using SPIFFE as authorization grants for authorization requests where the workload itself is the resource owner is covered by other specifications, such as {{Headless_JWT}}.
 
@@ -139,7 +139,7 @@ To identify the assertion content as a JWT-SVID this specification establishes t
 urn:ietf:params:oauth:client-assertion-type:jwt-spiffe
 ~~~
 
-Based on {{RFC7523}} the following request parameters MUST be present to perform client authenticated in context of this specification:
+Based on {{RFC7523}} the following request parameters MUST be present to perform client authentication in the context of this specification:
 
 * client_assertion_type: MUST be set to `urn:ietf:params:oauth:client-assertion-type:jwt-spiffe`.
 * client_assertion: MUST be a single SPIFFE JWT-SVID.
@@ -190,7 +190,7 @@ For clarify, the SPIFFE-JWT header and body decoded:
 
 X.509-SVID based authentication uses mutual TLS as defined in OAuth 2.0 Mutual-TLS Client Authentication {{RFC8705}}, with specific adaptations for SPIFFE X.509-SVIDs.
 
-To authenticate using an X.509-SVID, the client establishes a mutual TLS connection with the authorization server using its X.509-SVID as the client certificate. The authorization server validates the client certificate as an X.509-SVID and extracts the SPIFFE ID from the URI SAN. The server certificate MUST be validated by the client using its system trust store and NOT the SPIFFE trust bundle.
+To authenticate using an X.509-SVID, the client establishes a mutual TLS connection with the authorization server using its X.509-SVID as the client certificate. The authorization server validates the client certificate as an X.509-SVID and extracts the SPIFFE ID from the URI SAN. The server certificate MUST be validated by the client using its system trust store, and NOT the SPIFFE trust bundle.
 
 The request MUST include the `client_id` parameter containing the SPIFFE-ID of the client. It MUST match the URI SAN of the presented X509-SVID client credential.
 
@@ -270,7 +270,7 @@ Similar to the trust establishment, corresponding OAuth clients need to be estab
 
 # SPIFFE Bundle Validation {#spiffe-bundle-validation}
 
-This section describes how an authorization server verifies the signature of an X509 or JWT-SVID. It offers 2 approaches, both SPIFFE-native.
+This section describes how an authorization server verifies the signature of an X509 or JWT-SVID. It recommends two SPIFFE-native approaches.
 
 Trust bundles in general MUST be keyed by the trust domain identifier to prevent mix up between trust domain and their corresponding bundles. The 2 approaches can be used in conjunction, for instance:
 
@@ -279,9 +279,6 @@ Trust domain "example.org": Workload API at unix:///var/secrets/spiffe/agent.soc
 Trust domain "production": SPIFFE Bundle Endpoint at https://example.com/auth/spiffe/bundle.json
 ~~~
 
-## Manual configuration
-
-In small, static environments the authorization server MAY be configured with the SPIFFE bundles manually. This approach requires human interaction to set up, rotate and manage keying material and is thus generally NOT RECOMMENDED.
 
 ## SPIFFE Workload API
 
@@ -301,7 +298,13 @@ The authorization server SHOULD periodically poll the bundle endpoint to retriev
 
 The bundle endpoint is not discoverable from the JWT-SVID and X509-SVID and MUST be configured manually out of band. Bundle endpoints MUST be keyed by the trust domain identifier.
 
-## A note on JWT-SVID carrying `iss` claims
+## Alternative validation methods to avoid
+
+## Manual configuration
+
+In small, static environments the authorization server MAY be configured with the SPIFFE bundles manually. This approach requires human interaction to set up, rotate and manage keying material and is thus generally NOT RECOMMENDED.
+
+## Using the JWT-SVID `iss` claim
 
 JWT-SVIDs carrying `iss` claims could technically be validated by retrieving the signing keys via OpenID Connect Discovery or OAuth 2.0 Authorization Server Metadata. In the context of this specification these key distribution mechanisms MUST NOT be used.
 
