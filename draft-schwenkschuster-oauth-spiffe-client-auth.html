@@ -1231,7 +1231,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="name-introduction">
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
-<p id="section-1-1">Traditional OAuth client authentication typically relies on client secrets or private key JWT authentication, both require an out of band distribution of secret material to the OAuth client. In modern cloud-native architectures where identity is managed by SPIFFE (Secure Production Identity Framework for Everyone), there is a need to provision additional secret material for OAuth clients when verifiable credentials such as SVIDs are already available.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-1">Traditional OAuth client authentication typically relies on client secrets or private key JWT authentication, both require an out of band distribution of secret material to the OAuth client. In modern cloud-native architectures where identity is managed by SPIFFE (Secure Production Identity Framework for Everyone), there is a need to provision additional secret material for OAuth clients when attested identifiers and credentials such as SVIDs are already available.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">This specification profiles the Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span> to allow SPIFFE-enabled workloads to use their SPIFFE Verifiable Identity Documents (SVIDs) — either X.509 certificates or JWT tokens — as client credentials for OAuth 2.0 client authentication. JWT tokens make use of the profiled version of <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span> - the JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span>.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">This profile focuses specifically on client authentication rather than authorization grants. This focus is deliberate for several reasons:<a href="#section-1-3" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-1-4">
@@ -1245,7 +1245,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
           <p id="section-1-4.3.1">Using SPIFFE as authorization grants for authorization requests where the workload itself is the resource owner is covered by other specifications, such as <span>[<a href="#Headless_JWT" class="cite xref">Headless_JWT</a>]</span>.<a href="#section-1-4.3.1" class="pilcrow">¶</a></p>
 </li>
       </ol>
-<p id="section-1-5">The SPIFFE profile for client authentication enables seamless integration between SPIFFE-based and OAuth-based systems, allowing applications to leverage both ecosystems without requiring additional credential management. It also enables a more secure authentication method by leveraging cryptographically verifiable identity documents rather than shared secrets.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-5">The SPIFFE profile for client authentication enables seamless integration between SPIFFE-based and OAuth-based systems, allowing applications to leverage both ecosystems without requiring additional credential management. It also enables a more secure authentication method by leveraging cryptographically verifiable credentials rather than shared secrets.<a href="#section-1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="conventions-and-definitions">

@@ -103,7 +103,8 @@ Table of Contents
    cloud-native architectures where identity is managed by SPIFFE
    (Secure Production Identity Framework for Everyone), there is a need
    to provision additional secret material for OAuth clients when
-   verifiable credentials such as SVIDs are already available.
+   attested identifiers and credentials such as SVIDs are already
+   available.
 
    This specification profiles the Assertion Framework for OAuth 2.0
    Client Authentication and Authorization Grants [RFC7521] to allow
@@ -132,8 +133,8 @@ Table of Contents
    integration between SPIFFE-based and OAuth-based systems, allowing
    applications to leverage both ecosystems without requiring additional
    credential management.  It also enables a more secure authentication
-   method by leveraging cryptographically verifiable identity documents
-   rather than shared secrets.
+   method by leveraging cryptographically verifiable credentials rather
+   than shared secrets.
 
 2.  Conventions and Definitions
 
