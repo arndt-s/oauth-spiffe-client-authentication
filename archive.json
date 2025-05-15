@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-13T01:02:29.457662+00:00",
+  "timestamp": "2025-05-15T00:59:09.145281+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -89,6 +89,111 @@
           "body": "## Pull Request Overview\n\nThis PR updates the metadata in the draft document for improved naming and clarity, and adds a Makefile for managing dependencies via submodules and symbolic links.\n- Updated document metadata including title, docname, workgroup, and keywords.\n- Changed the consensus flag from true to false.\n- Added a Makefile to conditionally sync submodules or clone a template repository.\n\n### Reviewed Changes\n\nCopilot reviewed 3 out of 3 changed files in this pull request and generated no comments.\n\n| File                                                        | Description                                                      |\n| ----------------------------------------------------------- | ---------------------------------------------------------------- |\n| draft-schwenkschuster-oauth-spiffe-client-auth.md            | Updated metadata fields to reflect accurate document naming, title, and contact information. |\n| Makefile                                                    | Introduces dependency management via submodules, symlink creation, or repository cloning.       |\n\n\n\n",
           "createdAt": "2025-05-08T11:55:14Z",
           "updatedAt": "2025-05-08T11:55:14Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "id": "PR_kwDOOml42M6V9OB1",
+      "title": "Add profile of RFC7521",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/2",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-05-13T08:30:49Z",
+      "updatedAt": "2025-05-13T08:31:59Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "3e28e36ee1cdf7b7ebd4e3f7ad5da5a227dfeb13",
+      "headRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "headRefName": "spiffe-profile-of-rfc7521",
+      "headRefOid": "efaf967a72a923bff29269c2224409bd63dbe095",
+      "closedAt": "2025-05-13T08:31:23Z",
+      "mergedAt": "2025-05-13T08:31:23Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "0c58b4ddb09d52685bbd0e747d4d61bb4088a71c"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M6pBrBb",
+          "commit": {
+            "abbreviatedOid": "efaf967"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## Pull Request Overview\n\nThis PR adds a profile for RFC7521 by extending the specification to support SPIFFE-based OAuth client authentication.  \n- Updated document metadata and normative references to include RFC7521 and related standards.  \n- Expanded the abstract, introduction, and detailed sections for JWT-SVID and X509-SVID client authentication.  \n- Added new sections for SPIFFE terminology, trust establishment, and bundle validation.\n\n\n\n",
+          "createdAt": "2025-05-13T08:31:58Z",
+          "updatedAt": "2025-05-13T08:31:59Z",
+          "comments": [
+            {
+              "originalPosition": 43,
+              "body": "The 'target' value 'foo' for Headless_JWT appears to be a placeholder and is not a valid reference. Please provide a proper URL to the related documentation or remove the entry if not needed.\n```suggestion\n    target: https://example.com/headless-jwt-specification\n```",
+              "createdAt": "2025-05-13T08:31:59Z",
+              "updatedAt": "2025-05-13T08:32:00Z"
+            },
+            {
+              "originalPosition": 238,
+              "body": "The word 'levarage' seems to be a spelling error; it should be 'leverage'.\n```suggestion\nSimilar to the trust establishment, corresponding OAuth clients need to be established prior of using SPIFFE as client authentication. This is also out of scope, implementors may for example choose to leverage OAuth 2.0 dynamic client registration according to {{RFC7591}} or configure them out of band.\n```",
+              "createdAt": "2025-05-13T08:31:59Z",
+              "updatedAt": "2025-05-13T08:32:00Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "id": "PR_kwDOOml42M6WDJEe",
+      "title": "Fixed minor typos and clarified validation recommendations",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/3",
+      "state": "MERGED",
+      "author": "heymarcel",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Mostly nits, except that I combined the \"not recommended\" validation methods and moved them to the end of the validation section.",
+      "createdAt": "2025-05-13T18:53:40Z",
+      "updatedAt": "2025-05-14T08:11:56Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "0c58b4ddb09d52685bbd0e747d4d61bb4088a71c",
+      "headRepository": "heymarcel/oauth-spiffe-client-authentication",
+      "headRefName": "main",
+      "headRefOid": "4f6a098289db76949bdb50db07201896d0ec0596",
+      "closedAt": "2025-05-14T08:11:56Z",
+      "mergedAt": "2025-05-14T08:11:56Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "6d2e28aebed13d7a19d38b2dc17b3599c20d70fb"
+      },
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "body": "Thank you Marcel, this is great!",
+          "createdAt": "2025-05-14T08:09:08Z",
+          "updatedAt": "2025-05-14T08:09:08Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M6pOtF4",
+          "commit": {
+            "abbreviatedOid": "4f6a098"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-05-14T08:11:52Z",
+          "updatedAt": "2025-05-14T08:11:52Z",
           "comments": []
         }
       ]
