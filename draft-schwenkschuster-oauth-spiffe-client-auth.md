@@ -87,7 +87,7 @@ This specification profiles the Assertion Framework for OAuth 2.0 Client Authent
 
 # Introduction
 
-Traditional OAuth client authentication typically relies on client secrets or private key JWT authentication, both require an out of band distribution of secret material to the OAuth client. In modern cloud-native architectures where identity is managed by SPIFFE (Secure Production Identity Framework for Everyone), there is a need to provision additional secret material for OAuth clients when verifiable credentials such as SVIDs are already available.
+Traditional OAuth client authentication typically relies on client secrets or private key JWT authentication, both require an out of band distribution of secret material to the OAuth client. In modern cloud-native architectures where identity is managed by SPIFFE (Secure Production Identity Framework for Everyone), there is a need to provision additional secret material for OAuth clients when attested identifiers and credentials such as SVIDs are already available.
 
 This specification profiles the Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants {{RFC7521}} to allow SPIFFE-enabled workloads to use their SPIFFE Verifiable Identity Documents (SVIDs) — either X.509 certificates or JWT tokens — as client credentials for OAuth 2.0 client authentication. JWT tokens make use of the profiled version of {{RFC7523}} - the JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants {{RFC7523}}.
 
@@ -99,7 +99,7 @@ This profile focuses specifically on client authentication rather than authoriza
 
 3. Using SPIFFE as authorization grants for authorization requests where the workload itself is the resource owner is covered by other specifications, such as {{Headless_JWT}}.
 
-The SPIFFE profile for client authentication enables seamless integration between SPIFFE-based and OAuth-based systems, allowing applications to leverage both ecosystems without requiring additional credential management. It also enables a more secure authentication method by leveraging cryptographically verifiable identity documents rather than shared secrets.
+The SPIFFE profile for client authentication enables seamless integration between SPIFFE-based and OAuth-based systems, allowing applications to leverage both ecosystems without requiring additional credential management. It also enables a more secure authentication method by leveraging cryptographically verifiable credentials rather than shared secrets.
 
 # Conventions and Definitions
 
