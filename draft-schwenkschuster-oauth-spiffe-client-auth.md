@@ -268,7 +268,7 @@ This specification requires previously established trust between the OAuth 2.0 A
 
 Similar to the trust establishment, corresponding OAuth clients need to be established prior of using SPIFFE as client authentication. This is also out of scope, implementors may for example choose to levarage OAuth 2.0 dynamic client registration according to {{RFC7591}} or configure them out of band.
 
-# SPIFFE Bundle Validation {#spiffe-bundle-validation}
+# SPIFFE Key Distribution and Validation {#spiffe-bundle-validation}
 
 This section describes how an authorization server verifies the signature of an X509 or JWT-SVID. It recommends two SPIFFE-native approaches.
 
@@ -279,18 +279,9 @@ Trust domain "example.org": Workload API at unix:///var/secrets/spiffe/agent.soc
 Trust domain "production": SPIFFE Bundle Endpoint at https://example.com/auth/spiffe/bundle.json
 ~~~
 
-
-## SPIFFE Workload API
-
-OAuth 2.0 Authorization Servers that have access to a SPIFFE Workload API SHOULD leverage said Workload API to retrieve the trust bundle. It is able to actively notify the authorization server of a change in the keying material in the bundle and can reduce the time to distribute updates significantly.
-
-This requires the authorization server to be part of a SPIFFE trust domain and allows for retrieving the trust bundle of said trust domain. Additional trust domains MAY be made available via federated bundles that are part of the bundle. See {{SPIFFE_FEDERATION}} for details.
-
-Authorization Servers MAY choose to automatically trust bundles coming from the SPIFFE Workload API. However, this is NOT RECOMMENDED and more explicit configuration which trust domains to trust SHOULD be maintained.
-
 ## SPIFFE Bundle Endpoint
 
-Compared to the Workload API the SPIFFE Bundle Endpoint allows for key distribution over the web. The bundle endpoint exposes the signing keys for X509 and JWT-SVIDs via a JSON Web Key Set according to {{RFC7517}} over HTTPS.
+The SPIFFE Bundle Endpoint allows for key distribution over the web. The bundle endpoint exposes the signing keys for X509 and JWT-SVIDs via a JSON Web Key Set according to {{RFC7517}} over HTTPS.
 
 Server authentication on this endpoint is available in 2 flavors, for the sake of interopability in context of this specification the WebPKI flavor MUST be used. This effectively means that the server certificate of the bundle endpoint is trusted by the authorization server accessing it. See Sec 5.2.1 of {{SPIFFE_FEDERATION}} for details.
 
@@ -298,13 +289,25 @@ The authorization server SHOULD periodically poll the bundle endpoint to retriev
 
 The bundle endpoint is not discoverable from the JWT-SVID and X509-SVID and MUST be configured manually out of band. Bundle endpoints MUST be keyed by the trust domain identifier.
 
-## Alternative validation methods to avoid
+## Alternative methods to avoid
 
-## Manual configuration
+The following key distribution mechanisms are alternatives and SHOULD be avoided for interopability reasons.
+
+### SPIFFE Workload API
+
+The SPIFFE Workload API allows workloads to retrieve a trust bundle from SPIFFE. It requires the authorization server to be part of a SPIFFE trust domain and be considered a workload within it. The authors acknowledge that using the SPIFFE Workload API can reduce the time a update to the bundle is received by the authorization server.
+
+In addition to the trust bundle of the trust domain the workload resides in, the SPIFFE Workload API also allows to retrieve trust bundles from federated trust domains. This mechnism moves trust establishment away from the authorization server to the SPIFFE configuration and is NOT RECOMMENDED and more explicit configuration SHOULD be maintained.
+
+### Manual configuration
 
 In small, static environments the authorization server MAY be configured with the SPIFFE bundles manually. This approach requires human interaction to set up, rotate and manage keying material and is thus generally NOT RECOMMENDED.
 
-## Using the JWT-SVID `iss` claim
+### Using the system trust store
+
+X509-SVIDs MUST NOT be validated using the systems trust store. The SPIFFE ID carried in the URI SAN is not a verified attribute in the broader X.500 ecosystem and using the system trust store as trust anchor would allow ANY certificate authority in it to issue a X509-SVID for ANY SPIFFE-ID which would be considered trusted. In comparison: using SPIFFE-native validation methods restricts the signing of SPIFFE-IDs to the corresponding trust domain signing keys.
+
+### Using the JWT-SVID `iss` claim
 
 JWT-SVIDs carrying `iss` claims could technically be validated by retrieving the signing keys via OpenID Connect Discovery or OAuth 2.0 Authorization Server Metadata. In the context of this specification these key distribution mechanisms MUST NOT be used.
 
