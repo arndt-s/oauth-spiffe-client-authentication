@@ -294,7 +294,8 @@ The SPIFFE bundle endpoint cannot be derived from the JWT-SVID and X509-SVID and
 The following examples showcase how the Authorization Server can perform key discovery for the trust domain `example.org`. Important to note is the difference between `example.org` trust domain and `example.com` location for the SPIFFE Bundle Endpoint. This highlights the importance of explicit configuration and undermines the fact that the SPIFFE Bundle Endpoint cannot be derived or discovered  from the X509-SVID without explicit configuration.
 
 Example configuration at the OAuth Authorization Server in the JSON format
-```
+
+~~~
 {
   "example.org": {
     "spiffe_bundle_endpoint": {
@@ -302,11 +303,12 @@ Example configuration at the OAuth Authorization Server in the JSON format
     }
   }
 }
-```
+~~~
 
 > Note difference between example.org and example.com
 
 Example SPIFFE Bundle Endpoint request, response:
+
 ~~~
 GET /bundle.json HTTP/1.1
 Host: example.com
@@ -340,6 +342,7 @@ Host: example.com
 > The `use` parameter in the JSON Web Key indicates the credential format the key is indended for. Multiple keys of the same use can be present.
 
 The X509-SVID signing certificate (`.keys[0].x5c[0]` from response above) in text form:
+
 ~~~
 Certificate:
     Data:
