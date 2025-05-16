@@ -412,63 +412,96 @@ Trust domain "production": SPIFFE Bundle Endpoint at https://example.com/auth/sp
    X509-SVID without explicit configuration.
 
    Example configuration at the OAuth Authorization Server in the JSON
-   format { "example.org": { "spiffe_bundle_endpoint": { "url":
-   "https://example.com/bundle.json" } } }
+   format
+
+   {
+     "example.org": {
+       "spiffe_bundle_endpoint": {
+         "url": "https://example.com/bundle.json"
+       }
+     }
+   }
 
       Note difference between example.org and example.com
 
-   Example SPIFFE Bundle Endpoint request, response: ~~~ GET
-   /bundle.json HTTP/1.1 Host: example.com
+   Example SPIFFE Bundle Endpoint request, response:
 
-   { "keys": [ { "use": "x509-svid", "kty": "EC", "crv": "P-384", "x":
-   "9XBzty8W_ex4Xr0RdzUBgie_okdaUTheSF0PQvVAaTsXaP1J7yv0Dhlaw45I7Cv9",
-   "y":
-   "HP21HOmMxIlZ0XeqsOl9sM5H57HBQWu0bINXfw4jdeHdB5vk1XyNyBQQxeUpSxhn",
-   "x5c": [ "MIIB2DCCAV6gAwIBAgIURJ20yIzal3ZT9NXkdwrsm0selwwwCgYIKoZIzj0
-   EAwQwHjELMAkGA1UEBhMCVVMxDzANBgNVBAoMBlNQSUZGRTAeFw0yMzA1MTUwMjA1MDZa
-   Fw0yODA1MTMwMjA1MDZaMB4xCzAJBgNVBAYTAlVTMQ8wDQYDVQQKDAZTUElGRkUwdjAQB
-   gcqhkjOPQIBBgUrgQQAIgNiAAT1cHO3Lxb97HhevRF3NQGCJ7+iR1pROF5IXQ9C9UBpOx
-   do/UnvK/QOGVrDjkjsK/0c/bUc6YzEiVnRd6qw6X2wzkfnscFBa7Rsg1d/DiN14d0Hm+T
-   VfI3IFBDF5SlLGGejXTBbMB0GA1UdDgQWBBSSiuNgxqqnz2r/jRcWsARqphwQ/zAPBgNV
-   HRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBBjAZBgNVHREEEjAQhg5zcGlmZmU6Ly9sb
-   2NhbDAKBggqhkjOPQQDBANoADBlAjEA54Q8hfhEd4qVycwbLNzOm/HQrp1n1+a2xc88iU
-   036FMPancR1PLqgsODPfWyttdRAjAKIodUi4eYiMa9+I2rVbj8gOxJAFn0hLLEF3QDmXt
-   GPpARs9qC+KbiklTu5Fpik2Q=" ] }, { "use": "jwt-svid", "kty": "EC",
-   "kid": "6d02Vc2oU62mXVH5nlggHGLmfIhrlnNW", "crv": "P-256", "x":
-   "S2V42XlFjNp30CFmOidbWQT9IpZHqJ8JuuJgDBvkdZA", "y":
-   "vN0y5TK36VRxZo_E3Gc7S5c0jIRIaHZ53f2UiJ1NFto" } ], "spiffe_sequence":
-   10, "spiffe_refresh_hint": 300 } ~~~
+GET /bundle.json HTTP/1.1
+Host: example.com
+
+{
+  "keys": [
+    {
+      "use": "x509-svid",
+      "kty": "EC",
+      "crv": "P-384",
+      "x": "9XBzty8W_ex4Xr0RdzUBgie_okdaUTheSF0PQvVAaTsXaP1J7yv0Dhlaw45I7Cv9",
+      "y": "HP21HOmMxIlZ0XeqsOl9sM5H57HBQWu0bINXfw4jdeHdB5vk1XyNyBQQxeUpSxhn",
+      "x5c": [
+        "MIIB2DCCAV6gAwIBAgIURJ20yIzal3ZT9NXkdwrsm0selwwwCgYIKoZIzj0EAwQwHjELMAkGA1UEBhMCVVMxDzANBgNVBAoMBlNQSUZGRTAeFw0yMzA1MTUwMjA1MDZaFw0yODA1MTMwMjA1MDZaMB4xCzAJBgNVBAYTAlVTMQ8wDQYDVQQKDAZTUElGRkUwdjAQBgcqhkjOPQIBBgUrgQQAIgNiAAT1cHO3Lxb97HhevRF3NQGCJ7+iR1pROF5IXQ9C9UBpOxdo/UnvK/QOGVrDjkjsK/0c/bUc6YzEiVnRd6qw6X2wzkfnscFBa7Rsg1d/DiN14d0Hm+TVfI3IFBDF5SlLGGejXTBbMB0GA1UdDgQWBBSSiuNgxqqnz2r/jRcWsARqphwQ/zAPBgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBBjAZBgNVHREEEjAQhg5zcGlmZmU6Ly9sb2NhbDAKBggqhkjOPQQDBANoADBlAjEA54Q8hfhEd4qVycwbLNzOm/HQrp1n1+a2xc88iU036FMPancR1PLqgsODPfWyttdRAjAKIodUi4eYiMa9+I2rVbj8gOxJAFn0hLLEF3QDmXtGPpARs9qC+KbiklTu5Fpik2Q="
+      ]
+    },
+    {
+      "use": "jwt-svid",
+      "kty": "EC",
+      "kid": "6d02Vc2oU62mXVH5nlggHGLmfIhrlnNW",
+      "crv": "P-256",
+      "x": "S2V42XlFjNp30CFmOidbWQT9IpZHqJ8JuuJgDBvkdZA",
+      "y": "vN0y5TK36VRxZo_E3Gc7S5c0jIRIaHZ53f2UiJ1NFto"
+    }
+  ],
+  "spiffe_sequence": 10,
+  "spiffe_refresh_hint": 300
+}
 
       The use parameter in the JSON Web Key indicates the credential
       format the key is indended for.  Multiple keys of the same use can
       be present.
 
    The X509-SVID signing certificate (.keys[0].x5c[0] from response
-   above) in text form: ~~~ Certificate: Data: Version: 3 (0x2) Serial
-   Number: 5c:4b:d5:2d:f9:c1:6e:78:2c:32:a6:bb:6c:73:f0:b8:f4:be:13:09
-   Signature Algorithm: ecdsa-with-SHA512 Issuer: C=US, O=SPIFFE
-   Validity Not Before: May 16 11:23:19 2025 GMT Not After : May 15
-   11:23:19 2030 GMT Subject: C=US, O=SPIFFE Subject Public Key Info:
-   Public Key Algorithm: id-ecPublicKey Public-Key: (384 bit) pub:
-   04:ef:3f:db:67:2b:e8:5c:a1:64:23:e7:f2:fd:f0:
-   3b:16:55:68:17:55:17:d4:bd:cd:6d:04:fd:cc:8f:
-   99:31:f7:8c:ac:b0:1e:31:60:18:45:32:8b:a1:17:
-   4b:2f:01:75:27:6c:3f:c3:a5:b9:da:56:fb:29:54:
-   63:cb:08:96:81:35:0e:96:04:03:40:fe:51:0d:26:
-   da:d5:99:6c:8f:c2:45:43:cb:2c:b4:8d:9b:68:78: 9f:c0:2d:68:36:b8:5e
-   ASN1 OID: secp384r1 NIST CURVE: P-384 X509v3 extensions: X509v3
-   Subject Key Identifier:
-   8D:79:D2:26:5E:4C:83:30:40:C7:E9:1D:E1:35:12:F6:60:CF:0B:DB X509v3
-   Basic Constraints: critical CA:TRUE X509v3 Key Usage: critical
-   Certificate Sign, CRL Sign X509v3 Subject Alternative Name:
-   URI:spiffe://example.org Signature Algorithm: ecdsa-with-SHA512
-   Signature Value:
-   30:64:02:30:0a:e9:fd:d4:cd:99:52:90:cb:14:86:93:4e:f8:
-   02:52:d6:17:12:9f:2e:65:99:0e:38:b6:b9:a6:fe:43:0f:60:
-   30:04:87:ec:24:20:80:a4:75:ee:3c:ad:9d:a2:72:0d:02:30:
-   55:93:0e:14:8c:47:47:3b:74:7c:a7:2a:2a:96:1d:a4:85:46:
-   4f:3f:95:a4:c2:ab:3c:2e:04:b3:1b:cf:02:0f:33:fc:dd:dc:
-   d5:2f:44:c8:2a:dc:ce:3f:c5:c6:89:d0 ~~~
+   above) in text form:
+
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            5c:4b:d5:2d:f9:c1:6e:78:2c:32:a6:bb:6c:73:f0:b8:f4:be:13:09
+        Signature Algorithm: ecdsa-with-SHA512
+        Issuer: C=US, O=SPIFFE
+        Validity
+            Not Before: May 16 11:23:19 2025 GMT
+            Not After : May 15 11:23:19 2030 GMT
+        Subject: C=US, O=SPIFFE
+        Subject Public Key Info:
+            Public Key Algorithm: id-ecPublicKey
+                Public-Key: (384 bit)
+                pub:
+                    04:ef:3f:db:67:2b:e8:5c:a1:64:23:e7:f2:fd:f0:
+                    3b:16:55:68:17:55:17:d4:bd:cd:6d:04:fd:cc:8f:
+                    99:31:f7:8c:ac:b0:1e:31:60:18:45:32:8b:a1:17:
+                    4b:2f:01:75:27:6c:3f:c3:a5:b9:da:56:fb:29:54:
+                    63:cb:08:96:81:35:0e:96:04:03:40:fe:51:0d:26:
+                    da:d5:99:6c:8f:c2:45:43:cb:2c:b4:8d:9b:68:78:
+                    9f:c0:2d:68:36:b8:5e
+                ASN1 OID: secp384r1
+                NIST CURVE: P-384
+        X509v3 extensions:
+            X509v3 Subject Key Identifier:
+                8D:79:D2:26:5E:4C:83:30:40:C7:E9:1D:E1:35:12:F6:60:CF:0B:DB
+            X509v3 Basic Constraints: critical
+                CA:TRUE
+            X509v3 Key Usage: critical
+                Certificate Sign, CRL Sign
+            X509v3 Subject Alternative Name:
+                URI:spiffe://example.org
+    Signature Algorithm: ecdsa-with-SHA512
+    Signature Value:
+        30:64:02:30:0a:e9:fd:d4:cd:99:52:90:cb:14:86:93:4e:f8:
+        02:52:d6:17:12:9f:2e:65:99:0e:38:b6:b9:a6:fe:43:0f:60:
+        30:04:87:ec:24:20:80:a4:75:ee:3c:ad:9d:a2:72:0d:02:30:
+        55:93:0e:14:8c:47:47:3b:74:7c:a7:2a:2a:96:1d:a4:85:46:
+        4f:3f:95:a4:c2:ab:3c:2e:04:b3:1b:cf:02:0f:33:fc:dd:dc:
+        d5:2f:44:c8:2a:dc:ce:3f:c5:c6:89:d0
 
       Arndt: Bundle doesn't match X509-SVID.  This needs to be fixed.
 
