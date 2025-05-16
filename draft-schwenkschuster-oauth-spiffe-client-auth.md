@@ -223,22 +223,22 @@ Certificate:
     Data:
         Version: 3 (0x2)
         Serial Number:
-            3a:3f:ca:4a:a6:9c:58:10:d0:72:c7:39:6b:20:6f:50
+            dd:48:ec:d4:a4:c6:b2:ea:8e:9b:54:35:e8:30:65:7b
         Signature Algorithm: ecdsa-with-SHA256
-        Issuer: C=US, O=SPIFFE, serialNumber=90586779643643322204403239935962541089
+        Issuer: C=US, O=SPIFFE, serialNumber=6968729192859147614695638370388029008
         Validity
-            Not Before: May 13 08:08:11 2025 GMT
-            Not After : May 13 09:08:21 2025 GMT
+            Not Before: May 16 11:26:11 2025 GMT
+            Not After : May 16 12:26:21 2025 GMT
         Subject: C=US, O=SPIRE
         Subject Public Key Info:
             Public Key Algorithm: id-ecPublicKey
                 Public-Key: (256 bit)
                 pub:
-                    04:3a:2e:ae:59:64:77:63:91:5f:90:e1:94:44:9b:
-                    7d:bc:8e:10:6f:31:aa:de:9c:38:a5:ab:09:2d:45:
-                    b2:92:c4:a1:75:21:84:88:61:02:5d:8c:bc:95:01:
-                    33:ac:c5:44:9a:21:86:14:10:7b:2b:30:97:24:05:
-                    35:41:a3:5d:8e
+                    04:c2:0b:b6:8e:47:9a:20:ab:33:f1:a9:a5:77:97:
+                    fa:a0:95:7d:2c:9f:e9:94:3d:e9:ed:e6:35:52:7f:
+                    ff:82:34:74:20:97:5a:1b:4e:87:5f:32:3e:9d:da:
+                    60:6a:05:8b:86:9d:0b:59:5f:67:be:93:3b:26:de:
+                    ea:1e:18:98:96
                 ASN1 OID: prime256v1
                 NIST CURVE: P-256
         X509v3 extensions:
@@ -249,17 +249,17 @@ Certificate:
             X509v3 Basic Constraints: critical
                 CA:FALSE
             X509v3 Subject Key Identifier:
-                ED:68:B4:9F:5C:71:FC:72:02:43:AB:2C:8C:98:7E:49:3F:66:18:C9
+                D8:7A:2F:8B:E3:CF:08:83:EA:DD:5E:0A:59:33:6E:4C:E0:CC:6B:AD
             X509v3 Authority Key Identifier:
-                F2:67:05:2C:7E:57:2B:09:37:DE:9E:B1:71:26:0F:7D:3C:F8:A1:DC
+                C2:41:49:B0:ED:E0:94:7B:FA:7D:C2:F1:02:24:20:B9:1E:3D:56:FA
             X509v3 Subject Alternative Name:
                 URI:spiffe://example.org/my-oauth-client
     Signature Algorithm: ecdsa-with-SHA256
     Signature Value:
-        30:45:02:20:08:22:bf:a9:a4:25:43:76:4d:27:58:80:c3:9e:
-        20:f7:0d:b9:4a:81:41:ed:a6:2d:12:f7:99:a6:e0:e9:6d:91:
-        02:21:00:fb:85:e6:b9:be:de:4e:83:b0:c9:61:1e:77:b2:e4:
-        4f:58:a0:fa:93:8b:b7:81:1b:53:a8:ac:d8:3b:30:7c:ce
+        30:44:02:20:48:c3:5f:68:b2:c5:5d:96:c4:96:32:37:1f:af:
+        b8:1c:1c:45:ad:41:26:dd:e2:92:b5:73:62:83:34:c6:16:2a:
+        02:20:0f:48:02:8e:6b:1d:09:01:80:d8:85:2b:ca:25:c6:2c:
+        9e:f2:27:c2:3c:e4:03:58:a8:47:21:f6:3c:5e:7a:c8
 ~~~
 
 # SPIFFE Trust Establishment and Client Registration
@@ -287,7 +287,104 @@ Server authentication on this endpoint is available in 2 flavors, for the sake o
 
 The authorization server SHOULD periodically poll the bundle endpoint to retrieve updated trust bundles, following the refresh hint and period provided in the bundle. See {{SPIFFE_FEDERATION}} for details.
 
-The bundle endpoint is not discoverable from the JWT-SVID and X509-SVID and MUST be configured manually out of band. Bundle endpoints MUST be keyed by the trust domain identifier.
+The SPIFFE bundle endpoint cannot be derived from the JWT-SVID and X509-SVID and MUST be configured manually out of band. Bundle endpoints MUST be keyed by the trust domain identifier.
+
+### Example
+
+The following examples showcase how the Authorization Server can perform key discovery for the trust domain `example.org`. Important to note is the difference between `example.org` trust domain and `example.com` location for the SPIFFE Bundle Endpoint. This highlights the importance of explicit configuration and undermines the fact that the SPIFFE Bundle Endpoint cannot be derived or discovered  from the X509-SVID without explicit configuration.
+
+Example configuration at the OAuth Authorization Server in the JSON format
+```
+{
+  "example.org": {
+    "spiffe_bundle_endpoint": {
+      "url": "https://example.com/bundle.json"
+    }
+  }
+}
+```
+
+> Note difference between example.org and example.com
+
+Example SPIFFE Bundle Endpoint request, response:
+~~~
+GET /bundle.json HTTP/1.1
+Host: example.com
+
+{
+  "keys": [
+    {
+      "use": "x509-svid",
+      "kty": "EC",
+      "crv": "P-384",
+      "x": "9XBzty8W_ex4Xr0RdzUBgie_okdaUTheSF0PQvVAaTsXaP1J7yv0Dhlaw45I7Cv9",
+      "y": "HP21HOmMxIlZ0XeqsOl9sM5H57HBQWu0bINXfw4jdeHdB5vk1XyNyBQQxeUpSxhn",
+      "x5c": [
+        "MIIB2DCCAV6gAwIBAgIURJ20yIzal3ZT9NXkdwrsm0selwwwCgYIKoZIzj0EAwQwHjELMAkGA1UEBhMCVVMxDzANBgNVBAoMBlNQSUZGRTAeFw0yMzA1MTUwMjA1MDZaFw0yODA1MTMwMjA1MDZaMB4xCzAJBgNVBAYTAlVTMQ8wDQYDVQQKDAZTUElGRkUwdjAQBgcqhkjOPQIBBgUrgQQAIgNiAAT1cHO3Lxb97HhevRF3NQGCJ7+iR1pROF5IXQ9C9UBpOxdo/UnvK/QOGVrDjkjsK/0c/bUc6YzEiVnRd6qw6X2wzkfnscFBa7Rsg1d/DiN14d0Hm+TVfI3IFBDF5SlLGGejXTBbMB0GA1UdDgQWBBSSiuNgxqqnz2r/jRcWsARqphwQ/zAPBgNVHRMBAf8EBTADAQH/MA4GA1UdDwEB/wQEAwIBBjAZBgNVHREEEjAQhg5zcGlmZmU6Ly9sb2NhbDAKBggqhkjOPQQDBANoADBlAjEA54Q8hfhEd4qVycwbLNzOm/HQrp1n1+a2xc88iU036FMPancR1PLqgsODPfWyttdRAjAKIodUi4eYiMa9+I2rVbj8gOxJAFn0hLLEF3QDmXtGPpARs9qC+KbiklTu5Fpik2Q="
+      ]
+    },
+    {
+      "use": "jwt-svid",
+      "kty": "EC",
+      "kid": "6d02Vc2oU62mXVH5nlggHGLmfIhrlnNW",
+      "crv": "P-256",
+      "x": "S2V42XlFjNp30CFmOidbWQT9IpZHqJ8JuuJgDBvkdZA",
+      "y": "vN0y5TK36VRxZo_E3Gc7S5c0jIRIaHZ53f2UiJ1NFto"
+    }
+  ],
+  "spiffe_sequence": 10,
+  "spiffe_refresh_hint": 300
+}
+~~~
+
+> The `use` parameter in the JSON Web Key indicates the credential format the key is indended for. Multiple keys of the same use can be present.
+
+The X509-SVID signing certificate (`.keys[0].x5c[0]` from response above) in text form:
+~~~
+Certificate:
+    Data:
+        Version: 3 (0x2)
+        Serial Number:
+            5c:4b:d5:2d:f9:c1:6e:78:2c:32:a6:bb:6c:73:f0:b8:f4:be:13:09
+        Signature Algorithm: ecdsa-with-SHA512
+        Issuer: C=US, O=SPIFFE
+        Validity
+            Not Before: May 16 11:23:19 2025 GMT
+            Not After : May 15 11:23:19 2030 GMT
+        Subject: C=US, O=SPIFFE
+        Subject Public Key Info:
+            Public Key Algorithm: id-ecPublicKey
+                Public-Key: (384 bit)
+                pub:
+                    04:ef:3f:db:67:2b:e8:5c:a1:64:23:e7:f2:fd:f0:
+                    3b:16:55:68:17:55:17:d4:bd:cd:6d:04:fd:cc:8f:
+                    99:31:f7:8c:ac:b0:1e:31:60:18:45:32:8b:a1:17:
+                    4b:2f:01:75:27:6c:3f:c3:a5:b9:da:56:fb:29:54:
+                    63:cb:08:96:81:35:0e:96:04:03:40:fe:51:0d:26:
+                    da:d5:99:6c:8f:c2:45:43:cb:2c:b4:8d:9b:68:78:
+                    9f:c0:2d:68:36:b8:5e
+                ASN1 OID: secp384r1
+                NIST CURVE: P-384
+        X509v3 extensions:
+            X509v3 Subject Key Identifier:
+                8D:79:D2:26:5E:4C:83:30:40:C7:E9:1D:E1:35:12:F6:60:CF:0B:DB
+            X509v3 Basic Constraints: critical
+                CA:TRUE
+            X509v3 Key Usage: critical
+                Certificate Sign, CRL Sign
+            X509v3 Subject Alternative Name:
+                URI:spiffe://example.org
+    Signature Algorithm: ecdsa-with-SHA512
+    Signature Value:
+        30:64:02:30:0a:e9:fd:d4:cd:99:52:90:cb:14:86:93:4e:f8:
+        02:52:d6:17:12:9f:2e:65:99:0e:38:b6:b9:a6:fe:43:0f:60:
+        30:04:87:ec:24:20:80:a4:75:ee:3c:ad:9d:a2:72:0d:02:30:
+        55:93:0e:14:8c:47:47:3b:74:7c:a7:2a:2a:96:1d:a4:85:46:
+        4f:3f:95:a4:c2:ab:3c:2e:04:b3:1b:cf:02:0f:33:fc:dd:dc:
+        d5:2f:44:c8:2a:dc:ce:3f:c5:c6:89:d0
+~~~
+
+> Arndt: Bundle doesn't match X509-SVID. This needs to be fixed.
 
 ## Alternative methods to avoid
 
@@ -295,9 +392,9 @@ The following key distribution mechanisms are alternatives and SHOULD be avoided
 
 ### SPIFFE Workload API
 
-The SPIFFE Workload API allows workloads to retrieve a trust bundle from SPIFFE. It requires the authorization server to be part of a SPIFFE trust domain and be considered a workload within it. The authors acknowledge that using the SPIFFE Workload API can reduce the time a update to the bundle is received by the authorization server.
+The SPIFFE Workload API allows workloads to retrieve a trust bundle from SPIFFE. It requires the authorization server to be part of a SPIFFE trust domain and be considered a workload within it. The authors acknowledge that using the SPIFFE Workload API can reduce the time an update of the bundle is received by the authorization server.
 
-In addition to the trust bundle of the trust domain the workload resides in, the SPIFFE Workload API also allows to retrieve trust bundles from federated trust domains. This mechnism moves trust establishment away from the authorization server to the SPIFFE configuration and is NOT RECOMMENDED and more explicit configuration SHOULD be maintained.
+In addition to the trust bundle of the trust domain the workload resides in, the SPIFFE Workload API also allows to retrieve trust bundles from federated trust domains. This mechanism moves trust establishment away from the authorization server to the SPIFFE configuration and is NOT RECOMMENDED and more explicit configuration SHOULD be maintained.
 
 ### Manual configuration
 
@@ -305,7 +402,7 @@ In small, static environments the authorization server MAY be configured with th
 
 ### Using the system trust store
 
-X509-SVIDs MUST NOT be validated using the systems trust store. The SPIFFE ID carried in the URI SAN is not a verified attribute in the broader X.500 ecosystem and using the system trust store as trust anchor would allow ANY certificate authority in it to issue a X509-SVID for ANY SPIFFE-ID which would be considered trusted. In comparison: using SPIFFE-native validation methods restricts the signing of SPIFFE-IDs to the corresponding trust domain signing keys.
+X509-SVIDs MUST NOT be validated using the system trust store. The SPIFFE ID carried in the URI SAN is not a verified attribute in the broader X.500 ecosystem and using the system trust store as trust anchor would allow ANY certificate authority in it to issue a X509-SVID for ANY SPIFFE-ID which would be considered trusted. In comparison: using SPIFFE-native validation methods restricts the signing of SPIFFE-IDs to the corresponding trust domain signing keys.
 
 ### Using the JWT-SVID `iss` claim
 
