@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-15T00:59:09.145281+00:00",
+  "timestamp": "2025-05-18T01:06:37.048761+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -49,7 +49,72 @@
       "color": "ffffff"
     }
   ],
-  "issues": [],
+  "issues": [
+    {
+      "number": 5,
+      "id": "I_kwDOOml42M62wmEq",
+      "title": "iss claim",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/5",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Should we explicitly note that the absence of an \"iss\" claim sets this draft apart from RFC7523 (where it is a required claim).\n\nWe may want to be more clear about the degree to which this is a profile (or extended profile) of RFC 7523 (related to the topic above, but maybe there is more - probably).",
+      "createdAt": "2025-05-15T13:08:10Z",
+      "updatedAt": "2025-05-15T13:25:08Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "body": "I wouldn't say the absence of the `iss` claim is what sets this draft apart from 7523. In the end a lot of JWT-SVIDs carry it! Section 5.5 tries to cover that a bit and basically forbids the use of key distribution based on `iss` claim in the context of this spec.\n\n---\n\nRegarding the profiling:\n- JWT-SVID profiles RFC7523\n- X509-SVID profiles RFC7521\n\nIf we don't profile RFC7523 we need to talk a lot about JWT processing, etc. which I'm not sure we want to duplicate.",
+          "createdAt": "2025-05-15T13:25:07Z",
+          "updatedAt": "2025-05-15T13:25:07Z"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "id": "I_kwDOOml42M62ws2B",
+      "title": "Should we point people that want to pursue this approach to raw RFC7523?",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/7",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I want to say yes... but... the key distribution is not described in RFC 7523. So, some options:\n\n1. Bump readers to RFC 7523 and instruct them to use the key distribution mechanisms in this draft.\n2. Bump them to RFC 7523 and let them \"build their own adventure\" for key distribution.\n3. Provide guidance on what to do with the \"iss\" claim.",
+      "createdAt": "2025-05-15T13:17:11Z",
+      "updatedAt": "2025-05-15T13:28:05Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "body": "1. is basically this draft, it uses RFC7523 + restricts key distribution\n2. that's the current approach\n3. I don't think we should put that in scope of this document. No reason to describe key distro outside of SPIFFE if this spec is about SPIFFE.",
+          "createdAt": "2025-05-15T13:28:04Z",
+          "updatedAt": "2025-05-15T13:28:04Z"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "id": "I_kwDOOml42M62wvAa",
+      "title": "RFC 7523-bis",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/8",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Placeholder only.... not urgent as RFC 7523-bis is a work in progress.\n\nShould we reference or adopt similar constrains as outlined in RFC 7523-bis? \n\nDo we want to say anything about strong typing of JWT-SVIDs (or the absence thereof)? e.g. could we use the fact that we define a client assertion type as the \"versioning mechanism\" equivalent to what strong typing would allow for in RFC7523-bis (urn:ietf:params:oauth:client-assertion-type:jwt-spiffe",
+      "createdAt": "2025-05-15T13:20:25Z",
+      "updatedAt": "2025-05-15T13:20:25Z",
+      "closedAt": null,
+      "comments": []
+    }
+  ],
   "pulls": [
     {
       "number": 1,
@@ -195,6 +260,188 @@
           "createdAt": "2025-05-14T08:11:52Z",
           "updatedAt": "2025-05-14T08:11:52Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "id": "PR_kwDOOml42M6WU33r",
+      "title": "Editorial tweaks",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/4",
+      "state": "MERGED",
+      "author": "PieterKas",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Changed some wording to limit the risk of confusion for verifiable credential enthusiasts",
+      "createdAt": "2025-05-15T13:06:21Z",
+      "updatedAt": "2025-05-15T13:29:32Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "6d2e28aebed13d7a19d38b2dc17b3599c20d70fb",
+      "headRepository": "PieterKas/oauth-spiffe-client-authentication",
+      "headRefName": "patch-1",
+      "headRefOid": "27d8191bed8ace5bae24f6ae8628218c73b01ad6",
+      "closedAt": "2025-05-15T13:29:32Z",
+      "mergedAt": "2025-05-15T13:29:32Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "b3b74213554efb66120f8938693945d1478e5dbc"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M6pfwGA",
+          "commit": {
+            "abbreviatedOid": "27d8191"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## Pull Request Overview\n\nThis PR makes editorial tweaks to reduce confusion for verifiable credential enthusiasts.  \n- Updates terminology on line 90 to clarify the description of available credentials.  \n- Adjusts wording on line 102 for consistency in describing secure credentials.\n\n\n<details>\n<summary>Comments suppressed due to low confidence (2)</summary>\n\n**draft-schwenkschuster-oauth-spiffe-client-auth.md:90**\n* The revised wording on line 90 improves clarity, but ensure that the term 'attested identifiers and credentials' is consistently defined elsewhere in the document to avoid any potential confusion.\n```\nTraditional OAuth client authentication typically relies on client secrets or private key JWT authentication, both require an out of band distribution of secret material to the OAuth client. In modern cloud-native architectures where identity is managed by SPIFFE (Secure Production Identity Framework for Everyone), there is a need to provision additional secret material for OAuth clients when attested identifiers and credentials such as SVIDs are already available.\n```\n**draft-schwenkschuster-oauth-spiffe-client-auth.md:102**\n* Ensure that the updated term 'cryptographically verifiable credentials' on line 102 aligns with the document's overall terminology and previously defined concepts.\n```\nThe SPIFFE profile for client authentication enables seamless integration between SPIFFE-based and OAuth-based systems, allowing applications to leverage both ecosystems without requiring additional credential management. It also enables a more secure authentication method by leveraging cryptographically verifiable credentials rather than shared secrets.\n```\n</details>\n\n",
+          "createdAt": "2025-05-15T13:19:58Z",
+          "updatedAt": "2025-05-15T13:19:58Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOml42M6pfwx8",
+          "commit": {
+            "abbreviatedOid": "27d8191"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "I'm ok with that. But I also want to mention that `Verifiable Identity Documents` are a term in SPIFFE.",
+          "createdAt": "2025-05-15T13:20:48Z",
+          "updatedAt": "2025-05-15T13:20:48Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "id": "PR_kwDOOml42M6WU8ja",
+      "title": "Profile RFC 7521 and RFC 7523",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/6",
+      "state": "MERGED",
+      "author": "PieterKas",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "I think we profile both.... so added clarification in the abstract.",
+      "createdAt": "2025-05-15T13:12:52Z",
+      "updatedAt": "2025-05-15T13:19:29Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "6d2e28aebed13d7a19d38b2dc17b3599c20d70fb",
+      "headRepository": "PieterKas/oauth-spiffe-client-authentication",
+      "headRefName": "patch-2",
+      "headRefOid": "7667e55357a7538f70d8ca689c834976bfaf9ffc",
+      "closedAt": "2025-05-15T13:19:29Z",
+      "mergedAt": "2025-05-15T13:19:29Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "69e976d8a8dc975357b91483553ac1e7fdbb0b69"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M6pfvl9",
+          "commit": {
+            "abbreviatedOid": "7667e55"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-05-15T13:19:22Z",
+          "updatedAt": "2025-05-15T13:19:22Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "id": "PR_kwDOOml42M6Wcp9h",
+      "title": "Prefer spiffe bundle endpoint, add system trust store alternative",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/9",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "- Only recommend the SPIFFE Bundle Endpoint.\r\n- Move SPIFFE Workload APIs to alternatives to avoid\r\n- Add system trust store as alternative to avoid.\r\n- Some rephrasing",
+      "createdAt": "2025-05-16T09:39:18Z",
+      "updatedAt": "2025-05-16T11:44:38Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "b3b74213554efb66120f8938693945d1478e5dbc",
+      "headRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "headRefName": "arndt/prefer-spiffe-bundle-endpoint",
+      "headRefOid": "ef3013b782d939dd0223568802b3d2d0892c5ce8",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M6ppDuY",
+          "commit": {
+            "abbreviatedOid": "2a0f39e"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## Pull Request Overview\n\nThis PR refines the SPIFFE trust bundle sections by prioritizing the SPIFFE Bundle Endpoint and presenting other methods\u2014including the system trust store\u2014as discouraged alternatives.\n\n- Renamed and expanded the main section to \u201cSPIFFE Key Distribution and Validation.\u201d\n- Promoted the Bundle Endpoint and restructured SPIFFE Workload API, manual configuration, system trust store, and JWT-SVID `iss` as \u201cmethods to avoid.\u201d\n- Added a new \u201cUsing the system trust store\u201d subsection detailing its risks.\n\n\n\n",
+          "createdAt": "2025-05-16T09:41:00Z",
+          "updatedAt": "2025-05-16T09:41:02Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "The section anchor 'spiffe-bundle-validation' no longer matches the updated title; consider updating the anchor (e.g., 'spiffe-key-distribution-and-validation') for consistency.",
+              "createdAt": "2025-05-16T09:41:00Z",
+              "updatedAt": "2025-05-16T09:41:02Z"
+            },
+            {
+              "originalPosition": 41,
+              "body": "Use 'an update' instead of 'a update' to correct the article before a vowel sound.\n```suggestion\nThe SPIFFE Workload API allows workloads to retrieve a trust bundle from SPIFFE. It requires the authorization server to be part of a SPIFFE trust domain and be considered a workload within it. The authors acknowledge that using the SPIFFE Workload API can reduce the time an update to the bundle is received by the authorization server.\n```",
+              "createdAt": "2025-05-16T09:41:01Z",
+              "updatedAt": "2025-05-16T09:41:02Z"
+            },
+            {
+              "originalPosition": 43,
+              "body": "Typo in 'mechnism'; should be 'mechanism'.\n```suggestion\nIn addition to the trust bundle of the trust domain the workload resides in, the SPIFFE Workload API also allows to retrieve trust bundles from federated trust domains. This mechanism moves trust establishment away from the authorization server to the SPIFFE configuration and is NOT RECOMMENDED and more explicit configuration SHOULD be maintained.\n```",
+              "createdAt": "2025-05-16T09:41:01Z",
+              "updatedAt": "2025-05-16T09:41:02Z"
+            },
+            {
+              "originalPosition": 52,
+              "body": "Consider using 'system trust store' or 'system's trust store' for correct grammar and clarity.\n```suggestion\nX509-SVIDs MUST NOT be validated using the system's trust store. The SPIFFE ID carried in the URI SAN is not a verified attribute in the broader X.500 ecosystem and using the system trust store as trust anchor would allow ANY certificate authority in it to issue a X509-SVID for ANY SPIFFE-ID which would be considered trusted. In comparison: using SPIFFE-native validation methods restricts the signing of SPIFFE-IDs to the corresponding trust domain signing keys.\n```",
+              "createdAt": "2025-05-16T09:41:01Z",
+              "updatedAt": "2025-05-16T09:41:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M6pqCea",
+          "commit": {
+            "abbreviatedOid": "ad10aa9"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## Pull Request Overview\n\nThis PR refines the SPIFFE trust establishment guidelines by recommending the SPIFFE Bundle Endpoint over the Workload API and adding an alternative method using the system trust store. Key changes include certificate data updates, renaming and restructuring of sections, and the inclusion of an example configuration for the SPIFFE Bundle Endpoint.\n\n\n\n",
+          "createdAt": "2025-05-16T11:37:20Z",
+          "updatedAt": "2025-05-16T11:37:21Z",
+          "comments": [
+            {
+              "originalPosition": 185,
+              "body": "The comment indicates a certificate mismatch issue between the bundle and the X509-SVID; please verify and update the certificate data to ensure consistency.",
+              "createdAt": "2025-05-16T11:37:21Z",
+              "updatedAt": "2025-05-16T11:37:21Z"
+            }
+          ]
         }
       ]
     }
