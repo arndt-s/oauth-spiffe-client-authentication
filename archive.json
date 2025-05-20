@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-18T01:06:37.048761+00:00",
+  "timestamp": "2025-05-20T01:03:11.513044+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -372,7 +372,7 @@
       "labels": [],
       "body": "- Only recommend the SPIFFE Bundle Endpoint.\r\n- Move SPIFFE Workload APIs to alternatives to avoid\r\n- Add system trust store as alternative to avoid.\r\n- Some rephrasing",
       "createdAt": "2025-05-16T09:39:18Z",
-      "updatedAt": "2025-05-16T11:44:38Z",
+      "updatedAt": "2025-05-19T16:55:58Z",
       "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
       "baseRefName": "main",
       "baseRefOid": "b3b74213554efb66120f8938693945d1478e5dbc",
@@ -440,6 +440,44 @@
               "body": "The comment indicates a certificate mismatch issue between the bundle and the X509-SVID; please verify and update the certificate data to ensure consistency.",
               "createdAt": "2025-05-16T11:37:21Z",
               "updatedAt": "2025-05-16T11:37:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M6ps8mM",
+          "commit": {
+            "abbreviatedOid": "ef3013b"
+          },
+          "author": "heymarcel",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-16T16:35:48Z",
+          "updatedAt": "2025-05-19T16:55:58Z",
+          "comments": [
+            {
+              "originalPosition": 72,
+              "body": "\"The SPIFFE Bundle Endpoint exposes the signing keys for X509 and JWT-SVIDs over HTTP via a JSON Web Key Set according to {{RFC7517}}.\"",
+              "createdAt": "2025-05-16T16:35:48Z",
+              "updatedAt": "2025-05-19T16:55:58Z"
+            },
+            {
+              "originalPosition": 75,
+              "body": "\"Server authentication on this endpoint is available in two flavors. For the sake of interoperability, in context of this specification the WebPKI flavor MUST be used.\"",
+              "createdAt": "2025-05-16T16:36:40Z",
+              "updatedAt": "2025-05-19T16:55:58Z"
+            },
+            {
+              "originalPosition": 81,
+              "body": "On second reading, I think it's fine to put the system trust store in \"methods to avoid\", and clarify the proper method here. In reference to our offline discussion: This section doesn't say anything about scoping down the trust store. But the client doesn't have the information to know how to do that. That's really up to the bundle endpoint.",
+              "createdAt": "2025-05-19T16:53:09Z",
+              "updatedAt": "2025-05-19T16:55:58Z"
+            },
+            {
+              "originalPosition": 207,
+              "body": "\"The SPIFFE ID carried in the URI SAN is rarely a verifiable attribute in the broader X.509 ecosystem. Using the system trust store as trust anchor would allow ANY certificate authority in it to issue a trusted X509-SVID for ANY SPIFFE ID.\"",
+              "createdAt": "2025-05-19T16:55:49Z",
+              "updatedAt": "2025-05-19T16:55:58Z"
             }
           ]
         }
