@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-20T01:03:11.513044+00:00",
+  "timestamp": "2025-05-22T01:02:13.059525+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -372,7 +372,7 @@
       "labels": [],
       "body": "- Only recommend the SPIFFE Bundle Endpoint.\r\n- Move SPIFFE Workload APIs to alternatives to avoid\r\n- Add system trust store as alternative to avoid.\r\n- Some rephrasing",
       "createdAt": "2025-05-16T09:39:18Z",
-      "updatedAt": "2025-05-19T16:55:58Z",
+      "updatedAt": "2025-05-20T12:38:53Z",
       "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
       "baseRefName": "main",
       "baseRefOid": "b3b74213554efb66120f8938693945d1478e5dbc",
@@ -478,6 +478,86 @@
               "body": "\"The SPIFFE ID carried in the URI SAN is rarely a verifiable attribute in the broader X.509 ecosystem. Using the system trust store as trust anchor would allow ANY certificate authority in it to issue a trusted X509-SVID for ANY SPIFFE ID.\"",
               "createdAt": "2025-05-19T16:55:49Z",
               "updatedAt": "2025-05-19T16:55:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M6qHHSo",
+          "commit": {
+            "abbreviatedOid": "ef3013b"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-20T12:31:54Z",
+          "updatedAt": "2025-05-20T12:31:55Z",
+          "comments": [
+            {
+              "originalPosition": 196,
+              "body": "Instead of:\r\n\r\nThe authors acknowledge that using the SPIFFE Workload API can reduce the time an update of the bundle is received by the authorization server.\r\n\r\nhow about:\r\n\r\nUsing the SPIFFE Workload API reduces the latency between an update to the trust bundle and the time the authorization server receives the update.\r\n\r\n\r\n",
+              "createdAt": "2025-05-20T12:31:54Z",
+              "updatedAt": "2025-05-20T12:31:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M6qHHi-",
+          "commit": {
+            "abbreviatedOid": "ef3013b"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-20T12:32:14Z",
+          "updatedAt": "2025-05-20T12:32:15Z",
+          "comments": [
+            {
+              "originalPosition": 194,
+              "body": "Is this a pattern we want to encourage?",
+              "createdAt": "2025-05-20T12:32:15Z",
+              "updatedAt": "2025-05-20T12:32:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M6qHKwA",
+          "commit": {
+            "abbreviatedOid": "ef3013b"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-20T12:36:35Z",
+          "updatedAt": "2025-05-20T12:36:35Z",
+          "comments": [
+            {
+              "originalPosition": 199,
+              "body": "This seems overly restrictive - not sure about the \"NOT RECOMMENDED\" here - I think it comes down to the rust relationships that the authorization server accept. I can imagine that if I have both an OAuth server and a SPIFFE deployment, I would be OK to say \"I trust the SPIFFE deployment, and accept all the trust relationships it establishes\" - it's a risk decision that is deployment specific.\r\n\r\nA better way to address this is to highlight the risk that a SPIFFE deployment may contain multiple federation relationships, and as a result, the OAuth deployment SHOULD make a conscious decision on whether to allow federation. The riskd ecision belongs to the deployment.",
+              "createdAt": "2025-05-20T12:36:35Z",
+              "updatedAt": "2025-05-20T12:36:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M6qHMaP",
+          "commit": {
+            "abbreviatedOid": "ef3013b"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-05-20T12:38:53Z",
+          "updatedAt": "2025-05-20T12:38:53Z",
+          "comments": [
+            {
+              "originalPosition": 211,
+              "body": "Add a sentence on why - e.g. the iss claim points to a SPIFFE issues and cannot normally be resolved or something similar.",
+              "createdAt": "2025-05-20T12:38:53Z",
+              "updatedAt": "2025-05-20T12:38:53Z"
             }
           ]
         }
