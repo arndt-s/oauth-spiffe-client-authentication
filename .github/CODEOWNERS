@@ -1,0 +1,3 @@
+# Automatically generated CODEOWNERS
+# Regenerate with `make update-codeowners`
+draft-schwenkschuster-oauth-spiffe-client-auth.md arndts.ietf@gmail.com pieter@spirl.com
