@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-05-22T01:02:13.059525+00:00",
+  "timestamp": "2025-06-24T01:04:32.588557+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -365,24 +365,26 @@
       "id": "PR_kwDOOml42M6Wcp9h",
       "title": "Prefer spiffe bundle endpoint, add system trust store alternative",
       "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/9",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "- Only recommend the SPIFFE Bundle Endpoint.\r\n- Move SPIFFE Workload APIs to alternatives to avoid\r\n- Add system trust store as alternative to avoid.\r\n- Some rephrasing",
       "createdAt": "2025-05-16T09:39:18Z",
-      "updatedAt": "2025-05-20T12:38:53Z",
+      "updatedAt": "2025-06-23T09:12:55Z",
       "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
       "baseRefName": "main",
       "baseRefOid": "b3b74213554efb66120f8938693945d1478e5dbc",
       "headRepository": "arndt-s/oauth-spiffe-client-authentication",
       "headRefName": "arndt/prefer-spiffe-bundle-endpoint",
-      "headRefOid": "ef3013b782d939dd0223568802b3d2d0892c5ce8",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "aa89bb14324f2b665d200a3dc18f6967ade54ef7",
+      "closedAt": "2025-06-23T09:12:55Z",
+      "mergedAt": "2025-06-23T09:12:55Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "7be3e8987abf754b93c6c4c8f95ee235fc1a178d"
+      },
       "comments": [],
       "reviews": [
         {
@@ -558,6 +560,55 @@
               "body": "Add a sentence on why - e.g. the iss claim points to a SPIFFE issues and cannot normally be resolved or something similar.",
               "createdAt": "2025-05-20T12:38:53Z",
               "updatedAt": "2025-05-20T12:38:53Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "id": "PR_kwDOOml42M6bpTcU",
+      "title": "Regenerate files",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/10",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Regenerate files to update README, codeowners and gitignore",
+      "createdAt": "2025-06-23T11:07:29Z",
+      "updatedAt": "2025-06-23T11:09:47Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "7be3e8987abf754b93c6c4c8f95ee235fc1a178d",
+      "headRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "headRefName": "regenerate-files",
+      "headRefOid": "5d8e0aea5a979e03474d05e9be9d715078e95187",
+      "closedAt": "2025-06-23T11:09:47Z",
+      "mergedAt": "2025-06-23T11:09:47Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "07e1d007af6b12e6833cd77e212041e65a50f96e"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M6v0DNc",
+          "commit": {
+            "abbreviatedOid": "5d8e0ae"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## Pull Request Overview\n\nThis PR regenerates repository metadata and documentation to align with the \u201cOAuth SPIFFE Client Authentication\u201d draft.\n\n- Updates README with new project title, links, and usage instructions\n- Adds LICENSE.md and CONTRIBUTING.md with IETF process details\n- Generates .github/CODEOWNERS to assign reviewers\n\n### Reviewed Changes\n\nCopilot reviewed 4 out of 5 changed files in this pull request and generated 1 comment.\n\n| File                   | Description                                         |\n| ---------------------- | --------------------------------------------------- |\n| README.md              | Replaced template text with draft-specific content  |\n| LICENSE.md             | Added placeholder license section                   |\n| CONTRIBUTING.md        | Introduced IETF contribution guidelines             |\n| .github/CODEOWNERS     | Auto-generated file ownership mappings              |\n\n\n<details>\n<summary>Comments suppressed due to low confidence (1)</summary>\n\n**LICENSE.md:3**\n* LICENSE.md should include the actual license terms (e.g., BSD or MIT text) rather than linking to the contributing guidelines, which belong in CONTRIBUTING.md.\n```\nSee the\n```\n</details>\n\n",
+          "createdAt": "2025-06-23T11:08:16Z",
+          "updatedAt": "2025-06-23T11:08:16Z",
+          "comments": [
+            {
+              "originalPosition": 3,
+              "body": "Consider using GitHub usernames (e.g., `@arndt-s` and `@pieter`) instead of email addresses to ensure CODEOWNERS entries reliably map to GitHub accounts.\n```suggestion\ndraft-schwenkschuster-oauth-spiffe-client-auth.md @arndt-s @pieter\n```",
+              "createdAt": "2025-06-23T11:08:16Z",
+              "updatedAt": "2025-06-23T11:08:16Z"
             }
           ]
         }
