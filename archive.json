@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-24T01:04:32.588557+00:00",
+  "timestamp": "2025-07-27T01:14:59.156776+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -111,6 +111,22 @@
       "body": "Placeholder only.... not urgent as RFC 7523-bis is a work in progress.\n\nShould we reference or adopt similar constrains as outlined in RFC 7523-bis? \n\nDo we want to say anything about strong typing of JWT-SVIDs (or the absence thereof)? e.g. could we use the fact that we define a client assertion type as the \"versioning mechanism\" equivalent to what strong typing would allow for in RFC7523-bis (urn:ietf:params:oauth:client-assertion-type:jwt-spiffe",
       "createdAt": "2025-05-15T13:20:25Z",
       "updatedAt": "2025-05-15T13:20:25Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 11,
+      "id": "I_kwDOOml42M7CPSs3",
+      "title": "Cover \"Certificate-Bound Access Tokens\" part of RFC 8705",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/11",
+      "state": "OPEN",
+      "author": "dagdagdag83",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "The company that I work for is implementing a workload identity pattern (inspired heavily by WIMSE WG) for securing service to service communication. One of the biggest benefits that we are leveraging is using Istio mTLS certificates (which are roughly SPIFFE-compatible) to get Certificate-Bound Access Tokens. This is something you get for \"free\" when implementing RFC 8705.\n\nIMO this specification should be more explicit about the ability to get certificate-bound tokens, because in effect these tokens are actually **workload-bound** (via SPIFFE ID) which is a huge security benefit. \n\nThe only modification we'd had to make for RFC 8705 is the following:\n\n1) We add a new cnf claim:\n```\n  \"cnf\":{\n    \"x5t#S256\": \"87abe78e185a0c5ee193bf1e34b36bbf43f47178850871b30225e23542b7d503\",\n    \"x5s#SPIFFE\": \"spiffe://cluster.local/ns/namespace/sa/default\"\n  }\n```\nThe `x5s#SPIFFE` is intended to reference to SPIFFE ID, the reason for that is because istio rotates mTLS certificates very quickly so we didn't want to rely on only the `x5t#S256` claim to validate the binding.\n\n2) RFC 8705 expects that the leaf cert itself or thumbprint is saved (or available at least) to the AS so that it can verify it.\nFor the same reason as above (rapid rotation) we don't do this. We only store the SPIFFE ID, then we use the root public CA (which Istio publishes) to verify the cert chain itself.\n\nThen following that, any of our APIs that gets these tokens will pretty much validate the certificate-binding per RFC 8705.",
+      "createdAt": "2025-07-24T07:08:45Z",
+      "updatedAt": "2025-07-24T07:20:31Z",
       "closedAt": null,
       "comments": []
     }
