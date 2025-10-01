@@ -429,7 +429,7 @@ According to RFC 7942, "this will allow reviewers and working groups to assign d
 
 Keycloak
 
-* Organization: CNCF
+* Organization: Red Hat / CNCF
 * Maturity: preview
 * Coverage: JWT-SVID client authentication using SPIFFE Trust Bundle Endpoint
 * Contact: [Keycloak community & maintainers](https://www.keycloak.org/community)
