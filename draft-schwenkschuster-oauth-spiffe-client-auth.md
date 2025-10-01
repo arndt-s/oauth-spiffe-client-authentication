@@ -49,6 +49,9 @@ author:
  -  fullname: Pieter Kasselmann
     organization: SPIRL
     email: pieter@spirl.com
+ -  fullname: Scott Rose
+    organization: NIST
+    email: scott.rose@nist.gov
 
 normative:
   RFC6749:
@@ -204,7 +207,7 @@ The server validates the client certificates according the following rules
 
 ### X509-SVID Example
 
-The following request uses a refresh token to obtain a new access token. The client is `spiffe://example.org/my-oauth-client` and is authenticted by performing this request over a mutual TLS connection.
+The following request uses a refresh token to obtain a new access token. The client is `spiffe://example.org/my-oauth-client` and is authenticated by performing this request over a mutual TLS connection.
 
 ~~~
 POST /token HTTP/1.1
@@ -266,7 +269,7 @@ Certificate:
 
 This specification requires previously established trust between the OAuth 2.0 Authorization Server and the SPIFFE Trust Domain. This needs to happen out of band and is not in scope of this specification. However, the mechanisms of key distribution is in scope and described in {{spiffe-bundle-validation}}.
 
-Similar to the trust establishment, corresponding OAuth clients need to be established prior of using SPIFFE as client authentication. This is also out of scope, implementors may for example choose to levarage OAuth 2.0 dynamic client registration according to {{RFC7591}} or configure them out of band.
+Similar to the trust establishment, corresponding OAuth clients need to be established prior of using SPIFFE as client authentication. This is also out of scope, implementors may for example choose to leverage OAuth 2.0 dynamic client registration according to {{RFC7591}} or configure them out of band.
 
 # SPIFFE Key Distribution and Validation {#spiffe-bundle-validation}
 
@@ -419,11 +422,21 @@ The narrow scope of applicability does not make it a viable alternative to the S
 
 # Security Considerations
 
-TODO Security
+Client authentication using JWT-SVIDs has the same security considerations as described in {{RFC6749}} and {{RFC7521}}.
+
+Client authentication using X509-SVIDs has the same security considerations as described in {{RFC8705}}. The validation rules in section 3.2 protect against an OAuth2 token being issued (or being issued incorrectly) to a client that did not present an appropriate X509-SVID.
+
+The issues described in Section 5.2 above include the threat that an authorization server may have the incorrect
+trust stores configured to validate the client SVID. This could result in an incorrectly issued token to an attacker if the attacker is able to obtain a certificate that can be validated by one of the misconfigured trust anchors in the trust store.
 
 # IANA Considerations
 
-This document has no IANA actions.
+This document requests a new entry to be added to the Oauth URI registry found at <https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml#uri>. The registration process is defined in {{RFC6755}}. This document requests the following entry to be added to the registry:
+
+- URN: urn:ietf:params:oauth:client-assertion-type:jwt-spiffe
+- Common Name: SPIFFE JWT-SVID Profile for OAuth 2.0 Client Authentication
+- Change Controller: IETF
+- Reference: This Document
 
 
 --- back
