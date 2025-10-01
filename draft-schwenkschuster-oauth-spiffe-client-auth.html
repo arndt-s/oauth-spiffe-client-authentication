@@ -1332,7 +1332,7 @@ urn:ietf:params:oauth:client-assertion-type:jwt-spiffe
             <p id="section-3.1-7.2.1">Verify that the JWT has not expired (check the <code>exp</code> claim).<a href="#section-3.1-7.2.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-3.1-7.3">
-            <p id="section-3.1-7.3.1">Verify that the <code>aud</code> claim equals the endpoint of the request without fragment and query parameters.<a href="#section-3.1-7.3.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-7.3.1">Verify that the <code>aud</code> claim contains only the issuer identifier of the authorization server as its sole value. See <span>[<a href="#I-D.draft-ietf-oauth-rfc7523bis" class="cite xref">I-D.draft-ietf-oauth-rfc7523bis</a>]</span> for details.<a href="#section-3.1-7.3.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-3.1-7.4">
             <p id="section-3.1-7.4.1">Verify the JWT signature using the signing keys of the trust domains according to <a href="#spiffe-bundle-validation" class="auto internal xref">Section 5</a>.<a href="#section-3.1-7.4.1" class="pilcrow">¶</a></p>
@@ -1718,6 +1718,10 @@ trust stores configured to validate the client SVID. This could result in an inc
 <dt id="Headless_JWT">[Headless_JWT]</dt>
       <dd>
 <span class="refTitle">"Headless-JWT"</span>, <span>n.d.</span>, <span>&lt;<a href="foo">foo</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.draft-ietf-oauth-rfc7523bis">[I-D.draft-ietf-oauth-rfc7523bis]</dt>
+      <dd>
+<span class="refAuthor">Jones, M. B.</span>, <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Mortimore, C.</span>, and <span class="refAuthor">F. Skokan</span>, <span class="refTitle">"Updates to Audience Values for OAuth 2.0 Authorization Servers"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-rfc7523bis-02</span>, <time datetime="2025-07-22" class="refDate">22 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc7523bis-02">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc7523bis-02</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
       <dd>

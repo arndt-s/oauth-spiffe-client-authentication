@@ -218,8 +218,9 @@ Table of Contents
 
    2.  Verify that the JWT has not expired (check the exp claim).
 
-   3.  Verify that the aud claim equals the endpoint of the request
-       without fragment and query parameters.
+   3.  Verify that the aud claim contains only the issuer identifier of
+       the authorization server as its sole value.  See
+       [I-D.draft-ietf-oauth-rfc7523bis] for details.
 
    4.  Verify the JWT signature using the signing keys of the trust
        domains according to Section 5.
@@ -605,6 +606,14 @@ Certificate:
 
    [Headless_JWT]
               "Headless-JWT", n.d., <foo>.
+
+   [I-D.draft-ietf-oauth-rfc7523bis]
+              Jones, M. B., Campbell, B., Mortimore, C., and F. Skokan,
+              "Updates to Audience Values for OAuth 2.0 Authorization
+              Servers", Work in Progress, Internet-Draft, draft-ietf-
+              oauth-rfc7523bis-02, 22 July 2025,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
+              rfc7523bis-02>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
