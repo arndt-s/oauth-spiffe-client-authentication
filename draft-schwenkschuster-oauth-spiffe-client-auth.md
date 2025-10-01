@@ -151,7 +151,7 @@ To validate JWT-SVID client authentication requests the authorization server MUS
 
 1. Verify that the JWT is well-formed and contains all required claims (SPIFFE ID in `sub`, `aud`, and `exp`).
 2. Verify that the JWT has not expired (check the `exp` claim).
-3. Verify that the `aud` claim equals the endpoint of the request without fragment and query parameters.
+3. Verify that the `aud` claim contains only the issuer identifier of the authorization server as its sole value. See {{!I-D.draft-ietf-oauth-rfc7523bis}} for details.
 4. Verify the JWT signature using the signing keys of the trust domains according to {{spiffe-bundle-validation}}.
 5. Verify that the SPIFFE ID in the `sub` claim matches a registered client identifier or is associated with a registered client identifier.
 
