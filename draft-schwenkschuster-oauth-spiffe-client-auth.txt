@@ -93,9 +93,10 @@ Table of Contents
        5.2.2.  Manual configuration
        5.2.3.  Using the system trust store
        5.2.4.  Using the JWT-SVID iss claim
-   6.  Security Considerations
-   7.  IANA Considerations
-   8.  Normative References
+   6.  Implementation Status
+   7.  Security Considerations
+   8.  IANA Considerations
+   9.  Normative References
    Acknowledgments
    Authors' Addresses
 
@@ -566,7 +567,43 @@ Certificate:
    alternative to the SPIFFE Bundle Endpoint.  In combination with
    interoperability concerns, this approach is NOT RECOMMENDED.
 
-6.  Security Considerations
+6.  Implementation Status
+
+
+   // Note to RFC Editor: please remove this section, as well as the
+   // reference to RFC 7942, before publication.  This section records
+   the status of known implementations of the protocol defined by this
+   specification at the time of posting of this Internet-Draft, and is
+   based on a proposal described in [RFC7942].  The description of
+   implementations in this section is intended to assist the IETF in its
+   decision processes in progressing drafts to RFCs.  Please note that
+   the listing of any individual implementation here does not imply
+   endorsement by the IETF.  Furthermore, no effort has been spent to
+   verify the information presented here that was supplied by IETF
+   contributors.  This is not intended as, and must not be construed to
+   be, a catalog of available implementations or their features.
+   Readers are advised to note that other implementations may exist.
+
+   According to RFC 7942, "this will allow reviewers and working groups
+   to assign due consideration to documents that have the benefit of
+   running code, which may serve as evidence of valuable experimentation
+   and feedback that have made the implemented protocols more mature.
+   It is up to the individual working groups to use this information as
+   they see fit".
+
+   Keycloak
+
+   *  Organization: Red Hat / CNCF
+
+   *  Maturity: preview
+
+   *  Coverage: JWT-SVID client authentication using SPIFFE Trust Bundle
+      Endpoint
+
+   *  Contact: Keycloak community & maintainers
+      (https://www.keycloak.org/community)
+
+7.  Security Considerations
 
    Client authentication using JWT-SVIDs has the same security
    considerations as described in [RFC6749] and [RFC7521].
@@ -584,7 +621,7 @@ Certificate:
    certificate that can be validated by one of the misconfigured trust
    anchors in the trust store.
 
-7.  IANA Considerations
+8.  IANA Considerations
 
    This document requests a new entry to be added to the Oauth URI
    registry found at https://www.iana.org/assignments/oauth-parameters/
@@ -602,7 +639,7 @@ Certificate:
 
    *  Reference: This Document
 
-8.  Normative References
+9.  Normative References
 
    [Headless_JWT]
               "Headless-JWT", n.d., <foo>.
@@ -646,6 +683,11 @@ Certificate:
               P. Hunt, "OAuth 2.0 Dynamic Client Registration Protocol",
               RFC 7591, DOI 10.17487/RFC7591, July 2015,
               <https://www.rfc-editor.org/rfc/rfc7591>.
+
+   [RFC7942]  Sheffer, Y. and A. Farrel, "Improving Awareness of Running
+              Code: The Implementation Status Section", BCP 205,
+              RFC 7942, DOI 10.17487/RFC7942, July 2016,
+              <https://www.rfc-editor.org/rfc/rfc7942>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
