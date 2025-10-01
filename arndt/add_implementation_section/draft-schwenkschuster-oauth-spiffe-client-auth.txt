@@ -592,7 +592,7 @@ Certificate:
 
    Keycloak
 
-   *  Organization: CNCF
+   *  Organization: Red Hat / CNCF
 
    *  Maturity: preview
 
