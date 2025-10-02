@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-25T00:58:14.193610+00:00",
+  "timestamp": "2025-10-02T00:57:02.703301+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -103,15 +103,15 @@
       "id": "I_kwDOOml42M62wvAa",
       "title": "RFC 7523-bis",
       "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/8",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Placeholder only.... not urgent as RFC 7523-bis is a work in progress.\n\nShould we reference or adopt similar constrains as outlined in RFC 7523-bis? \n\nDo we want to say anything about strong typing of JWT-SVIDs (or the absence thereof)? e.g. could we use the fact that we define a client assertion type as the \"versioning mechanism\" equivalent to what strong typing would allow for in RFC7523-bis (urn:ietf:params:oauth:client-assertion-type:jwt-spiffe",
       "createdAt": "2025-05-15T13:20:25Z",
-      "updatedAt": "2025-05-15T13:20:25Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-01T18:56:30Z",
+      "closedAt": "2025-10-01T18:56:30Z",
       "comments": []
     },
     {
@@ -135,16 +135,31 @@
       "id": "I_kwDOOml42M7NZ7AL",
       "title": "Need an IANA Oauth-URI entry?",
       "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/12",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "scottr-nist",
-      "authorAssociation": "NONE",
+      "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "RFC 6755 created a registry for Oauth URNs. This draft is adding one, so wouldn't that mean there is a request for IANA to add it to the Oauth-URI registry at: https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml#uri ? \n\nSeems like an easy request:\n\n   * URN: urn:ietf:params:oauth:client-assertion-type:jwt-spiffe\n\n   *  Common Name: `SPIFFE JWT-SVID Profile for OAuth 2.0 Client\n      Authentication\n\n   *  Change Controller: IETF\n\n   *  Reference: This Document\n\nMaybe with some text before to give the registry name and location.  I can generate a pull request for this if helpful (haven't done it before but should be able to figure it out). ",
       "createdAt": "2025-09-23T17:35:00Z",
-      "updatedAt": "2025-09-23T17:35:00Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-10-01T14:03:29Z",
+      "closedAt": "2025-10-01T14:03:29Z",
+      "comments": [
+        {
+          "author": "scottr-nist",
+          "authorAssociation": "COLLABORATOR",
+          "body": "PR created (#14), sorry that it's not linked to this issue directly.",
+          "createdAt": "2025-09-30T16:14:46Z",
+          "updatedAt": "2025-09-30T16:14:46Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "body": "Thank you @scottr-nist ! Closing this as it has been merged.",
+          "createdAt": "2025-10-01T14:03:29Z",
+          "updatedAt": "2025-10-01T14:03:29Z"
+        }
+      ]
     },
     {
       "number": 13,
@@ -657,6 +672,226 @@
               "body": "Consider using GitHub usernames (e.g., `@arndt-s` and `@pieter`) instead of email addresses to ensure CODEOWNERS entries reliably map to GitHub accounts.\n```suggestion\ndraft-schwenkschuster-oauth-spiffe-client-auth.md @arndt-s @pieter\n```",
               "createdAt": "2025-06-23T11:08:16Z",
               "updatedAt": "2025-06-23T11:08:16Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 14,
+      "id": "PR_kwDOOml42M6rX9oi",
+      "title": "Adding Security and IANA considerations section",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/14",
+      "state": "MERGED",
+      "author": "scottr-nist",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "This PR includes a security considerations section that largely references the security considerations from the RFCs that this references, a there are no significant differences.\r\n\r\nThe IANA considerations list the new URN requested for using SPIFFE. It follows the format described in RFC 6755. \r\n\r\nAlso some typos are fixed in other sections.",
+      "createdAt": "2025-09-30T16:09:22Z",
+      "updatedAt": "2025-10-01T13:24:07Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "07e1d007af6b12e6833cd77e212041e65a50f96e",
+      "headRepository": "scottr-nist/oauth-spiffe-client-authentication",
+      "headRefName": "secure-consider",
+      "headRefOid": "5743ecf2a0af37868e32ccc8cb730f5a831f1a8c",
+      "closedAt": "2025-10-01T13:24:06Z",
+      "mergedAt": "2025-10-01T13:24:06Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "67c408133c0eba984ea73975b42831dd8f18ccf1"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M7EC-cZ",
+          "commit": {
+            "abbreviatedOid": "8ccc2e6"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "Thank you Scott",
+          "createdAt": "2025-10-01T13:22:09Z",
+          "updatedAt": "2025-10-01T13:22:09Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 15,
+      "id": "PR_kwDOOml42M6rjwlY",
+      "title": "Add implementation section",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/15",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Adds implementation section",
+      "createdAt": "2025-10-01T13:33:03Z",
+      "updatedAt": "2025-10-01T19:09:51Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "67c408133c0eba984ea73975b42831dd8f18ccf1",
+      "headRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "headRefName": "arndt/add_implementation_section",
+      "headRefOid": "be212ee551ea0ab83b22bb502760d0473b5ac477",
+      "closedAt": "2025-10-01T19:09:51Z",
+      "mergedAt": "2025-10-01T19:09:51Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "0a0cbaa17b69a92e16bc85d5847959a6e221af7d"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M7EDPGn",
+          "commit": {
+            "abbreviatedOid": "c06102b"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## Pull Request Overview\n\nThis PR adds an implementation status section to the OAuth SPIFFE client authentication specification draft. The section documents known implementations following RFC 7942 guidelines.\n\n- Adds standardized implementation status section with proper RFC editor note\n- Documents Keycloak as a preview implementation with JWT-SVID client authentication support\n- Includes required disclaimers and guidance per RFC 7942\n\n\n\n\n\n---\n\n<sub>**Tip:** Customize your code reviews with copilot-instructions.md. <a href=\"/arndt-s/oauth-spiffe-client-authentication/new/main/.github?filename=copilot-instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Create the file</a> or <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">learn how to get started</a>.</sub>",
+          "createdAt": "2025-10-01T13:33:20Z",
+          "updatedAt": "2025-10-01T13:33:21Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "Keycloak is not a CNCF project. It is a Red Hat project that was donated to the Cloud Native Computing Foundation but is actually maintained by Red Hat. The organization should be 'Red Hat' or 'Red Hat / CNCF'.\n```suggestion\n* Organization: Red Hat / CNCF\n```",
+              "createdAt": "2025-10-01T13:33:20Z",
+              "updatedAt": "2025-10-01T13:33:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7EI7Au",
+          "commit": {
+            "abbreviatedOid": "be212ee"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-01T19:08:48Z",
+          "updatedAt": "2025-10-01T19:08:48Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 16,
+      "id": "PR_kwDOOml42M6rkGz-",
+      "title": "Consider RFC7523bis audience restrictions",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/16",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #8 ",
+      "createdAt": "2025-10-01T13:59:25Z",
+      "updatedAt": "2025-10-01T18:56:29Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "67c408133c0eba984ea73975b42831dd8f18ccf1",
+      "headRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "headRefName": "arndt/consider-rfc7523bis-aud-restrictions",
+      "headRefOid": "5230a9ca3eb1acbd0a922f744a61dc1f65b9fbe2",
+      "closedAt": "2025-10-01T18:56:29Z",
+      "mergedAt": "2025-10-01T18:56:29Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "2fe44f61e303bf03b83e920ff78d7e9dc7a7292b"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M7EDwWs",
+          "commit": {
+            "abbreviatedOid": "5230a9c"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## Pull Request Overview\n\nThis PR updates the JWT-SVID client authentication validation requirements to align with RFC7523bis audience restrictions. The change modifies how the authorization server validates the `aud` claim in JWT assertions.\n\n- Updates audience validation requirements to match RFC7523bis specifications\n- Changes from endpoint-based validation to issuer identifier validation\n\n\n\n\n\n---\n\n<sub>**Tip:** Customize your code reviews with copilot-instructions.md. <a href=\"/arndt-s/oauth-spiffe-client-authentication/new/main/.github?filename=copilot-instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Create the file</a> or <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">learn how to get started</a>.</sub>",
+          "createdAt": "2025-10-01T13:59:40Z",
+          "updatedAt": "2025-10-01T13:59:41Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "The reference format `{{!I-D.draft-ietf-oauth-rfc7523bis}}` appears to be incorrect. Internet-Draft references typically use the format `{{!I-D.ietf-oauth-rfc7523bis}}` without the redundant 'draft-' prefix.\n```suggestion\n3. Verify that the `aud` claim contains only the issuer identifier of the authorization server as its sole value. See {{!I-D.ietf-oauth-rfc7523bis}} for details.\n```",
+              "createdAt": "2025-10-01T13:59:40Z",
+              "updatedAt": "2025-10-01T13:59:41Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 17,
+      "id": "PR_kwDOOml42M6rlvrr",
+      "title": "Clarify focus on client auth",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/17",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "The previous reasons why this draft focus on client auth where not actually reasons but rather general statements.",
+      "createdAt": "2025-10-01T15:53:15Z",
+      "updatedAt": "2025-10-01T19:03:35Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "67c408133c0eba984ea73975b42831dd8f18ccf1",
+      "headRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "headRefName": "arndt/clarify-focus-on-client-auth",
+      "headRefOid": "66bc5c1c8b79eedf05422b2b05b18fc9cbf3b180",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M7EGDMR",
+          "commit": {
+            "abbreviatedOid": "66bc5c1"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## Pull Request Overview\n\nThis PR clarifies the reasoning for focusing specifically on client authentication rather than authorization grants in the OAuth SPIFFE specification. The change replaces general statements with a more precise technical explanation based on SPIFFE's scope as an authentication system.\n\n### Key Changes\n- Removed unused reference to \"Headless_JWT\" specification\n- Replaced three general reasons with a focused technical explanation about SPIFFE's role as an authentication-only system\n- Clarified that authorization requires additional context outside SPIFFE's domain\n\n\n\n\n\n---\n\n<sub>**Tip:** Customize your code reviews with copilot-instructions.md. <a href=\"/arndt-s/oauth-spiffe-client-authentication/new/main/.github?filename=copilot-instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Create the file</a> or <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">learn how to get started</a>.</sub>",
+          "createdAt": "2025-10-01T15:53:38Z",
+          "updatedAt": "2025-10-01T15:53:38Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "The sentence spanning lines 94-95 appears to have an incomplete line break. The sentence should flow properly without the line break in the middle of 'require'.\n```suggestion\nThis profile focuses specifically on client authentication rather than authorization grants because SPIFFE is purely an authentication system. SPIFFE SVIDs verify the identity of a workload but do not carry authorization information about what resources that workload is authorized to access or what actions it can perform. Authorization decisions in OAuth require additional context (resource owner consent, scopes, claims) that are outside SPIFFE's domain.\n```",
+              "createdAt": "2025-10-01T15:53:38Z",
+              "updatedAt": "2025-10-01T15:53:39Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7EIzyv",
+          "commit": {
+            "abbreviatedOid": "66bc5c1"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-10-01T19:03:35Z",
+          "updatedAt": "2025-10-01T19:03:35Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "I would suggest we leave the reasoning aside as it is not inconceivable that JWT-SVIDs MAY be used as authorization grants. Rather than spending time on trying to define things SPIFFE cannot be used for (kind of not the focus here), let's make it clear what it is used for. Something like this.\r\n\r\n```suggestion\r\nThis profile focuses on using SPIFFE credentials for OAuth client authentication.",
+              "createdAt": "2025-10-01T19:03:35Z",
+              "updatedAt": "2025-10-01T19:03:35Z"
             }
           ]
         }
