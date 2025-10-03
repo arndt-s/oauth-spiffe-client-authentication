@@ -443,8 +443,22 @@ This document requests a new entry to be added to the Oauth URI registry found a
 - Change Controller: IETF
 - Reference: This Document
 
-
 --- back
+
+# Document History
+<cref>RFC Editor: please remove before publication.</cref>
+
+## draft-schwenkschuster-oauth-spiffe-client-auth-01
+
+* Rephrase introduction to make the focus on client authentication more clear.
+* Add implementation section.
+* Add audience restrictions from RFC7523bis adopted WG document.
+* Add security and IANA considerations section.
+* Add Scott Rose as co-author.
+
+## draft-schwenkschuster-oauth-spiffe-client-auth-00
+
+* Initial document
 
 # Acknowledgments
 {:numbered="false"}
