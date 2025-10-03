@@ -76,9 +76,6 @@ normative:
   SPIFFE_FEDERATION:
     title: SPIFFE Federation
     target: https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Federation.md
-  Headless_JWT:
-    title: Headless-JWT
-    target: foo
 
 informative:
 
@@ -94,13 +91,7 @@ Traditional OAuth client authentication typically relies on client secrets or pr
 
 This specification profiles the Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants {{RFC7521}} to allow SPIFFE-enabled workloads to use their SPIFFE Verifiable Identity Documents (SVIDs) — either X.509 certificates or JWT tokens — as client credentials for OAuth 2.0 client authentication. JWT tokens make use of the profiled version of {{RFC7523}} - the JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants {{RFC7523}}.
 
-This profile focuses specifically on client authentication rather than authorization grants. This focus is deliberate for several reasons:
-
-1. In modern service-oriented architectures, services often need to authenticate as themselves to OAuth authorization servers.
-
-2. Using SPIFFE as client authentication towards OAuth 2.0 authorization servers is a bridge between SPIFFE, which covers workload identity and OAuth, which covers human identity.
-
-3. Using SPIFFE as authorization grants for authorization requests where the workload itself is the resource owner is covered by other specifications, such as {{Headless_JWT}}.
+This profile focuses on using SPIFFE credentials for OAuth client authentication.
 
 The SPIFFE profile for client authentication enables seamless integration between SPIFFE-based and OAuth-based systems, allowing applications to leverage both ecosystems without requiring additional credential management. It also enables a more secure authentication method by leveraging cryptographically verifiable credentials rather than shared secrets.
 
