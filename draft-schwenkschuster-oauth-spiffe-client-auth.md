@@ -91,8 +91,7 @@ Traditional OAuth client authentication typically relies on client secrets or pr
 
 This specification profiles the Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants {{RFC7521}} to allow SPIFFE-enabled workloads to use their SPIFFE Verifiable Identity Documents (SVIDs) — either X.509 certificates or JWT tokens — as client credentials for OAuth 2.0 client authentication. JWT tokens make use of the profiled version of {{RFC7523}} - the JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants {{RFC7523}}.
 
-This profile focuses specifically on client authentication rather than authorization grants because SPIFFE is purely an authentication system. SPIFFE SVIDs verify the identity of a workload but do not carry authorization information about what resources that workload is authorized to access or what actions it can perform. Authorization decisions in OAuth require 
-additional context (resource owner consent, scopes, claims) that are outside SPIFFE's domain.
+This profile focuses on using SPIFFE credentials for OAuth client authentication.
 
 The SPIFFE profile for client authentication enables seamless integration between SPIFFE-based and OAuth-based systems, allowing applications to leverage both ecosystems without requiring additional credential management. It also enables a more secure authentication method by leveraging cryptographically verifiable credentials rather than shared secrets.
 
