@@ -97,6 +97,9 @@ Table of Contents
    7.  Security Considerations
    8.  IANA Considerations
    9.  Normative References
+   Appendix A.  Document History
+     A.1.  draft-schwenkschuster-oauth-spiffe-client-auth-01
+     A.2.  draft-schwenkschuster-oauth-spiffe-client-auth-00
    Acknowledgments
    Authors' Addresses
 
@@ -708,6 +711,28 @@ Certificate:
               "X509-SVID", n.d.,
               <https://github.com/spiffe/spiffe/blob/main/standards/
               X509-SVID.md>.
+
+Appendix A.  Document History
+
+
+   // RFC Editor: please remove before publication.
+
+A.1.  draft-schwenkschuster-oauth-spiffe-client-auth-01
+
+   *  Rephrase introduction to make the focus on client authentication
+      more clear.
+
+   *  Add implementation section.
+
+   *  Add audience restrictions from RFC7523bis adopted WG document.
+
+   *  Add security and IANA considerations section.
+
+   *  Add Scott Rose as co-author.
+
+A.2.  draft-schwenkschuster-oauth-spiffe-client-auth-00
+
+   *  Initial document
 
 Acknowledgments
 
