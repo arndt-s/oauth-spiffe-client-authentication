@@ -5,9 +5,9 @@
 Web Authorization Protocol                            A. Schwenkschuster
 Internet-Draft                                             P. Kasselmann
 Intended status: Standards Track                                   SPIRL
-Expires: 4 April 2026                                            S. Rose
+Expires: 6 April 2026                                            S. Rose
                                                                     NIST
-                                                          1 October 2025
+                                                          3 October 2025
 
 
                    OAuth SPIFFE Client Authentication
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 April 2026.
+   This Internet-Draft will expire on 6 April 2026.
 
 Copyright Notice
 
@@ -119,20 +119,8 @@ Table of Contents
    make use of the profiled version of [RFC7523] - the JWT Profile for
    OAuth 2.0 Client Authentication and Authorization Grants [RFC7523].
 
-   This profile focuses specifically on client authentication rather
-   than authorization grants.  This focus is deliberate for several
-   reasons:
-
-   1.  In modern service-oriented architectures, services often need to
-       authenticate as themselves to OAuth authorization servers.
-
-   2.  Using SPIFFE as client authentication towards OAuth 2.0
-       authorization servers is a bridge between SPIFFE, which covers
-       workload identity and OAuth, which covers human identity.
-
-   3.  Using SPIFFE as authorization grants for authorization requests
-       where the workload itself is the resource owner is covered by
-       other specifications, such as [Headless_JWT].
+   This profile focuses on using SPIFFE credentials for OAuth client
+   authentication.
 
    The SPIFFE profile for client authentication enables seamless
    integration between SPIFFE-based and OAuth-based systems, allowing
@@ -640,9 +628,6 @@ Certificate:
    *  Reference: This Document
 
 9.  Normative References
-
-   [Headless_JWT]
-              "Headless-JWT", n.d., <foo>.
 
    [I-D.draft-ietf-oauth-rfc7523bis]
               Jones, M. B., Campbell, B., Mortimore, C., and F. Skokan,
