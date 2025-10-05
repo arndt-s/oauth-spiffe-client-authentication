@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-02T00:57:02.703301+00:00",
+  "timestamp": "2025-10-05T01:03:15.762524+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -166,16 +166,24 @@
       "id": "I_kwDOOml42M7Nkj-0",
       "title": "Add implementation status section",
       "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/13",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-09-24T11:07:00Z",
-      "updatedAt": "2025-09-24T11:07:00Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-10-03T10:06:00Z",
+      "closedAt": "2025-10-03T10:06:00Z",
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "body": "Closed with #15 ",
+          "createdAt": "2025-10-03T10:06:00Z",
+          "updatedAt": "2025-10-03T10:06:00Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -835,24 +843,26 @@
       "id": "PR_kwDOOml42M6rlvrr",
       "title": "Clarify focus on client auth",
       "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/17",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "The previous reasons why this draft focus on client auth where not actually reasons but rather general statements.",
       "createdAt": "2025-10-01T15:53:15Z",
-      "updatedAt": "2025-10-01T19:03:35Z",
+      "updatedAt": "2025-10-03T09:57:59Z",
       "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
       "baseRefName": "main",
       "baseRefOid": "67c408133c0eba984ea73975b42831dd8f18ccf1",
       "headRepository": "arndt-s/oauth-spiffe-client-authentication",
       "headRefName": "arndt/clarify-focus-on-client-auth",
-      "headRefOid": "66bc5c1c8b79eedf05422b2b05b18fc9cbf3b180",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "7640763714c2d5609b3aa3b22f0d8f79ebca0871",
+      "closedAt": "2025-10-03T09:57:59Z",
+      "mergedAt": "2025-10-03T09:57:59Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "6c929c04c2f2f92056d92da7f748310dab9ee7dc"
+      },
       "comments": [],
       "reviews": [
         {
@@ -894,6 +904,61 @@
               "updatedAt": "2025-10-01T19:03:35Z"
             }
           ]
+        }
+      ]
+    },
+    {
+      "number": 18,
+      "id": "PR_kwDOOml42M6r-g0q",
+      "title": "Add document history",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/18",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-10-03T15:05:53Z",
+      "updatedAt": "2025-10-03T15:08:09Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "6c929c04c2f2f92056d92da7f748310dab9ee7dc",
+      "headRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "headRefName": "arndt/add_history_section",
+      "headRefOid": "1f66bc771405a756bca820cd402c8f4ce7a7408a",
+      "closedAt": "2025-10-03T15:08:09Z",
+      "mergedAt": "2025-10-03T15:08:09Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "364acb06ffd21330140aec7c2f1c76f0e1402b12"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M7EqmdM",
+          "commit": {
+            "abbreviatedOid": "5ae21d9"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## Pull Request Overview\n\nThis PR adds a document history section to the OAuth SPIFFE Client Authentication draft specification, documenting changes made across different draft versions.\n\n- Adds a \"Document History\" section with version-specific change summaries\n- Documents changes from draft-00 (initial) to draft-01 (current version)\n- Includes RFC Editor note for removal before publication\n\n\n\n\n\n---\n\n<sub>**Tip:** Customize your code reviews with copilot-instructions.md. <a href=\"/arndt-s/oauth-spiffe-client-authentication/new/main/.github?filename=copilot-instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Create the file</a> or <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">learn how to get started</a>.</sub>",
+          "createdAt": "2025-10-03T15:06:02Z",
+          "updatedAt": "2025-10-03T15:06:02Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOml42M7EqpCt",
+          "commit": {
+            "abbreviatedOid": "1f66bc7"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-03T15:08:01Z",
+          "updatedAt": "2025-10-03T15:08:01Z",
+          "comments": []
         }
       ]
     }
