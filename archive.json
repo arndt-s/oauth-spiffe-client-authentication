@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-05T01:03:15.762524+00:00",
+  "timestamp": "2025-10-09T00:58:30.175149+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -184,6 +184,22 @@
           "updatedAt": "2025-10-03T10:06:00Z"
         }
       ]
+    },
+    {
+      "number": 19,
+      "id": "I_kwDOOml42M7QENdf",
+      "title": "Add wording to allow authorization servers to only support one SVID.",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/19",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-10-07T09:50:30Z",
+      "updatedAt": "2025-10-07T10:08:47Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
