@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-09T00:58:30.175149+00:00",
+  "timestamp": "2025-11-27T00:10:31.411285+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -62,7 +62,7 @@
       "labels": [],
       "body": "Should we explicitly note that the absence of an \"iss\" claim sets this draft apart from RFC7523 (where it is a required claim).\n\nWe may want to be more clear about the degree to which this is a profile (or extended profile) of RFC 7523 (related to the topic above, but maybe there is more - probably).",
       "createdAt": "2025-05-15T13:08:10Z",
-      "updatedAt": "2025-05-15T13:25:08Z",
+      "updatedAt": "2025-11-26T13:02:33Z",
       "closedAt": null,
       "comments": [
         {
@@ -71,6 +71,13 @@
           "body": "I wouldn't say the absence of the `iss` claim is what sets this draft apart from 7523. In the end a lot of JWT-SVIDs carry it! Section 5.5 tries to cover that a bit and basically forbids the use of key distribution based on `iss` claim in the context of this spec.\n\n---\n\nRegarding the profiling:\n- JWT-SVID profiles RFC7523\n- X509-SVID profiles RFC7521\n\nIf we don't profile RFC7523 we need to talk a lot about JWT processing, etc. which I'm not sure we want to duplicate.",
           "createdAt": "2025-05-15T13:25:07Z",
           "updatedAt": "2025-05-15T13:25:07Z"
+        },
+        {
+          "author": "stianst",
+          "authorAssociation": "NONE",
+          "body": "I would go as far as saying that implementors should ignore the `iss` claim if present in the JWT-SVID; highlighting that `sub` should be parsed and the trust-domain of the SPIFFE ID verified instead.",
+          "createdAt": "2025-11-26T13:02:33Z",
+          "updatedAt": "2025-11-26T13:02:33Z"
         }
       ]
     },
@@ -198,6 +205,38 @@
       "body": "",
       "createdAt": "2025-10-07T09:50:30Z",
       "updatedAt": "2025-10-07T10:08:47Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 20,
+      "id": "I_kwDOOml42M7amGdq",
+      "title": "Add mention of client assertion reuse",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/20",
+      "state": "OPEN",
+      "author": "stianst",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "RFC 7523 mentions preventing replay protection; while that is not generally possible with SPIFFE due to the lack of `jti` claim as well as caching of SPIFFE JWTs on the agent side the spec should have some mentions around this. Including security considerations around it.",
+      "createdAt": "2025-11-26T12:59:53Z",
+      "updatedAt": "2025-11-26T12:59:53Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 21,
+      "id": "I_kwDOOml42M7amJ4F",
+      "title": "Update Keycloak organization",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/21",
+      "state": "OPEN",
+      "author": "stianst",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Should be `Organization: CNCF / IBM`",
+      "createdAt": "2025-11-26T13:03:33Z",
+      "updatedAt": "2025-11-26T13:03:33Z",
       "closedAt": null,
       "comments": []
     }
