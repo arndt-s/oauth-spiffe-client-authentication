@@ -5,13 +5,13 @@
 Web Authorization Protocol                            A. Schwenkschuster
 Internet-Draft                                             P. Kasselmann
 Intended status: Standards Track                                   SPIRL
-Expires: 6 April 2026                                            S. Rose
+Expires: 4 June 2026                                             S. Rose
                                                                     NIST
-                                                          3 October 2025
+                                                         1 December 2025
 
 
                    OAuth SPIFFE Client Authentication
-         draft-schwenkschuster-oauth-spiffe-client-auth-latest
+               draft-ietf-oauth-spiffe-client-auth-latest
 
 Abstract
 
@@ -32,8 +32,8 @@ About This Document
    This note is to be removed before publishing as an RFC.
 
    Status information for this document may be found at
-   https://datatracker.ietf.org/doc/draft-schwenkschuster-oauth-spiffe-
-   client-auth/.
+   https://datatracker.ietf.org/doc/draft-ietf-oauth-spiffe-client-
+   auth/.
 
    Discussion of this document takes place on the Web Authorization
    Protocol Working Group mailing list (mailto:oauth@ietf.org), which is
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 6 April 2026.
+   This Internet-Draft will expire on 4 June 2026.
 
 Copyright Notice
 
@@ -98,8 +98,9 @@ Table of Contents
    8.  IANA Considerations
    9.  Normative References
    Appendix A.  Document History
-     A.1.  draft-schwenkschuster-oauth-spiffe-client-auth-01
-     A.2.  draft-schwenkschuster-oauth-spiffe-client-auth-00
+     A.1.  draft-ietf-oauth-spiffe-client-auth-00
+     A.2.  draft-schwenkschuster-oauth-spiffe-client-auth-01
+     A.3.  draft-schwenkschuster-oauth-spiffe-client-auth-00
    Acknowledgments
    Authors' Addresses
 
@@ -634,11 +635,12 @@ Certificate:
 
    [I-D.draft-ietf-oauth-rfc7523bis]
               Jones, M. B., Campbell, B., Mortimore, C., and F. Skokan,
-              "Updates to Audience Values for OAuth 2.0 Authorization
-              Servers", Work in Progress, Internet-Draft, draft-ietf-
-              oauth-rfc7523bis-02, 22 July 2025,
+              "Updates to OAuth 2.0 JSON Web Token (JWT) Client
+              Authentication and Assertion-Based Authorization Grants",
+              Work in Progress, Internet-Draft, draft-ietf-oauth-
+              rfc7523bis-03, 7 October 2025,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              rfc7523bis-02>.
+              rfc7523bis-03>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -717,7 +719,12 @@ Appendix A.  Document History
 
    // RFC Editor: please remove before publication.
 
-A.1.  draft-schwenkschuster-oauth-spiffe-client-auth-01
+A.1.  draft-ietf-oauth-spiffe-client-auth-00
+
+   *  Document name update to reflect adoption into the OAuth working
+      group
+
+A.2.  draft-schwenkschuster-oauth-spiffe-client-auth-01
 
    *  Rephrase introduction to make the focus on client authentication
       more clear.
@@ -730,7 +737,7 @@ A.1.  draft-schwenkschuster-oauth-spiffe-client-auth-01
 
    *  Add Scott Rose as co-author.
 
-A.2.  draft-schwenkschuster-oauth-spiffe-client-auth-00
+A.3.  draft-schwenkschuster-oauth-spiffe-client-auth-00
 
    *  Initial document
 
