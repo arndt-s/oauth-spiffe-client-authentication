@@ -22,7 +22,7 @@
 title: "OAuth SPIFFE Client Authentication"
 category: std
 
-docname: draft-schwenkschuster-oauth-spiffe-client-auth-latest
+docname: draft-ietf-oauth-spiffe-client-auth-latest
 submissiontype: IETF
 number:
 date:
