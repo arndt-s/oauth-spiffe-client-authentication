@@ -28,7 +28,7 @@ number:
 date:
 consensus: false
 v: 3
-area: AREA
+area: sec
 workgroup: "Web Authorization Protocol"
 keyword:
  - workload
