@@ -448,6 +448,10 @@ This document requests a new entry to be added to the Oauth URI registry found a
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
 
+## draft-ietf-oauth-spiffe-client-auth-00
+
+* Document name update to reflect adoption into the OAuth working group
+
 ## draft-schwenkschuster-oauth-spiffe-client-auth-01
 
 * Rephrase introduction to make the focus on client authentication more clear.
