@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-30T00:12:20.970401+00:00",
+  "timestamp": "2025-12-02T00:10:39.772210+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -1029,6 +1029,61 @@
           "body": "",
           "createdAt": "2025-10-03T15:08:01Z",
           "updatedAt": "2025-10-03T15:08:01Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 23,
+      "id": "PR_kwDOOml42M62Xolg",
+      "title": "Update document to reflect working group adoption status",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/23",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-12-01T15:01:25Z",
+      "updatedAt": "2025-12-01T15:04:08Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "364acb06ffd21330140aec7c2f1c76f0e1402b12",
+      "headRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "headRefName": "arndt/adoption_changes",
+      "headRefOid": "4e505dbd6c12ee1cda0df3146ffaf0d15a468ccf",
+      "closedAt": "2025-12-01T15:04:08Z",
+      "mergedAt": "2025-12-01T15:04:08Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "a5967934a781a7ee80d60e9bcb3846876ddb4ef3"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M7SImxt",
+          "commit": {
+            "abbreviatedOid": "1c0bdc0"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## Pull request overview\n\nThis PR updates the IETF Internet-Draft document name to reflect its adoption by the OAuth working group. The document transitions from a personal draft (`draft-schwenkschuster-oauth-spiffe-client-auth`) to an official working group draft (`draft-ietf-oauth-spiffe-client-auth`), following standard IETF conventions.\n\n- Updated the `docname` field to reflect working group adoption\n- Added a new document history entry for version `-00` documenting the name change\n\n\n\n\n\n---\n\n\ud83d\udca1 <a href=\"/arndt-s/oauth-spiffe-client-authentication/new/main/.github/instructions?filename=*.instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Add Copilot custom instructions</a> for smarter, more guided reviews. <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn how to get started</a>.",
+          "createdAt": "2025-12-01T15:03:11Z",
+          "updatedAt": "2025-12-01T15:03:11Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOml42M7SIm1t",
+          "commit": {
+            "abbreviatedOid": "1c0bdc0"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-12-01T15:03:15Z",
+          "updatedAt": "2025-12-01T15:03:15Z",
           "comments": []
         }
       ]
