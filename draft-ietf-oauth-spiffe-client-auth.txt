@@ -4,10 +4,12 @@
 
 Web Authorization Protocol                            A. Schwenkschuster
 Internet-Draft                                             P. Kasselmann
-Intended status: Standards Track                                   SPIRL
-Expires: 4 June 2026                                             S. Rose
+Intended status: Standards Track                        Defakto Security
+Expires: 20 June 2026                                            S. Rose
                                                                     NIST
-                                                         1 December 2025
+                                                           S. Thorgersen
+                                                                     IBM
+                                                        17 December 2025
 
 
                    OAuth SPIFFE Client Authentication
@@ -58,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 June 2026.
+   This Internet-Draft will expire on 20 June 2026.
 
 Copyright Notice
 
@@ -585,7 +587,7 @@ Certificate:
 
    Keycloak
 
-   *  Organization: Red Hat / CNCF
+   *  Organization: CNCF / IBM
 
    *  Maturity: preview
 
@@ -748,15 +750,20 @@ Acknowledgments
 Authors' Addresses
 
    Arndt Schwenkschuster
-   SPIRL
+   Defakto Security
    Email: arndts.ietf@gmail.com
 
 
    Pieter Kasselmann
-   SPIRL
-   Email: pieter@spirl.com
+   Defakto Security
+   Email: pieter@defakto.security
 
 
    Scott Rose
    NIST
    Email: scott.rose@nist.gov
+
+
+   Stian Thorgersen
+   IBM
+   Email: sthorger@ibm.com
