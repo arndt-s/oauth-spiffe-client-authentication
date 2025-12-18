@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-02T00:10:39.772210+00:00",
+  "timestamp": "2025-12-18T00:09:36.621511+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -229,15 +229,15 @@
       "id": "I_kwDOOml42M7amJ4F",
       "title": "Update Keycloak organization",
       "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/21",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "stianst",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "Should be `Organization: CNCF / IBM`",
       "createdAt": "2025-11-26T13:03:33Z",
-      "updatedAt": "2025-11-26T13:03:33Z",
-      "closedAt": null,
+      "updatedAt": "2025-12-17T14:34:44Z",
+      "closedAt": "2025-12-17T14:34:44Z",
       "comments": []
     },
     {
