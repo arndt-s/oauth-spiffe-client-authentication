@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-18T00:09:36.621511+00:00",
+  "timestamp": "2026-01-15T00:11:50.864786+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -55,15 +55,15 @@
       "id": "I_kwDOOml42M62wmEq",
       "title": "iss claim",
       "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/5",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Should we explicitly note that the absence of an \"iss\" claim sets this draft apart from RFC7523 (where it is a required claim).\n\nWe may want to be more clear about the degree to which this is a profile (or extended profile) of RFC 7523 (related to the topic above, but maybe there is more - probably).",
       "createdAt": "2025-05-15T13:08:10Z",
-      "updatedAt": "2025-11-26T13:02:33Z",
-      "closedAt": null,
+      "updatedAt": "2026-01-14T15:17:33Z",
+      "closedAt": "2026-01-14T15:17:33Z",
       "comments": [
         {
           "author": "arndt-s",
@@ -74,10 +74,17 @@
         },
         {
           "author": "stianst",
-          "authorAssociation": "NONE",
+          "authorAssociation": "COLLABORATOR",
           "body": "I would go as far as saying that implementors should ignore the `iss` claim if present in the JWT-SVID; highlighting that `sub` should be parsed and the trust-domain of the SPIFFE ID verified instead.",
           "createdAt": "2025-11-26T13:02:33Z",
           "updatedAt": "2025-11-26T13:02:33Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "body": "We decided today amongst the contributors that we'll not mandate or allow `iss` claim to be used for key distribution. We believe this that this topic may come back up again in the future and we may need to revisit.",
+          "createdAt": "2026-01-14T15:17:33Z",
+          "updatedAt": "2026-01-14T15:17:33Z"
         }
       ]
     },
@@ -89,11 +96,13 @@
       "state": "OPEN",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
-      "assignees": [],
+      "assignees": [
+        "PieterKas"
+      ],
       "labels": [],
       "body": "I want to say yes... but... the key distribution is not described in RFC 7523. So, some options:\n\n1. Bump readers to RFC 7523 and instruct them to use the key distribution mechanisms in this draft.\n2. Bump them to RFC 7523 and let them \"build their own adventure\" for key distribution.\n3. Provide guidance on what to do with the \"iss\" claim.",
       "createdAt": "2025-05-15T13:17:11Z",
-      "updatedAt": "2025-05-15T13:28:05Z",
+      "updatedAt": "2026-01-14T15:18:45Z",
       "closedAt": null,
       "comments": [
         {
@@ -102,6 +111,13 @@
           "body": "1. is basically this draft, it uses RFC7523 + restricts key distribution\n2. that's the current approach\n3. I don't think we should put that in scope of this document. No reason to describe key distro outside of SPIFFE if this spec is about SPIFFE.",
           "createdAt": "2025-05-15T13:28:04Z",
           "updatedAt": "2025-05-15T13:28:04Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "body": "Related to #5. \n\n@PieterKas to explore language to make it more clear to readers.",
+          "createdAt": "2026-01-14T15:18:40Z",
+          "updatedAt": "2026-01-14T15:18:40Z"
         }
       ]
     },
@@ -129,13 +145,23 @@
       "state": "OPEN",
       "author": "dagdagdag83",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [],
       "body": "The company that I work for is implementing a workload identity pattern (inspired heavily by WIMSE WG) for securing service to service communication. One of the biggest benefits that we are leveraging is using Istio mTLS certificates (which are roughly SPIFFE-compatible) to get Certificate-Bound Access Tokens. This is something you get for \"free\" when implementing RFC 8705.\n\nIMO this specification should be more explicit about the ability to get certificate-bound tokens, because in effect these tokens are actually **workload-bound** (via SPIFFE ID) which is a huge security benefit. \n\nThe only modification we'd had to make for RFC 8705 is the following:\n\n1) We add a new cnf claim:\n```\n  \"cnf\":{\n    \"x5t#S256\": \"87abe78e185a0c5ee193bf1e34b36bbf43f47178850871b30225e23542b7d503\",\n    \"x5s#SPIFFE\": \"spiffe://cluster.local/ns/namespace/sa/default\"\n  }\n```\nThe `x5s#SPIFFE` is intended to reference to SPIFFE ID, the reason for that is because istio rotates mTLS certificates very quickly so we didn't want to rely on only the `x5t#S256` claim to validate the binding.\n\n2) RFC 8705 expects that the leaf cert itself or thumbprint is saved (or available at least) to the AS so that it can verify it.\nFor the same reason as above (rapid rotation) we don't do this. We only store the SPIFFE ID, then we use the root public CA (which Istio publishes) to verify the cert chain itself.\n\nThen following that, any of our APIs that gets these tokens will pretty much validate the certificate-binding per RFC 8705.",
       "createdAt": "2025-07-24T07:08:45Z",
-      "updatedAt": "2025-07-24T07:20:31Z",
+      "updatedAt": "2026-01-14T15:30:26Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "body": "Hi @dagdagdag83 \n\nsorry for just getting back to you know. We've had a look at the issue and believe it's out of scope for now.\n\nWhile it seems simple at first, it comes with a lot of security considerations:\n- Binding to an identifier instead of a key has caveats and heavily depends on the granularity of the identifier (is it an instance, is it a logical unit, what if the identifier is shared?)\n- Resource servers need to change their logic to accept \"identifier-bound\" access tokens.\n\nHowever, we acknowledge that we need to talk more about some of the scenarios you mention:\n- When SVID key rotates, should the workload request a new AT from the AS?\n- What about general keybinding? Should easily be possible for X.509-SVIDs.",
+          "createdAt": "2026-01-14T15:30:15Z",
+          "updatedAt": "2026-01-14T15:30:15Z"
+        }
+      ]
     },
     {
       "number": 12,
