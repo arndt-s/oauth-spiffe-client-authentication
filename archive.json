@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-15T00:11:50.864786+00:00",
+  "timestamp": "2026-01-18T00:12:37.649095+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -279,6 +279,22 @@
       "body": "What if the federation endpoint uses a SPIFFE cert for server authentication and not a webpki one?",
       "createdAt": "2025-11-27T15:30:31Z",
       "updatedAt": "2025-11-27T15:30:31Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 24,
+      "id": "I_kwDOOml42M7jhtYU",
+      "title": "Should we include WIT-SVID usage in this draft?",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/24",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "SPIFFE is including support for WIMSE WIT tokens. WIMSE is wrapping up the WIT/WPT/HTTP sig specs that uses WITs, which I expect will all conclude before we finish this draft. \n\nIETF\nWIMSE WIT: https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds/00/\nWIMSE WPT: https://datatracker.ietf.org/doc/draft-ietf-wimse-http-signature/01/\nWIMSE HTTP Sig: https://datatracker.ietf.org/doc/draft-ietf-wimse-wpt/00/\n\nCNCF\nWIT-SVID SPIFFE support: https://github.com/spiffe/spiffe/pull/327\nWIT-SVID support in SPIRE: https://github.com/spiffe/spire/issues/6326",
+      "createdAt": "2026-01-15T12:07:08Z",
+      "updatedAt": "2026-01-15T12:07:08Z",
       "closedAt": null,
       "comments": []
     }
