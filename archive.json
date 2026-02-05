@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-18T00:12:37.649095+00:00",
+  "timestamp": "2026-02-05T00:15:17.112448+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -226,13 +226,23 @@
       "state": "OPEN",
       "author": "arndt-s",
       "authorAssociation": "OWNER",
-      "assignees": [],
+      "assignees": [
+        "stianst"
+      ],
       "labels": [],
       "body": "",
       "createdAt": "2025-10-07T09:50:30Z",
-      "updatedAt": "2025-10-07T10:08:47Z",
+      "updatedAt": "2026-02-03T15:14:38Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "body": "Discussed in today's call:\n+ authorization server metadata attribute to allow clients to discover \"support\". \"AS must advertise which one it supports\".\n+ client MUST support at least one and SHOULD support all.\n",
+          "createdAt": "2026-02-03T15:14:22Z",
+          "updatedAt": "2026-02-03T15:14:22Z"
+        }
+      ]
     },
     {
       "number": 20,
@@ -241,14 +251,22 @@
       "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/20",
       "state": "OPEN",
       "author": "stianst",
-      "authorAssociation": "NONE",
+      "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "RFC 7523 mentions preventing replay protection; while that is not generally possible with SPIFFE due to the lack of `jti` claim as well as caching of SPIFFE JWTs on the agent side the spec should have some mentions around this. Including security considerations around it.",
       "createdAt": "2025-11-26T12:59:53Z",
-      "updatedAt": "2025-11-26T12:59:53Z",
+      "updatedAt": "2026-02-03T15:25:33Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "body": "Discussed today:\n- It's a deployment choice\n- SPIFFE\n    - may release the same JWT to same workloads\n    - has no `jti` in the standard",
+          "createdAt": "2026-02-03T15:25:33Z",
+          "updatedAt": "2026-02-03T15:25:33Z"
+        }
+      ]
     },
     {
       "number": 21,
@@ -278,9 +296,24 @@
       "labels": [],
       "body": "What if the federation endpoint uses a SPIFFE cert for server authentication and not a webpki one?",
       "createdAt": "2025-11-27T15:30:31Z",
-      "updatedAt": "2025-11-27T15:30:31Z",
+      "updatedAt": "2026-02-04T21:21:52Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "body": "Keeping it open for now. ",
+          "createdAt": "2026-02-03T15:33:43Z",
+          "updatedAt": "2026-02-03T15:33:43Z"
+        },
+        {
+          "author": "deshmukhrajvardhan",
+          "authorAssociation": "NONE",
+          "body": "https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Federation.md#521-web-pki-https_web mentions how webpki is used to protect the bundle endpoint and serve using https.\n\nWhat does using SPIFFE cert mean for the server that hosts bundle endpoint?\n\n\"The server certificate used SHOULD be issued by a public certificate authority (as defined by the membership list of the CA/Browser forum)\": **Does this require extra mechanism to share SPIFFE cert authority validators with the client?**\n\n\"and MUST include the DNS name or IP address of the endpoint as an X.509 Subject Alternative Name (or Common Name).\": **I assume this stays the same.**\n\n\nWhat does using SPIFFE cert mean for the entity that has to validate the server certificate?\n\n\"server certificate MUST be issued by a certificate authority which is locally trusted\": **Does this now require extra mechanism to trust SPIFFE cert authority?**\n\n\"MUST contain an X.509 Subject Alternative Name (or Common Name) that matches the host component of the configured endpoint URL\": **I assume this stays the same.**\n\nIs there a reason to not use a webpki cert?",
+          "createdAt": "2026-02-04T21:13:35Z",
+          "updatedAt": "2026-02-04T21:21:52Z"
+        }
+      ]
     },
     {
       "number": 24,
@@ -295,6 +328,62 @@
       "body": "SPIFFE is including support for WIMSE WIT tokens. WIMSE is wrapping up the WIT/WPT/HTTP sig specs that uses WITs, which I expect will all conclude before we finish this draft. \n\nIETF\nWIMSE WIT: https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds/00/\nWIMSE WPT: https://datatracker.ietf.org/doc/draft-ietf-wimse-http-signature/01/\nWIMSE HTTP Sig: https://datatracker.ietf.org/doc/draft-ietf-wimse-wpt/00/\n\nCNCF\nWIT-SVID SPIFFE support: https://github.com/spiffe/spiffe/pull/327\nWIT-SVID support in SPIRE: https://github.com/spiffe/spire/issues/6326",
       "createdAt": "2026-01-15T12:07:08Z",
       "updatedAt": "2026-01-15T12:07:08Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 25,
+      "id": "I_kwDOOml42M7n-QDd",
+      "title": "`iss` and JWKs endpoints",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/25",
+      "state": "CLOSED",
+      "author": "stianst",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Some providers may set `iss` claim including the trust-domain in `sub`, and offer both federation endpoint as well as JWKs endpoints.\n\n`iss` should be ignored\n\nJWKs endpoint may be supported as well",
+      "createdAt": "2026-02-03T15:33:22Z",
+      "updatedAt": "2026-02-03T17:47:20Z",
+      "closedAt": "2026-02-03T17:46:56Z",
+      "comments": [
+        {
+          "author": "stianst",
+          "authorAssociation": "COLLABORATOR",
+          "body": "Memory lapse; we've already talked about this one and included it",
+          "createdAt": "2026-02-03T17:47:20Z",
+          "updatedAt": "2026-02-03T17:47:20Z"
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "id": "I_kwDOOml42M7n-Rmc",
+      "title": "When using X.509, allow for a webPKI server certificate",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/26",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-02-03T15:34:49Z",
+      "updatedAt": "2026-02-03T15:34:49Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 27,
+      "id": "I_kwDOOml42M7oWLsk",
+      "title": "We need to clarify/defined what we mean by webpki",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/27",
+      "state": "OPEN",
+      "author": "ncamwing",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "In looking how to address the federation comment, we need elaborate what is meant by WebPKI; which I'm presuming is the SPIRE's definition for how they use  the certs.  At minimum we can reference that section here, or provide a little more elaboration to our intent.",
+      "createdAt": "2026-02-04T19:41:40Z",
+      "updatedAt": "2026-02-04T19:41:40Z",
       "closedAt": null,
       "comments": []
     }
