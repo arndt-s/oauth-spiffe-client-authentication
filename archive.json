@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-05T00:15:17.112448+00:00",
+  "timestamp": "2026-02-19T00:16:09.774904+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -1216,6 +1216,157 @@
           "createdAt": "2025-12-01T15:03:15Z",
           "updatedAt": "2025-12-01T15:03:15Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 28,
+      "id": "PR_kwDOOml42M7Ek6Cn",
+      "title": "Add Workload Identity Token & attestation-based client auth",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/28",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "Adds WIT & attestation-based client auth variant. ",
+      "createdAt": "2026-02-18T10:07:12Z",
+      "updatedAt": "2026-02-18T14:27:36Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "7404b14a04f1cab1ee61696308f964d2750aeb33",
+      "headRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "headRefName": "arndt/add_wit",
+      "headRefOid": "b21e17a2754b37d65b85c7013fd082d239c626d1",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M7joNQu",
+          "commit": {
+            "abbreviatedOid": "b21e17a"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## Pull request overview\n\nThis PR extends the OAuth SPIFFE Client Authentication draft to cover Workload Identity Token-based SVIDs (WIT-SVIDs) and align the document with OAuth 2.0 attestation-based client authentication.\n\n**Changes:**\n- Update abstract/introduction to include WIT-SVIDs and reference attestation-based client authentication.\n- Add a new \u201cClient Authentication with WIT-SVID\u201d section including validation guidance and an end-to-end request example.\n- Extend the SPIFFE bundle/JWKS example to include a WIT-SVID key entry and update related explanatory text.\n\n\n\n\n\n---\n\n\ud83d\udca1 <a href=\"/arndt-s/oauth-spiffe-client-authentication/new/main/.github/instructions?filename=*.instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Add Copilot custom instructions</a> for smarter, more guided reviews. <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn how to get started</a>.",
+          "createdAt": "2026-02-18T10:11:39Z",
+          "updatedAt": "2026-02-18T10:11:40Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "The phrasing \"SVID (JWT, WIT or X.509)\" is ambiguous and inconsistent with the rest of the document\u2019s terminology (JWT-SVID, WIT-SVID, X.509-SVID). Consider using the fully qualified SVID terms here to avoid confusion about whether this refers to generic JWTs/WITs vs SPIFFE SVID formats.\n```suggestion\nOAuth 2.0 client authentication is used to authenticate the client to the authorization server when making requests to the token endpoint. When using SPIFFE for client authentication, the client presents its SVID (JWT-SVID, WIT-SVID, or X.509-SVID) to prove its identity.\n```",
+              "createdAt": "2026-02-18T10:11:39Z",
+              "updatedAt": "2026-02-18T10:11:41Z"
+            },
+            {
+              "originalPosition": 33,
+              "body": "This section introduces WIT-SVIDs, but the earlier Terminology section still states that the document specifies only two SVID types (JWT-SVID and X.509-SVID) and does not define WIT-SVID. Please update the Terminology/definitions accordingly and consider making the heading consistent with the plural form used elsewhere (\"WIT-SVIDs\").\n```suggestion\n## Client Authentication with WIT-SVIDs\n\nIn this document, WIT-SVIDs are the SPIFFE variant of the WIMSE Workload Identity Token (WIT) as defined in {{?I-D.draft-ietf-wimse-workload-creds}} and make use of concepts defined in OAuth 2.0 Attestation-Based Client Authentication {{?I-D.draft-ietf-oauth-attestation-based-client-auth}}.\n```",
+              "createdAt": "2026-02-18T10:11:39Z",
+              "updatedAt": "2026-02-18T10:11:42Z"
+            },
+            {
+              "originalPosition": 46,
+              "body": "The WIT-SVID validation rules don\u2019t currently state how the authorization server binds the authenticated client to a registered client identifier (e.g., ensuring the SPIFFE ID in the WIT-SVID `sub` matches a registered client and/or the `client_id` parameter when present), which is explicitly required for JWT-SVID and X.509-SVID flows earlier. Please add an explicit validation step to prevent client impersonation/misbinding.\n```suggestion\n* The Client Attestation PoP JWT MUST be validated according to Section 5.2 of {{?I-D.draft-ietf-oauth-attestation-based-client-auth}}.\n* The authorization server MUST bind the authenticated client to a registered client identifier. Specifically:\n  * The SPIFFE ID carried in the WIT-SVID `sub` claim MUST correspond to a registered OAuth client at the authorization server.\n  * When a `client_id` parameter is present in the request, the authorization server MUST verify that it identifies the same registered client as the SPIFFE ID in the WIT-SVID `sub` claim. If this check fails, the authorization server MUST reject the authentication request.\n```",
+              "createdAt": "2026-02-18T10:11:40Z",
+              "updatedAt": "2026-02-18T10:11:42Z"
+            },
+            {
+              "originalPosition": 48,
+              "body": "There is an unresolved TODO about how to handle the `attest_jwt_client_auth` method in authorization server metadata. This needs to be specified (or removed) so implementers know how to advertise/discover WIT-SVID attestation-based client authentication.\n```suggestion\nAn authorization server that supports WIT-SVID-based client authentication MUST advertise the `attest_jwt_client_auth` token endpoint authentication method in its authorization server metadata, as defined in {{?I-D.draft-ietf-oauth-attestation-based-client-auth}} and {{?RFC8414}}. This document does not introduce any additional authorization server metadata parameters; clients discover support for WIT-SVID-based client authentication via the existing `attest_jwt_client_auth` method.\n```",
+              "createdAt": "2026-02-18T10:11:40Z",
+              "updatedAt": "2026-02-18T10:11:42Z"
+            },
+            {
+              "originalPosition": 130,
+              "body": "This TODO indicates the bundle example does not match the X509-SVID, which makes the validation/key-discovery example potentially misleading. Please update the example data so the bundle, X.509-SVID, and any referenced keys/certs are consistent.\n```suggestion\n> Note: In a real deployment, ensure that the trust bundle matches the X.509-SVID used for authentication so that validation and key discovery behave as expected.\n```",
+              "createdAt": "2026-02-18T10:11:40Z",
+              "updatedAt": "2026-02-18T10:11:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7js7w9",
+          "commit": {
+            "abbreviatedOid": "b21e17a"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-18T14:24:08Z",
+          "updatedAt": "2026-02-18T14:24:08Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "```suggestion\n## Client Authentication with WIT-SVIDs\n```",
+              "createdAt": "2026-02-18T14:24:08Z",
+              "updatedAt": "2026-02-18T14:24:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7js9bG",
+          "commit": {
+            "abbreviatedOid": "b21e17a"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-18T14:25:20Z",
+          "updatedAt": "2026-02-18T14:25:20Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\nThis specification profiles the Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants {{RFC7521}} to allow SPIFFE-enabled workloads to use their SPIFFE Verifiable Identity Documents (SVIDs), either X.509 certificates or JSON Web Tokens (JWT-SVID & WIT-SVID), as client credentials for OAuth 2.0 client authentication. JWT-SVIDs make use of a profiled version of the JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants {{RFC7523}}. WIT-SVIDs make use of the OAuth 2.0 Attestation-Based Client Authentication {{?I-D.draft-ietf-oauth-attestation-based-client-auth}}.\n```",
+              "createdAt": "2026-02-18T14:25:20Z",
+              "updatedAt": "2026-02-18T14:25:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7js_Ew",
+          "commit": {
+            "abbreviatedOid": "b21e17a"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-18T14:26:42Z",
+          "updatedAt": "2026-02-18T14:26:42Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "```suggestion\nA WIT-SVID as issued by a SPIFFE implementation binds a key held by the client via the `cnf` claim. This key is used as attestation proof during client authentication. The attestation proof is in the form of a \"Client Attestation PoP JWT\" as defined in {{?I-D.draft-ietf-oauth-attestation-based-client-auth}} that is issued by the client and signed with the private part of the key bound in the WIT-SVID.\n```",
+              "createdAt": "2026-02-18T14:26:42Z",
+              "updatedAt": "2026-02-18T14:26:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7jtAHi",
+          "commit": {
+            "abbreviatedOid": "b21e17a"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-18T14:27:36Z",
+          "updatedAt": "2026-02-18T14:27:36Z",
+          "comments": [
+            {
+              "originalPosition": 37,
+              "body": "You are proposing to use the POP-JWT here instead of a WPT, correct?",
+              "createdAt": "2026-02-18T14:27:36Z",
+              "updatedAt": "2026-02-18T14:27:36Z"
+            }
+          ]
         }
       ]
     }
