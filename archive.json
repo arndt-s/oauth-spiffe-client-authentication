@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-19T00:16:09.774904+00:00",
+  "timestamp": "2026-02-22T00:14:01.939781+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -386,6 +386,46 @@
       "updatedAt": "2026-02-04T19:41:40Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 29,
+      "id": "I_kwDOOml42M7skC7H",
+      "title": "Client ID for Client Authentication using X509-SVID",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/29",
+      "state": "OPEN",
+      "author": "TakahikoKawasaki",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "In draft 00 of OAuth SPIFFE Client Authentication, when using Client Authentication with X509-SVID, it requires that the value of the `client_id` request parameter be the SPIFFE ID. However, I believe this requirement should be removed. The reasons are as follows:\n\n* Systems that use the [OpenID Federation 1.0](https://openid.net/specs/openid-federation-1_0.html) specification cannot use OAuth SPIFFE Client Authentication.\n* Systems that use the [OAuth Client ID Metadata Document](https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document/) specification cannot use OAuth SPIFFE Client Authentication.\n* Systems in which client IDs cannot be flexibly changed cannot use OAuth SPIFFE Client Authentication.\n\nThe client authentication method defined in RFC 8705 [Section 2.1](https://www.rfc-editor.org/rfc/rfc8705.html#section-2.1) works correctly even if the value of the `tls_client_auth_san_uri` client metadata differs from the client ID.\n",
+      "createdAt": "2026-02-20T14:39:50Z",
+      "updatedAt": "2026-02-20T14:39:50Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 30,
+      "id": "I_kwDOOml42M7smOIn",
+      "title": "IANA OAuth Parameters for SPIFFE Client Authentication",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/30",
+      "state": "OPEN",
+      "author": "TakahikoKawasaki",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "I would like to propose the following [IANA OAuth Parameters](https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml) for SPIFFE Client Authentication:\n\n### OAuth Dynamic Client Registration Metadata\n\n- `spiffe_id`\n- `spiffe_bundle_endpoint`\n\n### OAuth Token Endpoint Authentication Methods\n\n- `spiffe_jwt`\n-  `spiffe_x509`\n\n### Rationale for spiffe_id\n\nSPIFFE Client Authentication with JWT-SVIDs requires the authorization server to ensure that the SPIFFE ID in the SVID matches the registered value, but the specification does not define how this verification is to be performed. If the `spiffe_id` client metadata is available, the authorization server can satisfy this requirement by comparing the registered metadata value with the SPIFFE ID contained in the SVID.\n\n### Rationale for spiffe_bundle_endpoint\n\nBecause the location of the SPIFFE Bundle Endpoint cannot be inferred from the SPIFFE ID or the SVID, it must be preconfigured. However, the specification does not define how this configuration is to be performed. If the `spiffe_bundle_endpoint` client metadata is available, the authorization server can use it to store the preconfigured value.\n\n### Rationale for spiffe_jwt and spiffe_x509\n\nThe `token_endpoint_auth_method` client metadata and the `token_endpoint_auth_methods_supported` server metadata require identifiers representing the new client authentication methods defined by this specification.",
+      "createdAt": "2026-02-20T16:51:19Z",
+      "updatedAt": "2026-02-20T19:52:48Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "TakahikoKawasaki",
+          "authorAssociation": "NONE",
+          "body": "I have created a diagram illustrating the approach I proposed on the OAuth WG mailing list for enabling SPIFFE Client Authentication to coexist with CIMD and OpenID Federation ([OAuth WG ML Thread](https://mailarchive.ietf.org/arch/browse/oauth/?gbt=1&index=RBshouOA2H8snQD9kRsEn8w89qg)).\n\n<img width=\"1600\" height=\"900\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/97523bfe-71b9-4cde-b7fd-d75e0f1a16e9\" />",
+          "createdAt": "2026-02-20T19:52:48Z",
+          "updatedAt": "2026-02-20T19:52:48Z"
+        }
+      ]
     }
   ],
   "pulls": [
