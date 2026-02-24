@@ -412,7 +412,7 @@ X509-SVIDs MUST NOT be validated using the system trust store. The SPIFFE ID car
 JWT-SVIDs carrying `iss` claims could technically be validated by retrieving the signing keys via OpenID Connect Discovery or OAuth 2.0 Authorization Server Metadata.
 This approach only applies for JWT-SVIDs and only works when the `iss` claim is present, which is not guaranteed and not part of the JWT-SVID specification.
 
-The narrow scope of applicability does not make it a viable alternative to the SPIFFE Bundle Endpoint. In combination with interoperability concerns, this approach is NOT RECOMMENDED.
+Because of its narrow scope and interoperability considerations, this approach is not a general alternative to the SPIFFE Bundle Endpoint. Implementations SHOULD use the mechanisms defined in this specification when available. However, when those mechanisms are not supported by a peer deployment, implementations MAY use iss-based discovery and key retrieval for JWT-SVID validation as a compatibility mechanism, subject to local policy and appropriate trust configuration.
 
 # Implementation Status
 
