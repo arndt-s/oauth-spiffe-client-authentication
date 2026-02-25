@@ -5,11 +5,11 @@
 Web Authorization Protocol                            A. Schwenkschuster
 Internet-Draft                                             P. Kasselmann
 Intended status: Standards Track                        Defakto Security
-Expires: 28 August 2026                                          S. Rose
+Expires: 29 August 2026                                          S. Rose
                                                                     NIST
                                                            S. Thorgersen
                                                                      IBM
-                                                        24 February 2026
+                                                        25 February 2026
 
 
                    OAuth SPIFFE Client Authentication
@@ -60,7 +60,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 August 2026.
+   This Internet-Draft will expire on 29 August 2026.
 
 Copyright Notice
 
@@ -97,6 +97,7 @@ Table of Contents
        5.2.4.  Using the JWT-SVID iss claim
    6.  Implementation Status
    7.  Security Considerations
+     7.1.  The JWT SVID iss claim
    8.  IANA Considerations
    9.  Normative References
    Appendix A.  Document History
@@ -563,8 +564,9 @@ Certificate:
    specification when available.  However, when those mechanisms are not
    supported by a peer deployment, implementations MAY use iss-based
    discovery and key retrieval for JWT-SVID validation as a
-   compatibility mechanism, subject to local policy and appropriate
-   trust configuration.
+   compatibility mechanism, subject to local policy, appropriate trust
+   configuration and risk mitigations described in jwt-svid-security-
+   considerations.
 
 6.  Implementation Status
 
@@ -619,6 +621,31 @@ Certificate:
    issued token to an attacker if the attacker is able to obtain a
    certificate that can be validated by one of the misconfigured trust
    anchors in the trust store.
+
+7.1.  The JWT SVID iss claim
+
+   As described in {#jwt-svid-iss-claim}, iss-based key discovery is not
+   a general alternative to the SPIFFE Bundle Endpoint and SHOULD be
+   avoided.
+
+   However, if it is used, the authorization server MUST NOT perform
+   issuer-based discovery solely based on the iss value from the token
+   unless the iss value is already known to the authorization server,
+   and that iss value is explicitly associated with the configured
+   SPIFFE Trust Domain being validated.
+
+   In addition implementations MUST NOT assume that keys advertised via
+   OpenID Connect Discovery or OAuth 2.0 Authorization Server Metadata
+   are dedicated to JWT-SVID issuance.  The same provider infrastructure
+   may issue multiple JWT types (e.g., OAuth/OIDC tokens and JWT-SVIDs).
+   A token MUST NOT be accepted as a JWT-SVID solely because it is a
+   JWT, its signature validates under keys discovered from iss, and its
+   sub resembles a SPIFFE ID.  Doing so can enable token confusion
+   (e.g., presenting an OAuth/OIDC token issued for another purpose as a
+   JWT-SVID).  Implementations MUST validate JWT-SVIDs according to JWT-
+   SVID-specific requirements and MUST use a trust anchor or key source
+   explicitly bound to the configured SPIFFE Trust Domain, rather than
+   generic issuer-based discovery from untrusted token input.
 
 8.  IANA Considerations
 
