@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-22T00:14:01.939781+00:00",
+  "timestamp": "2026-02-26T00:14:03.631649+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -379,11 +379,13 @@
       "state": "OPEN",
       "author": "ncamwing",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "ncamwing"
+      ],
       "labels": [],
       "body": "In looking how to address the federation comment, we need elaborate what is meant by WebPKI; which I'm presuming is the SPIRE's definition for how they use  the certs.  At minimum we can reference that section here, or provide a little more elaboration to our intent.",
       "createdAt": "2026-02-04T19:41:40Z",
-      "updatedAt": "2026-02-04T19:41:40Z",
+      "updatedAt": "2026-02-24T15:19:51Z",
       "closedAt": null,
       "comments": []
     },
@@ -415,7 +417,7 @@
       "labels": [],
       "body": "I would like to propose the following [IANA OAuth Parameters](https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml) for SPIFFE Client Authentication:\n\n### OAuth Dynamic Client Registration Metadata\n\n- `spiffe_id`\n- `spiffe_bundle_endpoint`\n\n### OAuth Token Endpoint Authentication Methods\n\n- `spiffe_jwt`\n-  `spiffe_x509`\n\n### Rationale for spiffe_id\n\nSPIFFE Client Authentication with JWT-SVIDs requires the authorization server to ensure that the SPIFFE ID in the SVID matches the registered value, but the specification does not define how this verification is to be performed. If the `spiffe_id` client metadata is available, the authorization server can satisfy this requirement by comparing the registered metadata value with the SPIFFE ID contained in the SVID.\n\n### Rationale for spiffe_bundle_endpoint\n\nBecause the location of the SPIFFE Bundle Endpoint cannot be inferred from the SPIFFE ID or the SVID, it must be preconfigured. However, the specification does not define how this configuration is to be performed. If the `spiffe_bundle_endpoint` client metadata is available, the authorization server can use it to store the preconfigured value.\n\n### Rationale for spiffe_jwt and spiffe_x509\n\nThe `token_endpoint_auth_method` client metadata and the `token_endpoint_auth_methods_supported` server metadata require identifiers representing the new client authentication methods defined by this specification.",
       "createdAt": "2026-02-20T16:51:19Z",
-      "updatedAt": "2026-02-20T19:52:48Z",
+      "updatedAt": "2026-02-25T19:23:02Z",
       "closedAt": null,
       "comments": [
         {
@@ -424,8 +426,31 @@
           "body": "I have created a diagram illustrating the approach I proposed on the OAuth WG mailing list for enabling SPIFFE Client Authentication to coexist with CIMD and OpenID Federation ([OAuth WG ML Thread](https://mailarchive.ietf.org/arch/browse/oauth/?gbt=1&index=RBshouOA2H8snQD9kRsEn8w89qg)).\n\n<img width=\"1600\" height=\"900\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/97523bfe-71b9-4cde-b7fd-d75e0f1a16e9\" />",
           "createdAt": "2026-02-20T19:52:48Z",
           "updatedAt": "2026-02-20T19:52:48Z"
+        },
+        {
+          "author": "aaronpk",
+          "authorAssociation": "NONE",
+          "body": "@TakahikoKawasaki Please see this PR I created to add this mechanism into the draft: https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/34",
+          "createdAt": "2026-02-25T19:23:02Z",
+          "updatedAt": "2026-02-25T19:23:02Z"
         }
       ]
+    },
+    {
+      "number": 31,
+      "id": "I_kwDOOml42M7tXMlw",
+      "title": "Distinguishing between non-SPIFFE and SPIFFE TLS authentication?",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/31",
+      "state": "OPEN",
+      "author": "stianst",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "`JWT-SVIDs` uses a different `client_assertion_type` making it simple for the authorization server to identify if the client is using a \"regular\" JWT client assertion or a JWT-SVID.\n\nFor `X509-SVID` the only way the authorization server can distinguish between a \"regular\" mTLS authentication and SPIFFE is by parsing the `client_id`. \n\nThis may lead to difficulty in support in authorization servers. As an example in Keycloak client authentication is implemented as a chain of authenticators, where the first authenticator that is able to authenticate the client is used (with an addition check that once the client is identified the correct authenticator was selected). This effectively means the regular mTLS authenticator would have to have an exclusion if the client_id is prefixed with `spiffe`.\n\nAdditionally Keycloak expects the `client_id` parameter to be the ID of the client within Keycloak; and not the SPIFFE SVID.\n\nWould it make sense to use an alternative parameter such as `spiffe_svid` instead of `client_id` to make it clear to the authorization server what it is?",
+      "createdAt": "2026-02-24T08:33:01Z",
+      "updatedAt": "2026-02-24T08:33:01Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -1405,6 +1430,230 @@
               "body": "You are proposing to use the POP-JWT here instead of a WPT, correct?",
               "createdAt": "2026-02-18T14:27:36Z",
               "updatedAt": "2026-02-18T14:27:36Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "id": "PR_kwDOOml42M7F3RWX",
+      "title": "Add section for interoperability between authorization servers and clients",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/32",
+      "state": "OPEN",
+      "author": "stianst",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Closes #19\r\n\r\nSigned-off-by: stianst <stianst@gmail.com>\r\n",
+      "createdAt": "2026-02-24T08:59:50Z",
+      "updatedAt": "2026-02-24T09:02:31Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "7404b14a04f1cab1ee61696308f964d2750aeb33",
+      "headRepository": "stianst/oauth-spiffe-client-authentication",
+      "headRefName": "interoperability",
+      "headRefOid": "7bcd48c9103da7df2fb5148ff903062453a5449b",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 33,
+      "id": "PR_kwDOOml42M7F77Sc",
+      "title": "Guidance on using the \"iss\" claim",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/33",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "See issue #7",
+      "createdAt": "2026-02-24T13:35:19Z",
+      "updatedAt": "2026-02-25T19:28:14Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "7404b14a04f1cab1ee61696308f964d2750aeb33",
+      "headRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "headRefName": "PieterKas-patch-1",
+      "headRefOid": "b95d52cd5c4784f1f164f280f2bde2e54065ecea",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M7laoIS",
+          "commit": {
+            "abbreviatedOid": "72041fe"
+          },
+          "author": "stianst",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-24T16:05:32Z",
+          "updatedAt": "2026-02-24T16:05:33Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I can see a potential security issues with relying on `iss` field:\n\nA trust relationship is configured in the authorization server for a given SPIFFE Trust Domain and it's associated SPIFFE Bundle Endpoint, but there is no explicit `iss` configured for this trust relationship. This would enable an attacker to craft a JWT-SVID with the `iss=https://attacker`; if the authorization server now validates the `sub` and SPIFFE Trust Domain it may blindly retrieve the keys from the `iss` without further verification.\n\nTo mitigate this it would be good to state the authorization server MUST only use iss-based discovery if the `iss` is known and associated with the SPIFFE Trust Domain.\n\nIn terms of the actual keys presented listed in OpenID Connect Discovery or OAuth 2.0 Authorization Server Metadata they may be advertised for other purposes than JWT-SVID; rather hypothetical but imagine a scenario where the provider is both an OpenID Connect provider and a SPIFFE provider, and a client can be registered with custom client-ids. Someone can then create a  client with `client_id=spiffe://mytrustdomain/myclient` and obtain an access token through an authorization request to then leverage this access token as a JWT-SVID.\n\nThe implementation in Keycloak avoids these issues completely by effectively always ignoring the `iss`.\n",
+              "createdAt": "2026-02-24T16:05:33Z",
+              "updatedAt": "2026-02-24T16:06:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7l2cVj",
+          "commit": {
+            "abbreviatedOid": "72041fe"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-25T19:04:13Z",
+          "updatedAt": "2026-02-25T19:04:13Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Thanks @stianst - very helpful - I think these should be captured as security considerations. I think there are two issues here:\r\n\r\n1. Trusted issuer\r\n2. keys used for other purposes than issueing SVIDs that are published at the OpenID Connect metatadata point.",
+              "createdAt": "2026-02-25T19:04:13Z",
+              "updatedAt": "2026-02-25T19:04:13Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "id": "PR_kwDOOml42M7GSlEf",
+      "title": "Added mechanism to use Client ID Metadata Document for SPIFFE client metadata discovery",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/34",
+      "state": "OPEN",
+      "author": "aaronpk",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #30",
+      "createdAt": "2026-02-25T17:13:49Z",
+      "updatedAt": "2026-02-25T17:35:28Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "7404b14a04f1cab1ee61696308f964d2750aeb33",
+      "headRepository": "aaronpk/oauth-spiffe-client-authentication",
+      "headRefName": "main",
+      "headRefOid": "5cde0e5722407396a6961e76e716a9ac9aafeca2",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M7l0K16",
+          "commit": {
+            "abbreviatedOid": "0b6af83"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "## Pull request overview\n\nThis PR adds support for using Client ID Metadata Documents (as defined in I-D.ietf-oauth-client-id-metadata-document) for SPIFFE client metadata discovery in OAuth authentication. This enhancement resolves issue #30 by introducing standardized OAuth parameters for SPIFFE client authentication, enabling authorization servers to discover and validate SPIFFE client metadata through a URL-based metadata document mechanism.\n\n**Changes:**\n- Extended JWT-SVID validation logic to support Client ID Metadata Document URLs with SPIFFE ID matching (including wildcard prefix matching)\n- Added new client metadata parameters (`spiffe_id` and `spiffe_bundle_endpoint`) for Client ID Metadata Documents\n- Registered new OAuth Dynamic Client Registration Metadata parameters with IANA\n\n\n\n\n\n---\n\n\ud83d\udca1 <a href=\"/arndt-s/oauth-spiffe-client-authentication/new/main?filename=.github/instructions/*.instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Add Copilot custom instructions</a> for smarter, more guided reviews. <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn how to get started</a>.",
+          "createdAt": "2026-02-25T17:21:21Z",
+          "updatedAt": "2026-02-25T17:21:23Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "The prefix matching logic uses string prefix matching rather than path-segment matching. This means that spiffe_id value of \"spiffe://example.org/client*\" would match \"spiffe://example.org/client123\" as well as \"spiffe://example.org/client/123\". Consider clarifying whether this string-based prefix matching is intentional, or whether the specification should require path-segment boundaries (e.g., by requiring a trailing slash before the wildcard, or by specifying that the wildcard must be preceded by a slash). The example on line 228 uses \"spiffe://example.org/client/*\" with a slash, which suggests path-segment matching may be intended.\n```suggestion\n5. Verify that the SPIFFE ID in the `sub` claim matches or is associated with a recognized client identifier. If the client authentication is presented with a `client_id` that is a URL described in {{I-D.ietf-oauth-client-id-metadata-document}}, verify that the SPIFFE ID in the `sub` claim matches the `spiffe_id` value in the Client ID Metadata Document (see {{client-registration-metadata}}). If the `spiffe_id` value uses a wildcard, it MUST end with the two-character sequence \"`/*`\". In this case, the authorization server MUST perform a path-segment prefix match: the `sub` claim value MUST begin with the `spiffe_id` value excluding the trailing \"`*`\" (i.e., up to and including the final \"`/`\"), and this prefix MUST correspond to complete path segment(s) of the SPIFFE ID (for example, `spiffe://example.org/client/*` matches `spiffe://example.org/client/123` but does not match `spiffe://example.org/client123`). Otherwise, the `sub` claim MUST be an exact match of the `spiffe_id` value.\n```",
+              "createdAt": "2026-02-25T17:21:22Z",
+              "updatedAt": "2026-02-25T17:21:24Z"
+            },
+            {
+              "originalPosition": 37,
+              "body": "Spelling error: \"For clarify\" should be \"For clarity\". The document uses \"For clarity\" in line 263, so this should be consistent.\n```suggestion\nFor clarity, the SPIFFE-JWT header and body decoded:\n```",
+              "createdAt": "2026-02-25T17:21:22Z",
+              "updatedAt": "2026-02-25T17:21:25Z"
+            },
+            {
+              "originalPosition": 34,
+              "body": "The client_assertion value appears to be identical to the one in the earlier example (line 166), but the decoded JWT shows a different sub claim value (spiffe://example.org/client/1234 vs spiffe://example.org/my-oauth-client). The encoded JWT must match its decoded representation. Please regenerate the JWT token to match the decoded claims shown in lines 206-218.",
+              "createdAt": "2026-02-25T17:21:22Z",
+              "updatedAt": "2026-02-25T17:21:25Z"
+            },
+            {
+              "originalPosition": 23,
+              "body": "Grammar error: \"The following examples illustrates\" is incorrect. It should be either \"The following example illustrates\" (singular) or \"The following examples illustrate\" (plural). Since this is a single example, \"The following example illustrates\" would be most appropriate.\n```suggestion\nThe following example illustrates a `client_credentials` request to the token endpoint of an OAuth 2.0 authorization server leveraging a SPIFFE JWT-SVID to authenticate the client.\n```",
+              "createdAt": "2026-02-25T17:21:23Z",
+              "updatedAt": "2026-02-25T17:21:25Z"
+            },
+            {
+              "originalPosition": 82,
+              "body": "The statement suggests that jwks or jwks_uri from the Client ID Metadata Document could be used to obtain signing keys for validating SVIDs. However, in SPIFFE, JWT-SVIDs are signed by the trust domain's signing authority, not by the client itself. The trust domain's keys typically come from the SPIFFE Bundle, while the client's jwks_uri would contain keys that the client owns for other purposes. Please clarify whether this is intentional and under what circumstances the client's jwks_uri would contain the appropriate trust domain signing keys, or if this should reference a different mechanism for obtaining trust domain keys as an alternative to the spiffe_bundle_endpoint.\n```suggestion\n: OPTIONAL. The URL of the SPIFFE Bundle Endpoint for the client's trust domain, which the authorization server can use to retrieve the signing keys for validating the client's SVIDs. If not provided, the authorization server MUST obtain the signing keys for the client's trust domain through some other established mechanism, such as a pre-configured SPIFFE bundle or equivalent trust-domain configuration, but not from the client's `jwks` or `jwks_uri` parameters.\n```",
+              "createdAt": "2026-02-25T17:21:23Z",
+              "updatedAt": "2026-02-25T17:21:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7l0Rdr",
+          "commit": {
+            "abbreviatedOid": "0b6af83"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-25T17:26:07Z",
+          "updatedAt": "2026-02-25T17:26:08Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "The JWTs are not identical, but they do look very similar, because the only difference is the `sub` value. I did regenerate the JWT token for the second example.",
+              "createdAt": "2026-02-25T17:26:08Z",
+              "updatedAt": "2026-02-25T17:26:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7l0X9-",
+          "commit": {
+            "abbreviatedOid": "0b6af83"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-25T17:30:29Z",
+          "updatedAt": "2026-02-25T17:30:29Z",
+          "comments": [
+            {
+              "originalPosition": 82,
+              "body": "This is a valid question. I was imagining the client's `jwks` or `jwks_uri` could point to the SPIFFE Workload API's keys instead of using the SPIFFE Bundle Endpoint. I guess the question is whether the Bundle Endpoint is always used in SPIFFE or whether it's an optional feature.",
+              "createdAt": "2026-02-25T17:30:29Z",
+              "updatedAt": "2026-02-25T17:30:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7l0f63",
+          "commit": {
+            "abbreviatedOid": "5cde0e5"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-25T17:35:28Z",
+          "updatedAt": "2026-02-25T17:35:28Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "I don't love how long this bullet point item has gotten. It might make more sense to move the details of the processing rules down to a section below.",
+              "createdAt": "2026-02-25T17:35:28Z",
+              "updatedAt": "2026-02-25T17:35:28Z"
             }
           ]
         }
