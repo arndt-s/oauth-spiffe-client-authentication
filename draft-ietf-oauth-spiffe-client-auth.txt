@@ -5,11 +5,11 @@
 Web Authorization Protocol                            A. Schwenkschuster
 Internet-Draft                                             P. Kasselmann
 Intended status: Standards Track                        Defakto Security
-Expires: 20 June 2026                                            S. Rose
+Expires: 31 August 2026                                          S. Rose
                                                                     NIST
                                                            S. Thorgersen
                                                                      IBM
-                                                        17 December 2025
+                                                        27 February 2026
 
 
                    OAuth SPIFFE Client Authentication
@@ -60,11 +60,11 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 June 2026.
+   This Internet-Draft will expire on 31 August 2026.
 
 Copyright Notice
 
-   Copyright (c) 2025 IETF Trust and the persons identified as the
+   Copyright (c) 2026 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -97,6 +97,7 @@ Table of Contents
        5.2.4.  Using the JWT-SVID iss claim
    6.  Implementation Status
    7.  Security Considerations
+     7.1.  The JWT SVID iss claim
    8.  IANA Considerations
    9.  Normative References
    Appendix A.  Document History
@@ -557,9 +558,15 @@ Certificate:
    SVIDs and only works when the iss claim is present, which is not
    guaranteed and not part of the JWT-SVID specification.
 
-   The narrow scope of applicability does not make it a viable
-   alternative to the SPIFFE Bundle Endpoint.  In combination with
-   interoperability concerns, this approach is NOT RECOMMENDED.
+   Because of its narrow scope and interoperability considerations, this
+   approach is not a general alternative to the SPIFFE Bundle Endpoint.
+   Implementations SHOULD use the mechanisms defined in this
+   specification when available.  However, when those mechanisms are not
+   supported by a peer deployment, implementations MAY use iss-based
+   discovery and key retrieval for JWT-SVID validation as a
+   compatibility mechanism, subject to local policy, appropriate trust
+   configuration and risk mitigations described in jwt-svid-security-
+   considerations.
 
 6.  Implementation Status
 
@@ -615,6 +622,31 @@ Certificate:
    certificate that can be validated by one of the misconfigured trust
    anchors in the trust store.
 
+7.1.  The JWT SVID iss claim
+
+   As described in {#jwt-svid-iss-claim}, iss-based key discovery is not
+   a general alternative to the SPIFFE Bundle Endpoint and SHOULD be
+   avoided.
+
+   However, if it is used, the authorization server MUST NOT perform
+   issuer-based discovery solely based on the iss value from the token
+   unless the iss value is already known to the authorization server,
+   and that iss value is explicitly associated with the configured
+   SPIFFE Trust Domain being validated.
+
+   In addition implementations MUST NOT assume that keys advertised via
+   OpenID Connect Discovery or OAuth 2.0 Authorization Server Metadata
+   are dedicated to JWT-SVID issuance.  The same provider infrastructure
+   may issue multiple JWT types (e.g., OAuth/OIDC tokens and JWT-SVIDs).
+   A token MUST NOT be accepted as a JWT-SVID solely because it is a
+   JWT, its signature validates under keys discovered from iss, and its
+   sub resembles a SPIFFE ID.  Doing so can enable token confusion
+   (e.g., presenting an OAuth/OIDC token issued for another purpose as a
+   JWT-SVID).  Implementations MUST validate JWT-SVIDs according to JWT-
+   SVID-specific requirements and MUST use a trust anchor or key source
+   explicitly bound to the configured SPIFFE Trust Domain, rather than
+   generic issuer-based discovery from untrusted token input.
+
 8.  IANA Considerations
 
    This document requests a new entry to be added to the Oauth URI
@@ -640,9 +672,9 @@ Certificate:
               "Updates to OAuth 2.0 JSON Web Token (JWT) Client
               Authentication and Assertion-Based Authorization Grants",
               Work in Progress, Internet-Draft, draft-ietf-oauth-
-              rfc7523bis-03, 7 October 2025,
+              rfc7523bis-05, 12 January 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              rfc7523bis-03>.
+              rfc7523bis-05>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
