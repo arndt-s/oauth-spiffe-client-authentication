@@ -64,6 +64,7 @@ normative:
   RFC7523:
   RFC7591:
   RFC8705:
+  I-D.ietf-oauth-client-id-metadata-document:
   SPIFFE_ID:
     title: SPIFFE-ID
     target: https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md
@@ -147,7 +148,7 @@ To validate JWT-SVID client authentication requests the authorization server MUS
 2. Verify that the JWT has not expired (check the `exp` claim).
 3. Verify that the `aud` claim contains only the issuer identifier of the authorization server as its sole value. See {{!I-D.draft-ietf-oauth-rfc7523bis}} for details.
 4. Verify the JWT signature using the signing keys of the trust domains according to {{spiffe-bundle-validation}}.
-5. Verify that the SPIFFE ID in the `sub` claim matches a registered client identifier or is associated with a registered client identifier.
+5. Verify that the SPIFFE ID in the `sub` claim matches or is associated with a recognized client identifier. If the client authentication is presented with a `client_id` that is a URL described in {{I-D.ietf-oauth-client-id-metadata-document}}, verify that the SPIFFE ID in the `sub` claim matches the `spiffe_id` value in the Client ID Metadata Document as described in {{client-registration-metadata}}.
 
 ### JWT-SVID example
 
@@ -161,8 +162,8 @@ Content-Type: application/x-www-form-urlencoded
 grant_type=authorization_code&
 code=n0esc3NRze7LTCu7iYzS6a5acc3f0ogp4&
 client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3A
-client-assertion-type%3Ajwt-spiffe&
-client_assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjR2QzhhZ3ljSHU2cm5rRUVKWUFINlZ1Q2U0Sm9Ta1BWIiwidHlwIjoiSldUIn0.eyJhdWQiOlsiaHR0cHM6Ly9hcy5leGFtcGxlLmNvbS90b2tlbiJdLCJleHAiOjE3NDcxMjQ1NDMsImlhdCI6MTc0NzEyNDI0Mywic3ViIjoic3BpZmZlOi8vZXhhbXBsZS5vcmcvbXktb2F1dGgtY2xpZW50In0.Xlv5lW4cbxDsQk4l0paewG4nXOR7MxF_FMn_c27DX45Bxr2HUZf9a6Untfq5S47xpwbw495HBL6_1Lc6TMJxmw
+client-assertion-type=jwt-spiffe&
+client_assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjR2QzhhZ3ljSHU2cm5rRUVKWUFINlZ1Q2U0Sm9Ta1BWIiwidHlwIjoiSldUIn0.eyJhdWQiOlsiaHR0cHM6Ly9hcy5leGFtcGxlLmNvbS8iXSwiZXhwIjoxNzQ3MTI0NTQzLCJpYXQiOjE3NDcxMjQyNDMsInN1YiI6InNwaWZmZTovL2V4YW1wbGUub3JnL215LW9hdXRoLWNsaWVudCJ9.Xlv5lW4cbxDsQk4l0paewG4nXOR7MxF_FMn_c27DX45Bxr2HUZf9a6Untfq5S47xpwbw495HBL6_1Lc6TMJxmw
 ~~~
 
 For clarify, the SPIFFE-JWT header and body decoded:
@@ -175,13 +176,59 @@ For clarify, the SPIFFE-JWT header and body decoded:
 }.
 {
   "aud": [
-    "https://as.example.com/token"
+    "https://as.example.com/"
   ],
   "exp": 1747124543,
   "iat": 1747124243,
   "sub": "spiffe://example.org/my-oauth-client"
 }
 ~~~
+
+### JWT-SVID example with Client ID Metadata Document
+
+The following example illustrates a `client_credentials` request to the token endpoint of an OAuth 2.0 authorization server leveraging a SPIFFE JWT-SVID to authenticate the client.
+
+~~~
+POST /token HTTP/1.1
+Host: as.example.com
+Content-Type: application/x-www-form-urlencoded
+
+grant_type=client_credentials&
+client_id=https%3A%2F%2Fexample.org%2Fclient%2Fmetadata.json&
+client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3A
+client-assertion-type=jwt-spiffe&
+client_assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjR2QzhhZ3ljSHU2cm5rRUVKWUFINlZ1Q2U0Sm9Ta1BWIiwidHlwIjoiSldUIn0.eyJhdWQiOlsiaHR0cHM6Ly9hcy5leGFtcGxlLmNvbS8iXSwiZXhwIjoxNzQ3MTI0NTQzLCJpYXQiOjE3NDcxMjQyNDMsInN1YiI6InNwaWZmZTovL2V4YW1wbGUub3JnL2NsaWVudC8xMjM0In0.Xlv5lW4cbxDsQk4l0paewG4nXOR7MxF_FMn_c27DX45Bxr2HUZf9a6Untfq5S47xpwbw495HBL6_1Lc6TMJxmw
+~~~
+
+For clarity, the SPIFFE-JWT header and body decoded:
+
+~~~
+{
+  "alg": "ES256",
+  "kid": "4vC8agycHu6rnkEEJYAH6VuCe4JoSkPV",
+  "typ": "JWT"
+}.
+{
+  "aud": [
+    "https://as.example.com/"
+  ],
+  "exp": 1747124543,
+  "iat": 1747124243,
+  "sub": "spiffe://example.org/client/1234"
+}
+~~~
+
+The `client_id` points to a Client ID Metadata Document ({{I-D.ietf-oauth-client-id-metadata-document}}) with the following contents:
+
+~~~
+{
+    "client_id": "https://example.org/client/metadata.json",
+    "client_name": "Example Client",
+    "spiffe_id": "spiffe://example.org/client/*",
+    "spiffe_bundle_endpoint": "https://example.org/client/bundle.json"
+}
+~~~
+
 
 ## Client Authentication using X509-SVID
 
@@ -264,6 +311,18 @@ Certificate:
 This specification requires previously established trust between the OAuth 2.0 Authorization Server and the SPIFFE Trust Domain. This needs to happen out of band and is not in scope of this specification. However, the mechanisms of key distribution is in scope and described in {{spiffe-bundle-validation}}.
 
 Similar to the trust establishment, corresponding OAuth clients need to be established prior of using SPIFFE as client authentication. This is also out of scope, implementors may for example choose to leverage OAuth 2.0 dynamic client registration according to {{RFC7591}} or configure them out of band.
+
+## Client Registration Metadata {#client-registration-metadata}
+
+This specification defines the following client metadata parameters for use in Client ID Metadata Documents {{I-D.ietf-oauth-client-id-metadata-document}}:
+
+spiffe_id
+: REQUIRED. The SPIFFE ID of the client, e.g. `spiffe://example.org/my-oauth-client`. The value MAY include a trailing `/*` character sequence (e.g. `spiffe://example.org/workloads/*`) indicating that a prefix match against the SPIFFE ID in the `sub` claim of the JWT-SVID is acceptable rather than requiring an exact match.
+
+spiffe_bundle_endpoint
+: OPTIONAL. The URL of the SPIFFE Bundle Endpoint for the client's trust domain, which the authorization server can use to retrieve the signing keys for validating the client's SVIDs. If not provided, the authorization server MUST obtain the signing keys for the client's trust domain through some other established mechanism, such as a pre-configured SPIFFE bundle.
+
+If the `spiffe_id` value uses a wildcard, it MUST end with the two-character sequence "`/*`". In this case, the authorization server MUST perform a path-segment prefix match: the `sub` claim value MUST begin with the `spiffe_id` value excluding the trailing "`*`" (i.e., up to and including the final "`/`"), and this prefix MUST correspond to complete path segment(s) of the SPIFFE ID (for example, `spiffe://example.org/client/*` matches `spiffe://example.org/client/123` but does not match `spiffe://example.org/client123`). Otherwise, the `sub` claim MUST be an exact match of the `spiffe_id` value.
 
 # SPIFFE Key Distribution and Validation {#spiffe-bundle-validation}
 
@@ -453,10 +512,28 @@ This document requests a new entry to be added to the Oauth URI registry found a
 - Change Controller: IETF
 - Reference: This Document
 
+## OAuth Dynamic Client Registration Metadata
+
+This document requests the following entries to be added to the "OAuth Dynamic Client Registration Metadata" registry defined in {{RFC7591}}:
+
+- Client Metadata Name: `spiffe_id`
+- Client Metadata Description: SPIFFE ID of the client
+- Change Controller: IETF
+- Reference: This Document
+
+- Client Metadata Name: `spiffe_bundle_endpoint`
+- Client Metadata Description: URL of the SPIFFE Bundle Endpoint for the client's trust domain
+- Change Controller: IETF
+- Reference: This Document
+
 --- back
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+## draft-ietf-oauth-spiffe-client-auth-01
+
+* Added mechanism to use Client ID Metadata Document for SPIFFE client metadata discovery
 
 ## draft-ietf-oauth-spiffe-client-auth-00
 
