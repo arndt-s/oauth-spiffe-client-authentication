@@ -407,12 +407,12 @@ In small, static environments the authorization server MAY be configured with th
 
 X509-SVIDs MUST NOT be validated using the system trust store. The SPIFFE ID carried in the URI SAN is rarely a verifiable attribute in the broader X.509 ecosystem. Using the system trust store as trust anchor would allow ANY certificate authority in it to issue a trusted X509-SVID for ANY SPIFFE ID. In comparison: using SPIFFE-native validation methods restricts the signing of SPIFFE-IDs to the corresponding trust domain signing keys.
 
-### Using the JWT-SVID `iss` claim
+### Using the JWT-SVID `iss` claim {#jwt-svid-iss-claim}
 
 JWT-SVIDs carrying `iss` claims could technically be validated by retrieving the signing keys via OpenID Connect Discovery or OAuth 2.0 Authorization Server Metadata.
 This approach only applies for JWT-SVIDs and only works when the `iss` claim is present, which is not guaranteed and not part of the JWT-SVID specification.
 
-The narrow scope of applicability does not make it a viable alternative to the SPIFFE Bundle Endpoint. In combination with interoperability concerns, this approach is NOT RECOMMENDED.
+Because of its narrow scope and interoperability considerations, this approach is not a general alternative to the SPIFFE Bundle Endpoint. Implementations SHOULD use the mechanisms defined in this specification when available. However, when those mechanisms are not supported by a peer deployment, implementations MAY use `iss`-based discovery and key retrieval for JWT-SVID validation as a compatibility mechanism, subject to local policy, appropriate trust configuration and risk mitigations described in {{{jwt-svid-security-considerations}}.
 
 # Implementation Status
 
@@ -436,6 +436,13 @@ Client authentication using X509-SVIDs has the same security considerations as d
 
 The issues described in Section 5.2 above include the threat that an authorization server may have the incorrect
 trust stores configured to validate the client SVID. This could result in an incorrectly issued token to an attacker if the attacker is able to obtain a certificate that can be validated by one of the misconfigured trust anchors in the trust store.
+
+## The JWT SVID iss claim {#jwt-svid-security-considerations}
+As described in {#jwt-svid-iss-claim}, `iss`-based key discovery is not a general alternative to the SPIFFE Bundle Endpoint and SHOULD be avoided.
+
+However, if it is used, the authorization server MUST NOT perform issuer-based discovery solely based on the `iss` value from the token unless the `iss` value is already known to the authorization server, and that `iss` value is explicitly associated with the configured SPIFFE Trust Domain being validated.
+
+In addition implementations MUST NOT assume that keys advertised via OpenID Connect Discovery or OAuth 2.0 Authorization Server Metadata are dedicated to JWT-SVID issuance. The same provider infrastructure may issue multiple JWT types (e.g., OAuth/OIDC tokens and JWT-SVIDs). A token MUST NOT be accepted as a JWT-SVID solely because it is a JWT, its signature validates under keys discovered from iss, and its sub resembles a SPIFFE ID. Doing so can enable token confusion (e.g., presenting an OAuth/OIDC token issued for another purpose as a JWT-SVID). Implementations MUST validate JWT-SVIDs according to JWT-SVID-specific requirements and MUST use a trust anchor or key source explicitly bound to the configured SPIFFE Trust Domain, rather than generic issuer-based discovery from untrusted token input.
 
 # IANA Considerations
 
