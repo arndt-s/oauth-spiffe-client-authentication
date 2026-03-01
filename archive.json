@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-26T00:14:03.631649+00:00",
+  "timestamp": "2026-03-01T00:15:29.134371+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -410,15 +410,15 @@
       "id": "I_kwDOOml42M7smOIn",
       "title": "IANA OAuth Parameters for SPIFFE Client Authentication",
       "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/30",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "TakahikoKawasaki",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "I would like to propose the following [IANA OAuth Parameters](https://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml) for SPIFFE Client Authentication:\n\n### OAuth Dynamic Client Registration Metadata\n\n- `spiffe_id`\n- `spiffe_bundle_endpoint`\n\n### OAuth Token Endpoint Authentication Methods\n\n- `spiffe_jwt`\n-  `spiffe_x509`\n\n### Rationale for spiffe_id\n\nSPIFFE Client Authentication with JWT-SVIDs requires the authorization server to ensure that the SPIFFE ID in the SVID matches the registered value, but the specification does not define how this verification is to be performed. If the `spiffe_id` client metadata is available, the authorization server can satisfy this requirement by comparing the registered metadata value with the SPIFFE ID contained in the SVID.\n\n### Rationale for spiffe_bundle_endpoint\n\nBecause the location of the SPIFFE Bundle Endpoint cannot be inferred from the SPIFFE ID or the SVID, it must be preconfigured. However, the specification does not define how this configuration is to be performed. If the `spiffe_bundle_endpoint` client metadata is available, the authorization server can use it to store the preconfigured value.\n\n### Rationale for spiffe_jwt and spiffe_x509\n\nThe `token_endpoint_auth_method` client metadata and the `token_endpoint_auth_methods_supported` server metadata require identifiers representing the new client authentication methods defined by this specification.",
       "createdAt": "2026-02-20T16:51:19Z",
-      "updatedAt": "2026-02-25T19:23:02Z",
-      "closedAt": null,
+      "updatedAt": "2026-02-27T19:02:42Z",
+      "closedAt": "2026-02-27T19:02:42Z",
       "comments": [
         {
           "author": "TakahikoKawasaki",
@@ -429,7 +429,7 @@
         },
         {
           "author": "aaronpk",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "@TakahikoKawasaki Please see this PR I created to add this mechanism into the draft: https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/34",
           "createdAt": "2026-02-25T19:23:02Z",
           "updatedAt": "2026-02-25T19:23:02Z"
@@ -1447,7 +1447,7 @@
       "labels": [],
       "body": "Closes #19\r\n\r\nSigned-off-by: stianst <stianst@gmail.com>\r\n",
       "createdAt": "2026-02-24T08:59:50Z",
-      "updatedAt": "2026-02-24T09:02:31Z",
+      "updatedAt": "2026-02-27T18:00:33Z",
       "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
       "baseRefName": "main",
       "baseRefOid": "7404b14a04f1cab1ee61696308f964d2750aeb33",
@@ -1459,31 +1459,54 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M7mkXNV",
+          "commit": {
+            "abbreviatedOid": "7bcd48c"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-27T18:00:33Z",
+          "updatedAt": "2026-02-27T18:00:33Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "@stianst - this text puts the burden for interoperability on the client. One of the guiding ideas behind OAuth was to try and absorb as much complexity in the server, especially the authorization server, as this is easie to maintain and there are fewer of them, making deployment easier.\n\nWhat are your thoughts on putting a MUST on the AS to support both credential types instead offputting the burden on the client? Was the idea here that in a SPIFFE deployment a workload can easily obtain both?",
+              "createdAt": "2026-02-27T18:00:33Z",
+              "updatedAt": "2026-02-27T18:00:33Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 33,
       "id": "PR_kwDOOml42M7F77Sc",
       "title": "Guidance on using the \"iss\" claim",
       "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/33",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "See issue #7",
       "createdAt": "2026-02-24T13:35:19Z",
-      "updatedAt": "2026-02-25T19:28:14Z",
+      "updatedAt": "2026-02-27T19:01:36Z",
       "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
       "baseRefName": "main",
       "baseRefOid": "7404b14a04f1cab1ee61696308f964d2750aeb33",
       "headRepository": "arndt-s/oauth-spiffe-client-authentication",
       "headRefName": "PieterKas-patch-1",
       "headRefOid": "b95d52cd5c4784f1f164f280f2bde2e54065ecea",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-02-27T19:01:36Z",
+      "mergedAt": "2026-02-27T19:01:36Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "1d86a6b0f047ce52d67574296e9a9ec58a21e28c"
+      },
       "comments": [],
       "reviews": [
         {
@@ -1525,6 +1548,32 @@
               "updatedAt": "2026-02-25T19:04:13Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7mYB2w",
+          "commit": {
+            "abbreviatedOid": "b95d52c"
+          },
+          "author": "stianst",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-27T05:56:45Z",
+          "updatedAt": "2026-02-27T05:56:45Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOml42M7mlYuy",
+          "commit": {
+            "abbreviatedOid": "b95d52c"
+          },
+          "author": "scottr-nist",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-02-27T19:00:58Z",
+          "updatedAt": "2026-02-27T19:00:58Z",
+          "comments": []
         }
       ]
     },
@@ -1533,24 +1582,26 @@
       "id": "PR_kwDOOml42M7GSlEf",
       "title": "Added mechanism to use Client ID Metadata Document for SPIFFE client metadata discovery",
       "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/34",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "aaronpk",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Resolves #30",
       "createdAt": "2026-02-25T17:13:49Z",
-      "updatedAt": "2026-02-25T17:35:28Z",
+      "updatedAt": "2026-02-27T19:02:41Z",
       "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
       "baseRefName": "main",
       "baseRefOid": "7404b14a04f1cab1ee61696308f964d2750aeb33",
       "headRepository": "aaronpk/oauth-spiffe-client-authentication",
       "headRefName": "main",
-      "headRefOid": "5cde0e5722407396a6961e76e716a9ac9aafeca2",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "4eca917d0f86d804feaf2d65cc90cb5c61d02733",
+      "closedAt": "2026-02-27T19:02:41Z",
+      "mergedAt": "2026-02-27T19:02:41Z",
+      "mergedBy": "PieterKas",
+      "mergeCommit": {
+        "oid": "b52cd638e8b6d4573e506adde04812ed94cc79a4"
+      },
       "comments": [],
       "reviews": [
         {
@@ -1559,7 +1610,7 @@
             "abbreviatedOid": "0b6af83"
           },
           "author": "copilot-pull-request-reviewer",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "## Pull request overview\n\nThis PR adds support for using Client ID Metadata Documents (as defined in I-D.ietf-oauth-client-id-metadata-document) for SPIFFE client metadata discovery in OAuth authentication. This enhancement resolves issue #30 by introducing standardized OAuth parameters for SPIFFE client authentication, enabling authorization servers to discover and validate SPIFFE client metadata through a URL-based metadata document mechanism.\n\n**Changes:**\n- Extended JWT-SVID validation logic to support Client ID Metadata Document URLs with SPIFFE ID matching (including wildcard prefix matching)\n- Added new client metadata parameters (`spiffe_id` and `spiffe_bundle_endpoint`) for Client ID Metadata Documents\n- Registered new OAuth Dynamic Client Registration Metadata parameters with IANA\n\n\n\n\n\n---\n\n\ud83d\udca1 <a href=\"/arndt-s/oauth-spiffe-client-authentication/new/main?filename=.github/instructions/*.instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Add Copilot custom instructions</a> for smarter, more guided reviews. <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn how to get started</a>.",
           "createdAt": "2026-02-25T17:21:21Z",
@@ -1603,7 +1654,7 @@
             "abbreviatedOid": "0b6af83"
           },
           "author": "aaronpk",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2026-02-25T17:26:07Z",
@@ -1623,7 +1674,7 @@
             "abbreviatedOid": "0b6af83"
           },
           "author": "aaronpk",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2026-02-25T17:30:29Z",
@@ -1643,7 +1694,7 @@
             "abbreviatedOid": "5cde0e5"
           },
           "author": "aaronpk",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2026-02-25T17:35:28Z",
@@ -1656,6 +1707,119 @@
               "updatedAt": "2026-02-25T17:35:28Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7l-8RG",
+          "commit": {
+            "abbreviatedOid": "5cde0e5"
+          },
+          "author": "TakahikoKawasaki",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-26T05:03:24Z",
+          "updatedAt": "2026-02-26T05:03:24Z",
+          "comments": [
+            {
+              "originalPosition": 47,
+              "body": "@aaronpk \n\nI think this PR is good.\n\nHowever, one point: I had been planning to mention this eventually, but in both the pre-change and post-change drafts, the `aud` value in the JWT-SVID example is set to the token endpoint URL. Since the specification itself states, *\"Verify that the aud claim contains only the issuer identifier of the authorization server as its sole value. See [I-D.draft-ietf-oauth-rfc7523bis] for details.\"*, it would be better to change the `aud` value in the example from `https://as.example.com/token` to `https://as.example.com`.\n",
+              "createdAt": "2026-02-26T05:03:24Z",
+              "updatedAt": "2026-02-26T05:03:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7l_NNT",
+          "commit": {
+            "abbreviatedOid": "5cde0e5"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-26T05:30:51Z",
+          "updatedAt": "2026-02-26T05:30:51Z",
+          "comments": [
+            {
+              "originalPosition": 47,
+              "body": "Yep good catch!",
+              "createdAt": "2026-02-26T05:30:51Z",
+              "updatedAt": "2026-02-26T05:30:51Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7mIvyh",
+          "commit": {
+            "abbreviatedOid": "5cde0e5"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-26T13:40:08Z",
+          "updatedAt": "2026-02-26T13:40:08Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "Perhaps add it to the Client Registration Metadata section to concentrate the CIMD processing rules in one place? Basically move this to Client Registration Metadata\n\n If the `spiffe_id` value uses a wildcard, it MUST end with the two-character sequence \"`/*`\". In this case, the authorization server MUST perform a path-segment prefix match: the `sub` claim value MUST begin with the `spiffe_id` value excluding the trailing \"`*`\" (i.e., up to and including the final \"`/`\"), and this prefix MUST correspond to complete path segment(s) of the SPIFFE ID (for example, `spiffe://example.org/client/*` matches `spiffe://example.org/client/123` but does not match `spiffe://example.org/client123`). Otherwise, the `sub` claim MUST be an exact match of the `spiffe_id` value.",
+              "createdAt": "2026-02-26T13:40:08Z",
+              "updatedAt": "2026-02-26T13:40:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7mKiwL",
+          "commit": {
+            "abbreviatedOid": "5cde0e5"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-26T14:56:25Z",
+          "updatedAt": "2026-02-26T14:56:25Z",
+          "comments": [
+            {
+              "originalPosition": 82,
+              "body": "This spec is opinionated about using the SPIFFE bundle end-point. There is a whole section that talks about alternatives and why they are problematic. There is also this PR https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/33 that tries to talk about alternatives and fallbacks. For JWTs, workloads never sign their own JWTs, that is always done by the SPIFFE Issuer. \n\nPerhaps something like this (for now)\n\n```suggestion\n: OPTIONAL. The URL of the SPIFFE Bundle Endpoint for the client's trust domain, which the authorization server can use to retrieve the signing keys for validating the client's SVIDs. If not provided, the authorization server MUST obtain the signing keys for the client's trust domain through some other established mechanism, such as a pre-configured SPIFFE bundle.\n```\n\nThis PR talks about using OIDC connect discovery - https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/33 (and some of the pitfalls to look out for) \n\nOnce that is merged, we can update this section to reference it (e.g. established mechanism, such as a pre-configured SPIFFE bundle or a OpenID Connect Metadata Discovery document that contains the SPIFFE trust domain signing keys (see {{jwt-svid-security-considerations}})",
+              "createdAt": "2026-02-26T14:56:25Z",
+              "updatedAt": "2026-02-26T14:56:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7mjNLh",
+          "commit": {
+            "abbreviatedOid": "0b6af83"
+          },
+          "author": "aaronpk",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-02-27T16:53:42Z",
+          "updatedAt": "2026-02-27T16:53:43Z",
+          "comments": [
+            {
+              "originalPosition": 82,
+              "body": "Ok, I updated the examples to use the bundle instead.",
+              "createdAt": "2026-02-27T16:53:42Z",
+              "updatedAt": "2026-02-27T16:53:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7mkQQr",
+          "commit": {
+            "abbreviatedOid": "4eca917"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Looks good, thanks Aaron!",
+          "createdAt": "2026-02-27T17:53:46Z",
+          "updatedAt": "2026-02-27T17:53:46Z",
+          "comments": []
         }
       ]
     }
