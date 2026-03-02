@@ -64,6 +64,7 @@ normative:
   RFC7523:
   RFC7591:
   RFC8705:
+  RFC8414:
   I-D.ietf-oauth-client-id-metadata-document:
   SPIFFE_ID:
     title: SPIFFE-ID
@@ -381,6 +382,16 @@ grant_type=authorization_code&
 code=n0esc3NRze7LTCu7iYzS6a5acc3f0ogp4&
 client_id=spiffe://example.org/my-oauth-client
 ~~~
+
+# Interoperability
+
+In order to achieve interoperability between the authorization server and clients the authorization server MUST advertise what client authentication methods are supported.
+
+Authorization servers MUST support at least one of JWT-SVID or X509-SVID. The methods supported MUST be advertised in the authorization servers metadata {{RFC8414}} by including `spiffe_jwt`, `spiffe_wit` and/or `spiffe_x509` in the `token_endpoint_auth_methods_supported` list. Additionally, the same should be included in `revocation_endpoint_auth_methods_supported` and `introspection_endpoint_auth_methods_supported` when applicable.
+
+Clients MUST support at least one of JWT-SVID, WIT-SVID or X509-SVID. To guarantee interoperability a client SHOULD support all.
+
+It is the responsibility of the client to select the authentication method supported by the authorization server and its deployment.
 
 # SPIFFE Trust Establishment and Client Registration
 
