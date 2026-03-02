@@ -628,7 +628,11 @@ This document requests the following entries to be added to the "OAuth Dynamic C
 
 ## draft-ietf-oauth-spiffe-client-auth-01
 
-* Added mechanism to use Client ID Metadata Document for SPIFFE client metadata discovery
+* Add mechanism to use Client ID Metadata Document for SPIFFE client metadata discovery.
+* Add WIT-SVID variant using Workload Identity Tokens and Attestation-Based Client Authentication.
+* Add interoperability section.
+* Add more guidance and security considerations when using the iss claim.
+* Add Stian Thorgersen as co-author.
 
 ## draft-ietf-oauth-spiffe-client-auth-00
 
