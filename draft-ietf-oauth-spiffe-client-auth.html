@@ -10,7 +10,7 @@
 <meta content="Scott Rose" name="author">
 <meta content="Stian Thorgersen" name="author">
 <meta content="
-       This specification profiles the Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants   and JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants   to enable the use of SPIFFE Verifiable Identity Documents (SVIDs) as client credentials in OAuth 2.0. It defines how OAuth clients with SPIFFE credentials can authenticate to OAuth authorization servers using their JWT-SVIDs or X.509-SVIDs without the need for client secrets. This approach enhances security by enabling seamless integration between SPIFFE-enabled workloads and OAuth authorization servers while eliminating the need to distribute and manage shared secrets such as static client secrets. 
+       This specification profiles the Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants  , the JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants  , and OAuth 2.0 Attestation-Based Client Authentication   to enable the use of SPIFFE Verifiable Identity Documents (SVIDs) as client credentials in OAuth 2.0. It defines how OAuth clients with SPIFFE credentials can authenticate to OAuth authorization servers using their JWT-SVIDs, WIT-SVIDs, or X.509-SVIDs without the need for client secrets. This approach enhances security by enabling seamless integration between SPIFFE-enabled workloads and OAuth authorization servers while eliminating the need to distribute and manage shared secrets such as static client secrets. 
     " name="description">
 <meta content="xml2rfc 3.31.0" name="generator">
 <meta content="workload" name="keyword">
@@ -1098,7 +1098,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <h1 id="title">OAuth SPIFFE Client Authentication</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">This specification profiles the Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span> and JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span> to enable the use of SPIFFE Verifiable Identity Documents (SVIDs) as client credentials in OAuth 2.0. It defines how OAuth clients with SPIFFE credentials can authenticate to OAuth authorization servers using their JWT-SVIDs or X.509-SVIDs without the need for client secrets. This approach enhances security by enabling seamless integration between SPIFFE-enabled workloads and OAuth authorization servers while eliminating the need to distribute and manage shared secrets such as static client secrets.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">This specification profiles the Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span>, the JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span>, and OAuth 2.0 Attestation-Based Client Authentication <span>[<a href="#I-D.draft-ietf-oauth-attestation-based-client-auth" class="cite xref">I-D.draft-ietf-oauth-attestation-based-client-auth</a>]</span> to enable the use of SPIFFE Verifiable Identity Documents (SVIDs) as client credentials in OAuth 2.0. It defines how OAuth clients with SPIFFE credentials can authenticate to OAuth authorization servers using their JWT-SVIDs, WIT-SVIDs, or X.509-SVIDs without the need for client secrets. This approach enhances security by enabling seamless integration between SPIFFE-enabled workloads and OAuth authorization servers while eliminating the need to distribute and manage shared secrets such as static client secrets.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1196,6 +1196,17 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </li>
                 </ul>
 </li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
+                <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-client-authentication-with-w" class="internal xref">Client Authentication with WIT-SVIDs</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3.2.1">
+                    <p id="section-toc.1-1.3.2.3.2.1.1"><a href="#section-3.3.1" class="auto internal xref">3.3.1</a>.  <a href="#name-authorization-server-valida" class="internal xref">Authorization Server Validation</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3.2.2">
+                    <p id="section-toc.1-1.3.2.3.2.2.1"><a href="#section-3.3.2" class="auto internal xref">3.3.2</a>.  <a href="#name-wit-svid-example" class="internal xref">WIT-SVID Example</a></p>
+</li>
+                </ul>
+</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
@@ -1233,7 +1244,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
                     <p id="section-toc.1-1.6.2.2.2.3.1"><a href="#section-6.2.3" class="auto internal xref">6.2.3</a>.  <a href="#name-using-the-system-trust-stor" class="internal xref">Using the system trust store</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6.2.2.2.4">
-                    <p id="section-toc.1-1.6.2.2.2.4.1"><a href="#section-6.2.4" class="auto internal xref">6.2.4</a>.  <a href="#name-using-the-jwt-svid-iss-clai" class="internal xref">Using the JWT-SVID <code>iss</code> claim</a></p>
+                    <p id="section-toc.1-1.6.2.2.2.4.1"><a href="#section-6.2.4" class="auto internal xref">6.2.4</a>.  <a href="#name-using-the-jwt-svid-or-wit-s" class="internal xref">Using the JWT-SVID or WIT-SVID <code>iss</code> claim</a></p>
 </li>
                 </ul>
 </li>
@@ -1246,7 +1257,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
-                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-the-jwt-svid-iss-claim" class="internal xref">The JWT SVID iss claim</a></p>
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-jwt-svid-and-wit-svid-iss-c" class="internal xref">JWT-SVID and WIT-SVID iss claim</a></p>
 </li>
             </ul>
 </li>
@@ -1259,7 +1270,15 @@ svg :is([fill="white"], [fill^="#fff"]) {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#section-10" class="auto internal xref">10</a>. <a href="#name-references" class="internal xref">References</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1">
+                <p id="section-toc.1-1.10.2.1.1"><a href="#section-10.1" class="auto internal xref">10.1</a>.  <a href="#name-normative-references" class="internal xref">Normative References</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2">
+                <p id="section-toc.1-1.10.2.2.1"><a href="#section-10.2" class="auto internal xref">10.2</a>.  <a href="#name-informative-references" class="internal xref">Informative References</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
             <p id="section-toc.1-1.11.1"><a href="#appendix-A" class="auto internal xref">Appendix A</a>.  <a href="#name-document-history" class="internal xref">Document History</a></p>
@@ -1294,7 +1313,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
 <p id="section-1-1">Traditional OAuth client authentication typically relies on client secrets or private key JWT authentication, both require an out of band distribution of secret material to the OAuth client. In modern cloud-native architectures where identity is managed by SPIFFE (Secure Production Identity Framework for Everyone), there is a need to provision additional secret material for OAuth clients when attested identifiers and credentials such as SVIDs are already available.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">This specification profiles the Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span> to allow SPIFFE-enabled workloads to use their SPIFFE Verifiable Identity Documents (SVIDs) — either X.509 certificates or JWT tokens — as client credentials for OAuth 2.0 client authentication. JWT tokens make use of the profiled version of <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span> - the JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span>.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-2">This specification profiles the Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span> to allow SPIFFE-enabled workloads to use their SPIFFE Verifiable Identity Documents (SVIDs), either X.509 certificates or JSON Web Tokens (JWT-SVID &amp; WIT-SVID), as client credentials for OAuth 2.0 client authentication. JWT-SVIDs make use of a profiled version of the JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span>. WIT-SVIDs make use of the OAuth 2.0 Attestation-Based Client Authentication <span>[<a href="#I-D.draft-ietf-oauth-attestation-based-client-auth" class="cite xref">I-D.draft-ietf-oauth-attestation-based-client-auth</a>]</span>.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">This profile focuses on using SPIFFE credentials for OAuth client authentication.<a href="#section-1-3" class="pilcrow">¶</a></p>
 <p id="section-1-4">The SPIFFE profile for client authentication enables seamless integration between SPIFFE-based and OAuth-based systems, allowing applications to leverage both ecosystems without requiring additional credential management. It also enables a more secure authentication method by leveraging cryptographically verifiable credentials rather than shared secrets.<a href="#section-1-4" class="pilcrow">¶</a></p>
 </section>
@@ -1337,7 +1356,7 @@ appear in all capitals, as shown here.<a href="#section-2-1" class="pilcrow">¶<
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-oauth-client-authentication" class="section-name selfRef">OAuth Client Authentication Using SPIFFE</a>
       </h2>
 <p id="section-3-1">This section describes how SPIFFE identity documents can be used for OAuth 2.0 client authentication, following the patterns established in <span>[<a href="#RFC7521" class="cite xref">RFC7521</a>]</span> and, in case of JWT-SVID <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span>.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<p id="section-3-2">OAuth 2.0 client authentication is used to authenticate the client to the authorization server when making requests to the token endpoint. When using SPIFFE for client authentication, the client presents its SVID (either JWT-SVID or X.509-SVID) to prove its identity.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<p id="section-3-2">OAuth 2.0 client authentication is used to authenticate the client to the authorization server when making requests to the token endpoint. When using SPIFFE for client authentication, the client presents its SVID (JWT-SVID, WIT-SVID, or X.509-SVID) to prove its identity.<a href="#section-3-2" class="pilcrow">¶</a></p>
 <div id="client-authentication-with-jwt-svids">
 <section id="section-3.1">
         <h3 id="name-client-authentication-with-">
@@ -1561,6 +1580,104 @@ Certificate:
 </div>
 </section>
 </div>
+<div id="client-authentication-with-wit-svids">
+<section id="section-3.3">
+        <h3 id="name-client-authentication-with-w">
+<a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-client-authentication-with-w" class="section-name selfRef">Client Authentication with WIT-SVIDs</a>
+        </h3>
+<p id="section-3.3-1">WIT-SVIDs are the SPIFFE variant of the WIMSE Workload Identity Token (WIT) as defined in <span>[<a href="#I-D.draft-ietf-wimse-workload-creds" class="cite xref">I-D.draft-ietf-wimse-workload-creds</a>]</span> and make use of concepts defined in OAuth 2.0 Attestation-Based Client Authentication <span>[<a href="#I-D.draft-ietf-oauth-attestation-based-client-auth" class="cite xref">I-D.draft-ietf-oauth-attestation-based-client-auth</a>]</span>.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-2">A WIT-SVID as issued by a SPIFFE implementation binds a key held by the client via the <code>cnf</code> claim. This key is used as attestation proof during client authentication. The attestation proof is in the form of a "Client Attestation PoP JWT" as defined in <span>[<a href="#I-D.draft-ietf-oauth-attestation-based-client-auth" class="cite xref">I-D.draft-ietf-oauth-attestation-based-client-auth</a>]</span> that is issued by the client and signed with the private part of the key bound in the WIT-SVID.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
+<p id="section-3.3-3">The WIT-SVID and the corresponding Client Attestation PoP JWT are sent together to the authorization server as a means of client authentication using the HTTP header-based syntax defined in Section 6.1 of <span>[<a href="#I-D.draft-ietf-oauth-attestation-based-client-auth" class="cite xref">I-D.draft-ietf-oauth-attestation-based-client-auth</a>]</span>.<a href="#section-3.3-3" class="pilcrow">¶</a></p>
+<div id="wit-svid-validation">
+<section id="section-3.3.1">
+          <h4 id="name-authorization-server-valida">
+<a href="#section-3.3.1" class="section-number selfRef">3.3.1. </a><a href="#name-authorization-server-valida" class="section-name selfRef">Authorization Server Validation</a>
+          </h4>
+<p id="section-3.3.1-1">To validate a WIT-SVID client authentication request, the authorization server <span class="bcp14">MUST</span> apply the following rules:<a href="#section-3.3.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.3.1-2.1">
+              <p id="section-3.3.1-2.1.1">The authorization server <span class="bcp14">MUST</span> accept <code>wit+jwt</code> as a valid value of the <code>typ</code> JWT header parameter in the <code>OAuth-Client-Attestation</code> header, in addition to <code>oauth-client-attestation+jwt</code>.<a href="#section-3.3.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.3.1-2.2">
+              <p id="section-3.3.1-2.2.1">The WIT-SVID <span class="bcp14">MUST</span> be validated as a Workload Identity Token according to Section 3.1 of <span>[<a href="#I-D.draft-ietf-wimse-workload-creds" class="cite xref">I-D.draft-ietf-wimse-workload-creds</a>]</span>.<a href="#section-3.3.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.3.1-2.3">
+              <p id="section-3.3.1-2.3.1">The WIT-SVID signature <span class="bcp14">MUST</span> be verified using the signing keys of the trust domain according to <a href="#spiffe-bundle-validation" class="auto internal xref">Section 6</a>.<a href="#section-3.3.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.3.1-2.4">
+              <p id="section-3.3.1-2.4.1">The Client Attestation PoP JWT <span class="bcp14">MUST</span> be validated according to Section 5.2 of <span>[<a href="#I-D.draft-ietf-oauth-attestation-based-client-auth" class="cite xref">I-D.draft-ietf-oauth-attestation-based-client-auth</a>]</span>.<a href="#section-3.3.1-2.4.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-3.3.1-3.1">
+              <p id="section-3.3.1-3.1.1">TODO: What to do with <code>attest_jwt_client_auth</code> method in AS metadata?<a href="#section-3.3.1-3.1.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+</section>
+</div>
+<div id="wit-svid-example">
+<section id="section-3.3.2">
+          <h4 id="name-wit-svid-example">
+<a href="#section-3.3.2" class="section-number selfRef">3.3.2. </a><a href="#name-wit-svid-example" class="section-name selfRef">WIT-SVID Example</a>
+          </h4>
+<p id="section-3.3.2-1">The following example illustrates a token request using a WIT-SVID and a Client Attestation PoP JWT for client authentication.<a href="#section-3.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.3.2-2">The WIT-SVID (OAuth-Client-Attestation) header and body decoded:<a href="#section-3.3.2-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.3.2-3">
+<pre>
+{
+  "typ": "wit+jwt",
+  "alg": "ES256",
+  "kid": "4vC8agycHu6rnkEEJYAH6VuCe4JoSkPV"
+}.
+{
+  "iss": "spiffe://example.org/my-spiffe-workload-api",
+  "sub": "spiffe://example.org/my-oauth-client",
+  "exp": 1747128000,
+  "iat": 1747124400,
+  "cnf": {
+    "jwk": {
+      "kty": "EC",
+      "crv": "P-256",
+      "x": "18wHLeIgW9wVN6VD1Txgpqy2LszYkMf6J8njVAibvhM",
+      "y": "-V4dS4UaLMgP_4fY4j8ir7cl1TXlFdAgcx55o7TkcSA"
+    }
+  }
+}
+</pre><a href="#section-3.3.2-3" class="pilcrow">¶</a>
+</div>
+<p id="section-3.3.2-4">The Client Attestation PoP JWT (OAuth-Client-Attestation-PoP) header and body decoded:<a href="#section-3.3.2-4" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.3.2-5">
+<pre>
+{
+  "typ": "oauth-client-attestation-pop+jwt",
+  "alg": "ES256"
+}.
+{
+  "iss": "spiffe://example.org/my-oauth-client",
+  "aud": "https://as.example.com",
+  "jti": "d25d00ab-552b-46fc-ae19-98f440f25064",
+  "iat": 1747124400
+}
+</pre><a href="#section-3.3.2-5" class="pilcrow">¶</a>
+</div>
+<p id="section-3.3.2-6">The token endpoint request:<a href="#section-3.3.2-6" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.3.2-7">
+<pre>
+POST /token HTTP/1.1
+Host: as.example.com
+Content-Type: application/x-www-form-urlencoded
+OAuth-Client-Attestation: eyJ0eXAiOiJ3aXQrand0IiwiYWxnIjoiRVMyNTYiL...
+OAuth-Client-Attestation-PoP: eyJhbGciOiJFUzI1NiIsInR5cCI6Im9hdXRoLWN...
+
+grant_type=authorization_code&amp;
+code=n0esc3NRze7LTCu7iYzS6a5acc3f0ogp4&amp;
+client_id=spiffe://example.org/my-oauth-client
+</pre><a href="#section-3.3.2-7" class="pilcrow">¶</a>
+</div>
+</section>
+</div>
+</section>
+</div>
 </section>
 </div>
 <div id="interoperability">
@@ -1569,8 +1686,8 @@ Certificate:
 <a href="#section-4" class="section-number selfRef">4. </a><a href="#name-interoperability" class="section-name selfRef">Interoperability</a>
       </h2>
 <p id="section-4-1">In order to achieve interoperability between the authorization server and clients the authorization server <span class="bcp14">MUST</span> advertise what client authentication methods are supported.<a href="#section-4-1" class="pilcrow">¶</a></p>
-<p id="section-4-2">Authorization servers <span class="bcp14">MUST</span> support at least one of JWT-SVID or X509-SVID. The methods supported <span class="bcp14">MUST</span> be advertised in the authorization servers metadata <span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span> by including <code>spiffe_jwt</code> and/or <code>spiffe_x509</code> in the <code>token_endpoint_auth_methods_supported</code> list. Additionally, the same should be included in <code>revocation_endpoint_auth_methods_supported</code> and <code>introspection_endpoint_auth_methods_supported</code> when applicable.<a href="#section-4-2" class="pilcrow">¶</a></p>
-<p id="section-4-3">Clients <span class="bcp14">MUST</span> support at least one of JWT-SVID or X509-SVID. To guarantee interoperability a client <span class="bcp14">SHOULD</span> support both JWT-SVID and X509-SVID.<a href="#section-4-3" class="pilcrow">¶</a></p>
+<p id="section-4-2">Authorization servers <span class="bcp14">MUST</span> support at least one of JWT-SVID or X509-SVID. The methods supported <span class="bcp14">MUST</span> be advertised in the authorization servers metadata <span>[<a href="#RFC8414" class="cite xref">RFC8414</a>]</span> by including <code>spiffe_jwt</code>, <code>spiffe_wit</code> and/or <code>spiffe_x509</code> in the <code>token_endpoint_auth_methods_supported</code> list. Additionally, the same should be included in <code>revocation_endpoint_auth_methods_supported</code> and <code>introspection_endpoint_auth_methods_supported</code> when applicable.<a href="#section-4-2" class="pilcrow">¶</a></p>
+<p id="section-4-3">Clients <span class="bcp14">MUST</span> support at least one of JWT-SVID, WIT-SVID or X509-SVID. To guarantee interoperability a client <span class="bcp14">SHOULD</span> support all.<a href="#section-4-3" class="pilcrow">¶</a></p>
 <p id="section-4-4">It is the responsibility of the client to select the authentication method supported by the authorization server and its deployment.<a href="#section-4-4" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1674,6 +1791,14 @@ Host: example.com
       "crv": "P-256",
       "x": "S2V42XlFjNp30CFmOidbWQT9IpZHqJ8JuuJgDBvkdZA",
       "y": "vN0y5TK36VRxZo_E3Gc7S5c0jIRIaHZ53f2UiJ1NFto"
+    },
+    {
+      "use": "wit-svid",
+      "kty": "EC",
+      "kid": "b7f3K2oPz8nQvT1xYl9gHGLmfIhrlnXY",
+      "crv": "P-256",
+      "x": "18wHLeIgW9wVN6VD1Txgpqy2LszYkMf6J8njVAibvhM",
+      "y": "-V4dS4UaLMgP_4fY4j8ir7cl1TXlFdAgcx55o7TkcSA"
     }
   ],
   "spiffe_sequence": 10,
@@ -1734,7 +1859,7 @@ Certificate:
 </div>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-6.1.1-10.1">
-              <p id="section-6.1.1-10.1.1">Arndt: Bundle doesn't match X509-SVID. This needs to be fixed.<a href="#section-6.1.1-10.1.1" class="pilcrow">¶</a></p>
+              <p id="section-6.1.1-10.1.1">TODO: Bundle doesn't match X509-SVID. This needs to be fixed.<a href="#section-6.1.1-10.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -1780,14 +1905,13 @@ Certificate:
 <p id="section-6.2.3-1">X509-SVIDs <span class="bcp14">MUST NOT</span> be validated using the system trust store. The SPIFFE ID carried in the URI SAN is rarely a verifiable attribute in the broader X.509 ecosystem. Using the system trust store as trust anchor would allow ANY certificate authority in it to issue a trusted X509-SVID for ANY SPIFFE ID. In comparison: using SPIFFE-native validation methods restricts the signing of SPIFFE-IDs to the corresponding trust domain signing keys.<a href="#section-6.2.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="jwt-svid-iss-claim">
+<div id="svid-iss-claim">
 <section id="section-6.2.4">
-          <h4 id="name-using-the-jwt-svid-iss-clai">
-<a href="#section-6.2.4" class="section-number selfRef">6.2.4. </a><a href="#name-using-the-jwt-svid-iss-clai" class="section-name selfRef">Using the JWT-SVID <code>iss</code> claim</a>
+          <h4 id="name-using-the-jwt-svid-or-wit-s">
+<a href="#section-6.2.4" class="section-number selfRef">6.2.4. </a><a href="#name-using-the-jwt-svid-or-wit-s" class="section-name selfRef">Using the JWT-SVID or WIT-SVID <code>iss</code> claim</a>
           </h4>
-<p id="section-6.2.4-1">JWT-SVIDs carrying <code>iss</code> claims could technically be validated by retrieving the signing keys via OpenID Connect Discovery or OAuth 2.0 Authorization Server Metadata.
-This approach only applies for JWT-SVIDs and only works when the <code>iss</code> claim is present, which is not guaranteed and not part of the JWT-SVID specification.<a href="#section-6.2.4-1" class="pilcrow">¶</a></p>
-<p id="section-6.2.4-2">Because of its narrow scope and interoperability considerations, this approach is not a general alternative to the SPIFFE Bundle Endpoint. Implementations <span class="bcp14">SHOULD</span> use the mechanisms defined in this specification when available. However, when those mechanisms are not supported by a peer deployment, implementations <span class="bcp14">MAY</span> use <code>iss</code>-based discovery and key retrieval for JWT-SVID validation as a compatibility mechanism, subject to local policy, appropriate trust configuration and risk mitigations described in <span class="contact-name">jwt-svid-security-considerations</span>.<a href="#section-6.2.4-2" class="pilcrow">¶</a></p>
+<p id="section-6.2.4-1">JSON Web Token-based credentials carrying <code>iss</code> claims could technically be validated by retrieving the signing keys via OpenID Connect Discovery or OAuth 2.0 Authorization Server Metadata. This approach only applies for the JWT-SVID and WIT-SVID and only works when the <code>iss</code> claim is present, which is optional.<a href="#section-6.2.4-1" class="pilcrow">¶</a></p>
+<p id="section-6.2.4-2">Because of its narrow scope and interoperability considerations, this approach is not a general alternative to the SPIFFE Bundle Endpoint. Implementations <span class="bcp14">SHOULD</span> use the mechanisms defined in this specification when available. However, when those mechanisms are not supported by a peer deployment, implementations <span class="bcp14">MAY</span> use <code>iss</code>-based discovery and key retrieval for JWT-SVID or WIT-SVID validation as a compatibility mechanism, subject to local policy, appropriate trust configuration and risk mitigations described in <a href="#iss-claim-security-considerations" class="auto internal xref">Section 8.1</a>.<a href="#section-6.2.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1828,14 +1952,14 @@ This section records the status of known implementations of the protocol defined
 <p id="section-8-2">Client authentication using X509-SVIDs has the same security considerations as described in <span>[<a href="#RFC8705" class="cite xref">RFC8705</a>]</span>. The validation rules in section 3.2 protect against an OAuth2 token being issued (or being issued incorrectly) to a client that did not present an appropriate X509-SVID.<a href="#section-8-2" class="pilcrow">¶</a></p>
 <p id="section-8-3">The issues described in Section 5.2 above include the threat that an authorization server may have the incorrect
 trust stores configured to validate the client SVID. This could result in an incorrectly issued token to an attacker if the attacker is able to obtain a certificate that can be validated by one of the misconfigured trust anchors in the trust store.<a href="#section-8-3" class="pilcrow">¶</a></p>
-<div id="jwt-svid-security-considerations">
+<div id="iss-claim-security-considerations">
 <section id="section-8.1">
-        <h3 id="name-the-jwt-svid-iss-claim">
-<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-the-jwt-svid-iss-claim" class="section-name selfRef">The JWT SVID iss claim</a>
+        <h3 id="name-jwt-svid-and-wit-svid-iss-c">
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-jwt-svid-and-wit-svid-iss-c" class="section-name selfRef">JWT-SVID and WIT-SVID iss claim</a>
         </h3>
-<p id="section-8.1-1">As described in {#jwt-svid-iss-claim}, <code>iss</code>-based key discovery is not a general alternative to the SPIFFE Bundle Endpoint and <span class="bcp14">SHOULD</span> be avoided.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
+<p id="section-8.1-1">As described in <a href="#svid-iss-claim" class="auto internal xref">Section 6.2.4</a>, <code>iss</code>-based key discovery is not a general alternative to the SPIFFE Bundle Endpoint and <span class="bcp14">SHOULD</span> be avoided.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
 <p id="section-8.1-2">However, if it is used, the authorization server <span class="bcp14">MUST NOT</span> perform issuer-based discovery solely based on the <code>iss</code> value from the token unless the <code>iss</code> value is already known to the authorization server, and that <code>iss</code> value is explicitly associated with the configured SPIFFE Trust Domain being validated.<a href="#section-8.1-2" class="pilcrow">¶</a></p>
-<p id="section-8.1-3">In addition implementations <span class="bcp14">MUST NOT</span> assume that keys advertised via OpenID Connect Discovery or OAuth 2.0 Authorization Server Metadata are dedicated to JWT-SVID issuance. The same provider infrastructure may issue multiple JWT types (e.g., OAuth/OIDC tokens and JWT-SVIDs). A token <span class="bcp14">MUST NOT</span> be accepted as a JWT-SVID solely because it is a JWT, its signature validates under keys discovered from iss, and its sub resembles a SPIFFE ID. Doing so can enable token confusion (e.g., presenting an OAuth/OIDC token issued for another purpose as a JWT-SVID). Implementations <span class="bcp14">MUST</span> validate JWT-SVIDs according to JWT-SVID-specific requirements and <span class="bcp14">MUST</span> use a trust anchor or key source explicitly bound to the configured SPIFFE Trust Domain, rather than generic issuer-based discovery from untrusted token input.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
+<p id="section-8.1-3">In addition implementations <span class="bcp14">MUST NOT</span> assume that keys advertised via OpenID Connect Discovery or OAuth 2.0 Authorization Server Metadata are dedicated to JWT-SVID issuance. The same provider infrastructure may issue multiple JWT types (e.g., OAuth/OIDC tokens, JWT-SVIDs, WIT-SVIDs). A token <span class="bcp14">MUST NOT</span> be accepted as a JWT-SVID or WIT-SVID solely because it is a JWT, its signature validates under keys discovered from iss, and its sub resembles a SPIFFE ID. Doing so can enable token confusion (e.g., presenting an OAuth/OIDC token issued for another purpose as a JWT-SVID). Implementations <span class="bcp14">MUST</span> validate SVIDs according to SVID-specific requirements and <span class="bcp14">MUST</span> use a trust anchor or key source explicitly bound to the configured SPIFFE Trust Domain, rather than generic issuer-based discovery from untrusted token input.<a href="#section-8.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1896,85 +2020,109 @@ trust stores configured to validate the client SVID. This could result in an inc
 </div>
 </section>
 </div>
-<div id="sec-normative-references">
+<div id="sec-combined-references">
 <section id="section-10">
-      <h2 id="name-normative-references">
-<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+      <h2 id="name-references">
+<a href="#section-10" class="section-number selfRef">10. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
+<section id="section-10.1">
+        <h3 id="name-normative-references">
+<a href="#section-10.1" class="section-number selfRef">10.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
+        </h3>
 <dl class="references">
 <dt id="I-D.draft-ietf-oauth-rfc7523bis">[I-D.draft-ietf-oauth-rfc7523bis]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Jones, M. B.</span>, <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Mortimore, C.</span>, and <span class="refAuthor">F. Skokan</span>, <span class="refTitle">"Updates to OAuth 2.0 JSON Web Token (JWT) Client Authentication and Assertion-Based Authorization Grants"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-rfc7523bis-05</span>, <time datetime="2026-01-12" class="refDate">12 January 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc7523bis-05">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-rfc7523bis-05</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.ietf-oauth-client-id-metadata-document">[I-D.ietf-oauth-client-id-metadata-document]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Parecki, A.</span> and <span class="refAuthor">E. Smith</span>, <span class="refTitle">"OAuth Client ID Metadata Document"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-client-id-metadata-document-01</span>, <time datetime="2026-03-01" class="refDate">1 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-01">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6749">[RFC6749]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Hardt, D., Ed.</span>, <span class="refTitle">"The OAuth 2.0 Authorization Framework"</span>, <span class="seriesInfo">RFC 6749</span>, <span class="seriesInfo">DOI 10.17487/RFC6749</span>, <time datetime="2012-10" class="refDate">October 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6749">https://www.rfc-editor.org/rfc/rfc6749</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6755">[RFC6755]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Campbell, B.</span> and <span class="refAuthor">H. Tschofenig</span>, <span class="refTitle">"An IETF URN Sub-Namespace for OAuth"</span>, <span class="seriesInfo">RFC 6755</span>, <span class="seriesInfo">DOI 10.17487/RFC6755</span>, <time datetime="2012-10" class="refDate">October 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6755">https://www.rfc-editor.org/rfc/rfc6755</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7517">[RFC7517]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Jones, M.</span>, <span class="refTitle">"JSON Web Key (JWK)"</span>, <span class="seriesInfo">RFC 7517</span>, <span class="seriesInfo">DOI 10.17487/RFC7517</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7517">https://www.rfc-editor.org/rfc/rfc7517</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7521">[RFC7521]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Mortimore, C.</span>, <span class="refAuthor">Jones, M.</span>, and <span class="refAuthor">Y. Goland</span>, <span class="refTitle">"Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants"</span>, <span class="seriesInfo">RFC 7521</span>, <span class="seriesInfo">DOI 10.17487/RFC7521</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7521">https://www.rfc-editor.org/rfc/rfc7521</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7523">[RFC7523]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Campbell, B.</span>, and <span class="refAuthor">C. Mortimore</span>, <span class="refTitle">"JSON Web Token (JWT) Profile for OAuth 2.0 Client Authentication and Authorization Grants"</span>, <span class="seriesInfo">RFC 7523</span>, <span class="seriesInfo">DOI 10.17487/RFC7523</span>, <time datetime="2015-05" class="refDate">May 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7523">https://www.rfc-editor.org/rfc/rfc7523</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7591">[RFC7591]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Richer, J., Ed.</span>, <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Machulak, M.</span>, and <span class="refAuthor">P. Hunt</span>, <span class="refTitle">"OAuth 2.0 Dynamic Client Registration Protocol"</span>, <span class="seriesInfo">RFC 7591</span>, <span class="seriesInfo">DOI 10.17487/RFC7591</span>, <time datetime="2015-07" class="refDate">July 2015</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7591">https://www.rfc-editor.org/rfc/rfc7591</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC7942">[RFC7942]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Sheffer, Y.</span> and <span class="refAuthor">A. Farrel</span>, <span class="refTitle">"Improving Awareness of Running Code: The Implementation Status Section"</span>, <span class="seriesInfo">BCP 205</span>, <span class="seriesInfo">RFC 7942</span>, <span class="seriesInfo">DOI 10.17487/RFC7942</span>, <time datetime="2016-07" class="refDate">July 2016</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7942">https://www.rfc-editor.org/rfc/rfc7942</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8414">[RFC8414]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Jones, M.</span>, <span class="refAuthor">Sakimura, N.</span>, and <span class="refAuthor">J. Bradley</span>, <span class="refTitle">"OAuth 2.0 Authorization Server Metadata"</span>, <span class="seriesInfo">RFC 8414</span>, <span class="seriesInfo">DOI 10.17487/RFC8414</span>, <time datetime="2018-06" class="refDate">June 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8414">https://www.rfc-editor.org/rfc/rfc8414</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8705">[RFC8705]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Bradley, J.</span>, <span class="refAuthor">Sakimura, N.</span>, and <span class="refAuthor">T. Lodderstedt</span>, <span class="refTitle">"OAuth 2.0 Mutual-TLS Client Authentication and Certificate-Bound Access Tokens"</span>, <span class="seriesInfo">RFC 8705</span>, <span class="seriesInfo">DOI 10.17487/RFC8705</span>, <time datetime="2020-02" class="refDate">February 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8705">https://www.rfc-editor.org/rfc/rfc8705</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="SPIFFE_BUNDLE">[SPIFFE_BUNDLE]</dt>
-      <dd>
+        <dd>
 <span class="refTitle">"SPIFFE Bundle"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Trust_Domain_and_Bundle.md#4-spiffe-bundle-format">https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Trust_Domain_and_Bundle.md#4-spiffe-bundle-format</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="SPIFFE_FEDERATION">[SPIFFE_FEDERATION]</dt>
-      <dd>
+        <dd>
 <span class="refTitle">"SPIFFE Federation"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Federation.md">https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE_Federation.md</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="SPIFFE_ID">[SPIFFE_ID]</dt>
-      <dd>
+        <dd>
 <span class="refTitle">"SPIFFE-ID"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md">https://github.com/spiffe/spiffe/blob/main/standards/SPIFFE-ID.md</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="SPIFFE_JWT">[SPIFFE_JWT]</dt>
-      <dd>
+        <dd>
 <span class="refTitle">"JWT-SVID"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md">https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="SPIFFE_X509">[SPIFFE_X509]</dt>
-    <dd>
+      <dd>
 <span class="refTitle">"X509-SVID"</span>, <span>n.d.</span>, <span>&lt;<a href="https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md">https://github.com/spiffe/spiffe/blob/main/standards/X509-SVID.md</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
+</section>
+</div>
+<div id="sec-informative-references">
+<section id="section-10.2">
+        <h3 id="name-informative-references">
+<a href="#section-10.2" class="section-number selfRef">10.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
+        </h3>
+<dl class="references">
+<dt id="I-D.draft-ietf-oauth-attestation-based-client-auth">[I-D.draft-ietf-oauth-attestation-based-client-auth]</dt>
+        <dd>
+<span class="refAuthor">Looker, T.</span>, <span class="refAuthor">Bastian, P.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"OAuth 2.0 Attestation-Based Client Authentication"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-attestation-based-client-auth-07</span>, <time datetime="2025-09-15" class="refDate">15 September 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-attestation-based-client-auth-07">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-attestation-based-client-auth-07</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.draft-ietf-wimse-workload-creds">[I-D.draft-ietf-wimse-workload-creds]</dt>
+      <dd>
+<span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Schwenkschuster, A.</span>, <span class="refAuthor">Sheffer, Y.</span>, and <span class="refAuthor">Y. Rosomakho</span>, <span class="refTitle">"WIMSE Workload Credentials"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-workload-creds-00</span>, <time datetime="2025-11-03" class="refDate">3 November 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-00">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-00</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+</dl>
+</section>
+</div>
 </section>
 </div>
 <div id="document-history">
