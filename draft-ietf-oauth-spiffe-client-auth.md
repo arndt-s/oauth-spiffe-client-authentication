@@ -92,7 +92,7 @@ This specification profiles the Assertion Framework for OAuth 2.0 Client Authent
 
 Traditional OAuth client authentication typically relies on client secrets or private key JWT authentication, both require an out of band distribution of secret material to the OAuth client. In modern cloud-native architectures where identity is managed by SPIFFE (Secure Production Identity Framework for Everyone), there is a need to provision additional secret material for OAuth clients when attested identifiers and credentials such as SVIDs are already available.
 
-This specification profiles the Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants {{RFC7521}} to allow SPIFFE-enabled workloads to use their SPIFFE Verifiable Identity Documents (SVIDs) — either X.509 certificates or JSON Web Tokens (JWT-SVID & WIT-SVID) — as client credentials for OAuth 2.0 client authentication. JWT-SVIDs make use of a profiled version of the JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants {{RFC7523}}. WIT-SVIDs make use of the OAuth 2.0 Attestation-Based Client Authentication {{?I-D.draft-ietf-oauth-attestation-based-client-auth}}.
+This specification profiles the Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants {{RFC7521}} to allow SPIFFE-enabled workloads to use their SPIFFE Verifiable Identity Documents (SVIDs), either X.509 certificates or JSON Web Tokens (JWT-SVID & WIT-SVID), as client credentials for OAuth 2.0 client authentication. JWT-SVIDs make use of a profiled version of the JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants {{RFC7523}}. WIT-SVIDs make use of the OAuth 2.0 Attestation-Based Client Authentication {{?I-D.draft-ietf-oauth-attestation-based-client-auth}}.
 
 This profile focuses on using SPIFFE credentials for OAuth client authentication.
 
@@ -124,7 +124,7 @@ This specification uses the terms defined in OAuth 2.0 {{RFC6749}}, the Assertio
 
 This section describes how SPIFFE identity documents can be used for OAuth 2.0 client authentication, following the patterns established in {{RFC7521}} and, in case of JWT-SVID {{RFC7523}}.
 
-OAuth 2.0 client authentication is used to authenticate the client to the authorization server when making requests to the token endpoint. When using SPIFFE for client authentication, the client presents its SVID (JWT, WIT or X.509) to prove its identity.
+OAuth 2.0 client authentication is used to authenticate the client to the authorization server when making requests to the token endpoint. When using SPIFFE for client authentication, the client presents its SVID (JWT-SVID, WIT-SVID, or X.509-SVID) to prove its identity.
 
 ## Client Authentication with JWT-SVIDs
 
@@ -259,11 +259,11 @@ Certificate:
         9e:f2:27:c2:3c:e4:03:58:a8:47:21:f6:3c:5e:7a:c8
 ~~~
 
-## Client Authentication with WIT-SVID
+## Client Authentication with WIT-SVIDs
 
 WIT-SVIDs are the SPIFFE variant of the WIMSE Workload Identity Token (WIT) as defined in {{?I-D.draft-ietf-wimse-workload-creds}} and make use of concepts defined in OAuth 2.0 Attestation-Based Client Authentication {{?I-D.draft-ietf-oauth-attestation-based-client-auth}}.
 
-A WIT-SVID as issued by a SPIFFE infrastructure binds a key held by the client via the `cnf` claim. This key is used as attestation proof during client authentication. The attestation proof is in the form of a "Client Attestation PoP JWT" as defined in {{?I-D.draft-ietf-oauth-attestation-based-client-auth}} that is issued by the client and signed with the private part of the key bound in the WIT-SVID.
+A WIT-SVID as issued by a SPIFFE implementation binds a key held by the client via the `cnf` claim. This key is used as attestation proof during client authentication. The attestation proof is in the form of a "Client Attestation PoP JWT" as defined in {{?I-D.draft-ietf-oauth-attestation-based-client-auth}} that is issued by the client and signed with the private part of the key bound in the WIT-SVID.
 
 The WIT-SVID and the corresponding Client Attestation PoP JWT are sent together to the authorization server as a means of client authentication using the HTTP header-based syntax defined in Section 6.1 of {{?I-D.draft-ietf-oauth-attestation-based-client-auth}}.
 
