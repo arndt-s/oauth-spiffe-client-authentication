@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-01T00:15:29.134371+00:00",
+  "timestamp": "2026-03-03T00:15:15.831970+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -223,7 +223,7 @@
       "id": "I_kwDOOml42M7QENdf",
       "title": "Add wording to allow authorization servers to only support one SVID.",
       "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/19",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "arndt-s",
       "authorAssociation": "OWNER",
       "assignees": [
@@ -232,8 +232,8 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-10-07T09:50:30Z",
-      "updatedAt": "2026-02-03T15:14:38Z",
-      "closedAt": null,
+      "updatedAt": "2026-03-02T16:00:10Z",
+      "closedAt": "2026-03-02T16:00:10Z",
       "comments": [
         {
           "author": "arndt-s",
@@ -449,6 +449,22 @@
       "body": "`JWT-SVIDs` uses a different `client_assertion_type` making it simple for the authorization server to identify if the client is using a \"regular\" JWT client assertion or a JWT-SVID.\n\nFor `X509-SVID` the only way the authorization server can distinguish between a \"regular\" mTLS authentication and SPIFFE is by parsing the `client_id`. \n\nThis may lead to difficulty in support in authorization servers. As an example in Keycloak client authentication is implemented as a chain of authenticators, where the first authenticator that is able to authenticate the client is used (with an addition check that once the client is identified the correct authenticator was selected). This effectively means the regular mTLS authenticator would have to have an exclusion if the client_id is prefixed with `spiffe`.\n\nAdditionally Keycloak expects the `client_id` parameter to be the ID of the client within Keycloak; and not the SPIFFE SVID.\n\nWould it make sense to use an alternative parameter such as `spiffe_svid` instead of `client_id` to make it clear to the authorization server what it is?",
       "createdAt": "2026-02-24T08:33:01Z",
       "updatedAt": "2026-02-24T08:33:01Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 35,
+      "id": "I_kwDOOml42M7u5hhD",
+      "title": "Identifier for SPIFFE Client Authentication using JWT-SVID",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/issues/35",
+      "state": "OPEN",
+      "author": "TakahikoKawasaki",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "To list SPIFFE Client Authentication using JWT-SVID in the `token_endpoint_auth_methods_supported` server metadata parameter and to set it as the value of the `token_endpoint_auth_method` client metadata parameter, an identifier for this client authentication method is required.\n\nI would like to propose `spiffe_jwt` as a candidate. This name aligns with the following existing identifiers, both of which represent variants of assertion-based client authentication:\n\n- `client_secret_jwt`\n- `private_key_jwt`\n\nReference:\n\nIANA OAuth Parameters\nOAuth Token Endpoint Authentication Methods\nhttps://www.iana.org/assignments/oauth-parameters/oauth-parameters.xhtml#token-endpoint-auth-method\n\n\n",
+      "createdAt": "2026-03-01T19:17:14Z",
+      "updatedAt": "2026-03-01T19:17:14Z",
       "closedAt": null,
       "comments": []
     }
@@ -1289,24 +1305,26 @@
       "id": "PR_kwDOOml42M7Ek6Cn",
       "title": "Add Workload Identity Token & attestation-based client auth",
       "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/28",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "OWNER",
       "assignees": [],
       "labels": [],
       "body": "Adds WIT & attestation-based client auth variant. ",
       "createdAt": "2026-02-18T10:07:12Z",
-      "updatedAt": "2026-02-18T14:27:36Z",
+      "updatedAt": "2026-03-02T16:59:19Z",
       "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
       "baseRefName": "main",
-      "baseRefOid": "7404b14a04f1cab1ee61696308f964d2750aeb33",
+      "baseRefOid": "c6ff80e271140ae34af39a198018f6af1e9a5890",
       "headRepository": "arndt-s/oauth-spiffe-client-authentication",
       "headRefName": "arndt/add_wit",
-      "headRefOid": "b21e17a2754b37d65b85c7013fd082d239c626d1",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "050f4f936d3c5ec80f0024cbb8a23457832010ae",
+      "closedAt": "2026-03-02T16:59:15Z",
+      "mergedAt": "2026-03-02T16:59:15Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "57d85cd8d9a6c1acc8725edb01f67dfd271faf1e"
+      },
       "comments": [],
       "reviews": [
         {
@@ -1315,7 +1333,7 @@
             "abbreviatedOid": "b21e17a"
           },
           "author": "copilot-pull-request-reviewer",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "## Pull request overview\n\nThis PR extends the OAuth SPIFFE Client Authentication draft to cover Workload Identity Token-based SVIDs (WIT-SVIDs) and align the document with OAuth 2.0 attestation-based client authentication.\n\n**Changes:**\n- Update abstract/introduction to include WIT-SVIDs and reference attestation-based client authentication.\n- Add a new \u201cClient Authentication with WIT-SVID\u201d section including validation guidance and an end-to-end request example.\n- Extend the SPIFFE bundle/JWKS example to include a WIT-SVID key entry and update related explanatory text.\n\n\n\n\n\n---\n\n\ud83d\udca1 <a href=\"/arndt-s/oauth-spiffe-client-authentication/new/main/.github/instructions?filename=*.instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Add Copilot custom instructions</a> for smarter, more guided reviews. <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn how to get started</a>.",
           "createdAt": "2026-02-18T10:11:39Z",
@@ -1432,6 +1450,139 @@
               "updatedAt": "2026-02-18T14:27:36Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7m_h86",
+          "commit": {
+            "abbreviatedOid": "b21e17a"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T10:49:08Z",
+          "updatedAt": "2026-03-02T10:49:09Z",
+          "comments": [
+            {
+              "originalPosition": 23,
+              "body": "Applied",
+              "createdAt": "2026-03-02T10:49:09Z",
+              "updatedAt": "2026-03-02T10:49:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7m_ird",
+          "commit": {
+            "abbreviatedOid": "b21e17a"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T10:49:40Z",
+          "updatedAt": "2026-03-02T10:49:40Z",
+          "comments": [
+            {
+              "originalPosition": 46,
+              "body": "This is a generic topic, not only to this PR.",
+              "createdAt": "2026-03-02T10:49:40Z",
+              "updatedAt": "2026-03-02T10:49:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7m_i6e",
+          "commit": {
+            "abbreviatedOid": "b21e17a"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T10:49:53Z",
+          "updatedAt": "2026-03-02T10:49:53Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "Applied",
+              "createdAt": "2026-03-02T10:49:53Z",
+              "updatedAt": "2026-03-02T10:49:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7m_jBb",
+          "commit": {
+            "abbreviatedOid": "b21e17a"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T10:49:59Z",
+          "updatedAt": "2026-03-02T10:49:59Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "Applied",
+              "createdAt": "2026-03-02T10:49:59Z",
+              "updatedAt": "2026-03-02T10:49:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7m_jJC",
+          "commit": {
+            "abbreviatedOid": "b21e17a"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T10:50:05Z",
+          "updatedAt": "2026-03-02T10:50:05Z",
+          "comments": [
+            {
+              "originalPosition": 37,
+              "body": "Correct.",
+              "createdAt": "2026-03-02T10:50:05Z",
+              "updatedAt": "2026-03-02T10:50:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7m_jci",
+          "commit": {
+            "abbreviatedOid": "b21e17a"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T10:50:21Z",
+          "updatedAt": "2026-03-02T10:50:21Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "Applied",
+              "createdAt": "2026-03-02T10:50:21Z",
+              "updatedAt": "2026-03-02T10:50:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7nFt0a",
+          "commit": {
+            "abbreviatedOid": "754d3bf"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-03-02T15:48:28Z",
+          "updatedAt": "2026-03-02T15:48:28Z",
+          "comments": []
         }
       ]
     },
@@ -1440,24 +1591,26 @@
       "id": "PR_kwDOOml42M7F3RWX",
       "title": "Add section for interoperability between authorization servers and clients",
       "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/32",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "stianst",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "Closes #19\r\n\r\nSigned-off-by: stianst <stianst@gmail.com>\r\n",
       "createdAt": "2026-02-24T08:59:50Z",
-      "updatedAt": "2026-02-27T18:00:33Z",
+      "updatedAt": "2026-03-02T16:00:09Z",
       "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
       "baseRefName": "main",
-      "baseRefOid": "7404b14a04f1cab1ee61696308f964d2750aeb33",
+      "baseRefOid": "b52cd638e8b6d4573e506adde04812ed94cc79a4",
       "headRepository": "stianst/oauth-spiffe-client-authentication",
       "headRefName": "interoperability",
-      "headRefOid": "7bcd48c9103da7df2fb5148ff903062453a5449b",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "6a99f97fac3fedc473fe53802ac25a50cfca8901",
+      "closedAt": "2026-03-02T16:00:09Z",
+      "mergedAt": "2026-03-02T16:00:09Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "c6ff80e271140ae34af39a198018f6af1e9a5890"
+      },
       "comments": [],
       "reviews": [
         {
@@ -1479,6 +1632,105 @@
               "updatedAt": "2026-02-27T18:00:33Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7m7Kay",
+          "commit": {
+            "abbreviatedOid": "7bcd48c"
+          },
+          "author": "stianst",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T06:18:56Z",
+          "updatedAt": "2026-03-02T06:18:56Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "Supporting both on the client side is fairly straightforward, while on the authorization server side it may be a lot more complicated, especially X509-SVIDs. Keycloak for instance supports JWT-SVID, but X509-SVID is on hold for now as it's a lot more effort to support.\r\n\r\nThere may also be policies in place on the authorization server side that determines which of the two should be used.\r\n\r\nI don't think this is very different to what is common for discover endpoints; servers advertise a range of options they support, while clients need to adapt to that to select what works and what doesn't. In general client libraries need to support a wider range of capabilities compared to authorization servers to guarantee compatibility.",
+              "createdAt": "2026-03-02T06:18:56Z",
+              "updatedAt": "2026-03-02T06:18:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7m_zPo",
+          "commit": {
+            "abbreviatedOid": "7bcd48c"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-03-02T11:03:26Z",
+          "updatedAt": "2026-03-02T11:04:31Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "It's not just the server support, but also the infrastructures. If the infrastructure terminates TLS prior to reaching the server, it doesn't work from the client perspective even if the server supports it in theory.\n\nMaybe it's worth to make it more clear that the deployment matters too?\n\n```suggestion\nIt is the responsibility of the client to select the authentication method supported by the authorization server and its deployment.\n```",
+              "createdAt": "2026-03-02T11:03:26Z",
+              "updatedAt": "2026-03-02T11:04:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7nBTSm",
+          "commit": {
+            "abbreviatedOid": "7bcd48c"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-02T12:20:17Z",
+          "updatedAt": "2026-03-02T12:20:18Z",
+          "comments": [
+            {
+              "originalPosition": 21,
+              "body": "Thanks for the clarification @stianst, it makes sense. @arndt-s I think the suggestion is good. Perhaps capturing some of this reasoning around TLS termination would be helpful for implementer as well as an implementation note (possibly through a separate issue)?",
+              "createdAt": "2026-03-02T12:20:17Z",
+              "updatedAt": "2026-03-02T12:20:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M7nFuq0",
+          "commit": {
+            "abbreviatedOid": "de93966"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "Looks good to me",
+          "createdAt": "2026-03-02T15:49:06Z",
+          "updatedAt": "2026-03-02T15:49:06Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOml42M7nF8Wn",
+          "commit": {
+            "abbreviatedOid": "6a99f97"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "## Pull request overview\n\nAdds an \u201cInteroperability\u201d section to the OAuth SPIFFE client authentication draft to clarify how authorization servers and clients can interoperate when supporting only a subset of SVID-based authentication methods (per Issue #19).\n\n**Changes:**\n- Adds RFC 8414 as a normative reference.\n- Introduces a new \u201cInteroperability\u201d section describing method support requirements and metadata advertisement.\n\n\n<details>\n<summary>Comments suppressed due to low confidence (1)</summary>\n\n**draft-ietf-oauth-spiffe-client-auth.md:324**\n* This section duplicates the existing \u201cSPIFFE Trust Establishment and Client Registration\u201d section immediately below, including repeating the heading and paragraphs. Remove one copy (either this newly inserted block or the original) so the document has a single, canonical section.\n```\n# SPIFFE Trust Establishment and Client Registration\n\nThis specification requires previously established trust between the OAuth 2.0 Authorization Server and the SPIFFE Trust Domain. This needs to happen out of band and is not in scope of this specification. However, the mechanisms of key distribution is in scope and described in {{spiffe-bundle-validation}}.\n\nSimilar to the trust establishment, corresponding OAuth clients need to be established prior of using SPIFFE as client authentication. This is also out of scope, implementors may for example choose to leverage OAuth 2.0 dynamic client registration according to {{RFC7591}} or configure them out of band.\n```\n</details>\n\n\n\n---\n\n\ud83d\udca1 <a href=\"/arndt-s/oauth-spiffe-client-authentication/new/main?filename=.github/instructions/*.instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Add Copilot custom instructions</a> for smarter, more guided reviews. <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn how to get started</a>.",
+          "createdAt": "2026-03-02T15:59:16Z",
+          "updatedAt": "2026-03-02T15:59:17Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "The values `spiffe_jwt` / `spiffe_x509` used in `token_endpoint_auth_methods_supported` are not defined anywhere else in this document and are not covered by the current IANA considerations. Either use existing registered auth method values (e.g., `private_key_jwt`, `tls_client_auth`) or define these new method names and add the necessary IANA registrations. Also, `should` here is lowercase and reads like a non-BCP14 keyword; consider using `SHOULD` if this is intended to be normative.\n```suggestion\nAuthorization servers MUST support at least one of JWT-SVID or X509-SVID. The methods supported MUST be advertised in the authorization servers metadata {{RFC8414}} by including the corresponding registered values (e.g., `private_key_jwt` and/or `tls_client_auth`) in the `token_endpoint_auth_methods_supported` list. Additionally, the same SHOULD be included in `revocation_endpoint_auth_methods_supported` and `introspection_endpoint_auth_methods_supported` when applicable.\n```",
+              "createdAt": "2026-03-02T15:59:16Z",
+              "updatedAt": "2026-03-02T15:59:17Z"
+            },
+            {
+              "originalPosition": 20,
+              "body": "These two consecutive sentences are duplicative and partially inconsistent; keep a single sentence here to avoid confusion about whether deployment-specific constraints are in scope for the client\u2019s selection logic.\n```suggestion\nClients are responsible for selecting, from among the authentication methods advertised by the authorization server, one that they support.\n```",
+              "createdAt": "2026-03-02T15:59:17Z",
+              "updatedAt": "2026-03-02T15:59:17Z"
+            }
+          ]
         }
       ]
     },
@@ -1494,7 +1746,7 @@
       "labels": [],
       "body": "See issue #7",
       "createdAt": "2026-02-24T13:35:19Z",
-      "updatedAt": "2026-02-27T19:01:36Z",
+      "updatedAt": "2026-03-02T20:15:41Z",
       "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
       "baseRefName": "main",
       "baseRefOid": "7404b14a04f1cab1ee61696308f964d2750aeb33",
@@ -1573,6 +1825,19 @@
           "body": "",
           "createdAt": "2026-02-27T19:00:58Z",
           "updatedAt": "2026-02-27T19:00:58Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOml42M7nLNT5",
+          "commit": {
+            "abbreviatedOid": "b95d52c"
+          },
+          "author": "ncamwing",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "Sorry, always late with the feedback as I had to check w/my team; the updates look fine and I see you merged it already.",
+          "createdAt": "2026-03-02T20:15:41Z",
+          "updatedAt": "2026-03-02T20:15:41Z",
           "comments": []
         }
       ]
@@ -1820,6 +2085,55 @@
           "createdAt": "2026-02-27T17:53:46Z",
           "updatedAt": "2026-02-27T17:53:46Z",
           "comments": []
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "id": "PR_kwDOOml42M7HYtHA",
+      "title": "Prepare history for -01",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/36",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "OWNER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-03-02T17:07:39Z",
+      "updatedAt": "2026-03-02T17:09:43Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "57d85cd8d9a6c1acc8725edb01f67dfd271faf1e",
+      "headRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "headRefName": "prepare-01",
+      "headRefOid": "8135558d881de44615519d0010f4eb382888bed9",
+      "closedAt": "2026-03-02T17:08:38Z",
+      "mergedAt": "2026-03-02T17:08:38Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "75fd0469769cf14d600b8964e68cb8ebef091c0d"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M7nHfSg",
+          "commit": {
+            "abbreviatedOid": "8135558"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "## Pull request overview\n\nUpdates the Internet-Draft\u2019s \u201cDocument History\u201d to reflect changes included in the `-01` revision.\n\n**Changes:**\n- Expand the `draft-ietf-oauth-spiffe-client-auth-01` history entry into a detailed bullet list (metadata discovery, WIT-SVID variant, interoperability, `iss` guidance, and co-author addition).\n\n\n\n\n\n---\n\n\ud83d\udca1 <a href=\"/arndt-s/oauth-spiffe-client-authentication/new/main?filename=.github/instructions/*.instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Add Copilot custom instructions</a> for smarter, more guided reviews. <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn how to get started</a>.",
+          "createdAt": "2026-03-02T17:09:42Z",
+          "updatedAt": "2026-03-02T17:09:43Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "For consistency with the rest of the document (e.g., the earlier section that refers to the `iss` claim using inline code formatting), consider formatting \u201ciss\u201d here as `iss` as well.\n```suggestion\n* Add more guidance and security considerations when using the `iss` claim.\n```",
+              "createdAt": "2026-03-02T17:09:42Z",
+              "updatedAt": "2026-03-02T17:09:43Z"
+            }
+          ]
         }
       ]
     }
