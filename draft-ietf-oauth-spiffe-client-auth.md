@@ -55,6 +55,9 @@ author:
  -  fullname: Stian Thorgersen
     organization: IBM
     email: sthorger@ibm.com
+ -  fullname: Nancy Cam-Winget
+    organization: Cisco Systems
+    email: ncamwing@cisco.com
 
 normative:
   RFC6749:
@@ -625,6 +628,9 @@ This document requests the following entries to be added to the "OAuth Dynamic C
 
 # Document History
 <cref>RFC Editor: please remove before publication.</cref>
+
+  - latest
+   * Added Nancy Cam-Winget (Cisco) as co-author
 
 ## draft-ietf-oauth-spiffe-client-auth-01
 
