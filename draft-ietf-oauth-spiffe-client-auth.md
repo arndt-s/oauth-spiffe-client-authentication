@@ -631,7 +631,7 @@ This document requests the following entries to be added to the "OAuth Dynamic C
 
   - latest
    * Added Nancy Cam-Winget (Cisco) as co-author
-  
+
 ## draft-ietf-oauth-spiffe-client-auth-01
 
 * Add mechanism to use Client ID Metadata Document for SPIFFE client metadata discovery.
