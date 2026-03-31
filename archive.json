@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-03T00:15:15.831970+00:00",
+  "timestamp": "2026-03-31T00:18:14.867173+00:00",
   "repo": "arndt-s/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -2134,6 +2134,48 @@
               "updatedAt": "2026-03-02T17:09:43Z"
             }
           ]
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "id": "PR_kwDOOml42M7OpwZh",
+      "title": "Add Nancy Cam-Winget as co-author",
+      "url": "https://github.com/arndt-s/oauth-spiffe-client-authentication/pull/37",
+      "state": "MERGED",
+      "author": "PieterKas",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Added Nancy Cam-Winget as co-author to the document.",
+      "createdAt": "2026-03-30T15:00:48Z",
+      "updatedAt": "2026-03-30T19:19:40Z",
+      "baseRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "75fd0469769cf14d600b8964e68cb8ebef091c0d",
+      "headRepository": "arndt-s/oauth-spiffe-client-authentication",
+      "headRefName": "PieterKas-patch-1",
+      "headRefOid": "a7e3b08a1d2e9d767b5a51b02c17e8265bf0a0bd",
+      "closedAt": "2026-03-30T19:19:40Z",
+      "mergedAt": "2026-03-30T19:19:40Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "096644613de1ea478d116e519c189c4784f34a88"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M7wX3TH",
+          "commit": {
+            "abbreviatedOid": "a7e3b08"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "OWNER",
+          "state": "APPROVED",
+          "body": "Thank you @PieterKas !",
+          "createdAt": "2026-03-30T19:19:26Z",
+          "updatedAt": "2026-03-30T19:19:26Z",
+          "comments": []
         }
       ]
     }
