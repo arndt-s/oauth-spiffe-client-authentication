@@ -5,13 +5,13 @@
 Web Authorization Protocol                            A. Schwenkschuster
 Internet-Draft                                             P. Kasselmann
 Intended status: Standards Track                        Defakto Security
-Expires: 1 October 2026                                          S. Rose
+Expires: 17 December 2026                                        S. Rose
                                                                     NIST
                                                            S. Thorgersen
                                                                      IBM
                                                            N. Cam-Winget
                                                            Cisco Systems
-                                                           30 March 2026
+                                                            15 June 2026
 
 
                    OAuth SPIFFE Client Authentication
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 October 2026.
+   This Internet-Draft will expire on 17 December 2026.
 
 Copyright Notice
 
@@ -177,13 +177,17 @@ Table of Contents
    [SPIFFE_ID] for details.
 
    *SVID*: A SPIFFE Verifiable Identity Document.  This document
-   specifies the use of two types of SVIDs:
+   specifies the use of three types of SVIDs:
 
    *  *X.509-SVID*: An X.509 certificate that contains a SPIFFE ID in
       the URI SAN extension.  See [SPIFFE_X509] for details.
 
    *  *JWT-SVID*: A JSON Web Token (JWT) that contains a SPIFFE ID in
       the sub claim.  See [SPIFFE_JWT] for details.
+
+   *  *WIT-SVID*: WIT-SVID: A WIMSE Workload Identity Token (WIT) that
+      contains a SPIFFE ID in the sub claim.  See [SPIFFE_WIT] for
+      details.
 
    *SPIFFE Bundle*: A collection of public keys and associated metadata
    that allow validation of SVIDs issued by a trust domain.
@@ -261,7 +265,7 @@ client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3A
 client-assertion-type=jwt-spiffe&
 client_assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjR2QzhhZ3ljSHU2cm5rRUVKWUFINlZ1Q2U0Sm9Ta1BWIiwidHlwIjoiSldUIn0.eyJhdWQiOlsiaHR0cHM6Ly9hcy5leGFtcGxlLmNvbS8iXSwiZXhwIjoxNzQ3MTI0NTQzLCJpYXQiOjE3NDcxMjQyNDMsInN1YiI6InNwaWZmZTovL2V4YW1wbGUub3JnL215LW9hdXRoLWNsaWVudCJ9.Xlv5lW4cbxDsQk4l0paewG4nXOR7MxF_FMn_c27DX45Bxr2HUZf9a6Untfq5S47xpwbw495HBL6_1Lc6TMJxmw
 
-   For clarify, the SPIFFE-JWT header and body decoded:
+   For clarity, the SPIFFE-JWT header and body decoded:
 
    {
      "alg": "ES256",
@@ -418,18 +422,21 @@ Certificate:
 
 3.3.  Client Authentication with WIT-SVIDs
 
-   WIT-SVIDs are the SPIFFE variant of the WIMSE Workload Identity Token
-   (WIT) as defined in [I-D.draft-ietf-wimse-workload-creds] and make
-   use of concepts defined in OAuth 2.0 Attestation-Based Client
-   Authentication [I-D.draft-ietf-oauth-attestation-based-client-auth].
+   A WIT-SVID is a WIMSE Workload Identity Token (WIT) as defined in
+   [I-D.draft-ietf-wimse-workload-creds] that contains a SPIFFE ID in
+   the sub claim [SPIFFE_WIT].  It uses OAuth 2.0 Attestation-Based
+   Client Authentication
+   [I-D.draft-ietf-oauth-attestation-based-client-auth] for client
+   authentication.
 
-   A WIT-SVID as issued by a SPIFFE implementation binds a key held by
-   the client via the cnf claim.  This key is used as attestation proof
-   during client authentication.  The attestation proof is in the form
-   of a "Client Attestation PoP JWT" as defined in
+   A WIT-SVID as issued by a SPIFFE implementation binds a key pair held
+   by the client via the cnf claim.  The key pair bound to the WIT-SVID
+   is used to generate an attestation proof during client
+   authentication.  The attestation proof is in the form of a "Client
+   Attestation PoP JWT" as defined in
    [I-D.draft-ietf-oauth-attestation-based-client-auth] that is issued
-   by the client and signed with the private part of the key bound in
-   the WIT-SVID.
+   by the client and signed with the private part of the key pair bound
+   in the WIT-SVID.
 
    The WIT-SVID and the corresponding Client Attestation PoP JWT are
    sent together to the authorization server as a means of client
@@ -517,15 +524,15 @@ client_id=spiffe://example.org/my-oauth-client
    and clients the authorization server MUST advertise what client
    authentication methods are supported.
 
-   Authorization servers MUST support at least one of JWT-SVID or
-   X509-SVID.  The methods supported MUST be advertised in the
-   authorization servers metadata [RFC8414] by including spiffe_jwt,
+   Authorization servers MUST support at least one of JWT-SVID,
+   X509-SVID or WIT-SVID.  The methods supported MUST be advertised in
+   the authorization servers metadata [RFC8414] by including spiffe_jwt,
    spiffe_wit and/or spiffe_x509 in the
    token_endpoint_auth_methods_supported list.  Additionally, the same
    should be included in revocation_endpoint_auth_methods_supported and
    introspection_endpoint_auth_methods_supported when applicable.
 
-   Clients MUST support at least one of JWT-SVID, WIT-SVID or X509-SVID.
+   Clients MUST support at least one of JWT-SVID, X509-SVID or WIT-SVID.
    To guarantee interoperability a client SHOULD support all.
 
    It is the responsibility of the client to select the authentication
@@ -540,10 +547,11 @@ client_id=spiffe://example.org/my-oauth-client
    scope and described in Section 6.
 
    Similar to the trust establishment, corresponding OAuth clients need
-   to be established prior of using SPIFFE as client authentication.
-   This is also out of scope, implementors may for example choose to
-   leverage OAuth 2.0 dynamic client registration according to [RFC7591]
-   or configure them out of band.
+   to be registered when using SPIFFE credentials for client
+   authentication.  OAuth client registration may leverage Client ID
+   Metadata Documents [I-D.ietf-oauth-client-id-metadata-document],
+   OAuth 2.0 Dynamic Client Registration [RFC7591] or configure them out
+   of band.
 
 5.1.  Client Registration Metadata
 
@@ -591,8 +599,8 @@ Trust domain "production": SPIFFE Bundle Endpoint at https://example.com/auth/sp
 
 6.1.  SPIFFE Bundle Endpoint
 
-   The SPIFFE Bundle Endpoint exposes the signing keys for X509-SVIDs
-   and JWT-SVIDs over HTTP via a JSON Web Key Set according to
+   The SPIFFE Bundle Endpoint exposes the signing keys for X509-SVIDs,
+   JWT-SVIDs and WIT-SVID over HTTP via a JSON Web Key Set according to
    [RFC7517].
 
    Server authentication on this endpoint is available in two flavors.
@@ -606,9 +614,9 @@ Trust domain "production": SPIFFE Bundle Endpoint at https://example.com/auth/sp
    to retrieve updated trust bundles, following the refresh hint and
    period provided in the bundle.  See [SPIFFE_FEDERATION] for details.
 
-   The SPIFFE bundle endpoint cannot be derived from the JWT-SVID and
-   X509-SVID and MUST be configured manually out of band.  Bundle
-   endpoints MUST be keyed by the trust domain identifier.
+   The SPIFFE bundle endpoint cannot be derived from the JWT-SVID,
+   X509-SVID or JWT-SVID and MUST be configured manually out of band.
+   Bundle endpoints MUST be keyed by the trust domain identifier.
 
 6.1.1.  Example
 
@@ -616,9 +624,9 @@ Trust domain "production": SPIFFE Bundle Endpoint at https://example.com/auth/sp
    perform key discovery for the trust domain example.org.  Important to
    note is the difference between example.org trust domain and
    example.com location for the SPIFFE Bundle Endpoint.  This highlights
-   the importance of explicit configuration and undermines the fact that
-   the SPIFFE Bundle Endpoint cannot be derived or discovered from the
-   X509-SVID without explicit configuration.
+   the importance of explicit configuration and demonstrates why the
+   SPIFFE Bundle Endpoint cannot be derived or discovered from the JWT-
+   SVID, X509-SVID or WIT-SVID without explicit configuration.
 
    Example configuration at the OAuth Authorization Server in the JSON
    format
@@ -739,7 +747,7 @@ Certificate:
    allows to retrieve trust bundles from federated trust domains.
 
    This approach is NOT RECOMMENDED for OAuth SPIFFE Client
-   Authentication for several reasons:
+   Authentication for the following reasons:
 
    *  OAuth Authorization Server needs to be a workload within a SPIFFE
       trust domain, which is a significant limitation for deployment
@@ -760,12 +768,12 @@ Certificate:
 6.2.3.  Using the system trust store
 
    X509-SVIDs MUST NOT be validated using the system trust store.  The
-   SPIFFE ID carried in the URI SAN is rarely a verifiable attribute in
-   the broader X.509 ecosystem.  Using the system trust store as trust
-   anchor would allow ANY certificate authority in it to issue a trusted
-   X509-SVID for ANY SPIFFE ID.  In comparison: using SPIFFE-native
-   validation methods restricts the signing of SPIFFE-IDs to the
-   corresponding trust domain signing keys.
+   SPIFFE ID carried in the URI SAN is usually not a verifiable
+   attribute in the broader X.509 ecosystem.  Using the system trust
+   store as trust anchor would allow ANY certificate authority in it to
+   issue a trusted X509-SVID for ANY SPIFFE ID.  In comparison: using
+   SPIFFE-native validation methods restricts the signing of SPIFFE-IDs
+   to the corresponding trust domain signing keys.
 
 6.2.4.  Using the JWT-SVID or WIT-SVID iss claim
 
@@ -823,13 +831,17 @@ Certificate:
 8.  Security Considerations
 
    Client authentication using JWT-SVIDs has the same security
-   considerations as described in [RFC6749] and [RFC7521].
+   considerations as described in [RFC6749], [RFC7521] and [RFC7523].
 
    Client authentication using X509-SVIDs has the same security
    considerations as described in [RFC8705].  The validation rules in
    section 3.2 protect against an OAuth2 token being issued (or being
    issued incorrectly) to a client that did not present an appropriate
    X509-SVID.
+
+   Client authentication using X509-SVIDs has the same security
+   considerations as described in [I-D.draft-ietf-wimse-workload-creds]
+   and [I-D.draft-ietf-oauth-attestation-based-client-auth]
 
    The issues described in Section 5.2 above include the threat that an
    authorization server may have the incorrect trust stores configured
@@ -846,7 +858,7 @@ Certificate:
 
    However, if it is used, the authorization server MUST NOT perform
    issuer-based discovery solely based on the iss value from the token
-   unless the iss value is already known to the authorization server,
+   unless the iss value is already trusted by the authorization server,
    and that iss value is explicitly associated with the configured
    SPIFFE Trust Domain being validated.
 
@@ -914,9 +926,9 @@ Certificate:
               "Updates to OAuth 2.0 JSON Web Token (JWT) Client
               Authentication and Assertion-Based Authorization Grants",
               Work in Progress, Internet-Draft, draft-ietf-oauth-
-              rfc7523bis-07, 26 March 2026,
+              rfc7523bis-11, 28 April 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              rfc7523bis-07>.
+              rfc7523bis-11>.
 
    [I-D.ietf-oauth-client-id-metadata-document]
               Parecki, A. and E. Smith, "OAuth Client ID Metadata
@@ -997,6 +1009,10 @@ Certificate:
               <https://github.com/spiffe/spiffe/blob/main/standards/JWT-
               SVID.md>.
 
+   [SPIFFE_WIT]
+              "WIT-SVID", n.d., <https://github.com/spiffe/spiffe/blob/
+              draft-wit-svid/standards/WIT-SVID.md>.
+
    [SPIFFE_X509]
               "X509-SVID", n.d.,
               <https://github.com/spiffe/spiffe/blob/main/standards/
@@ -1008,17 +1024,17 @@ Certificate:
               Looker, T., Bastian, P., and C. Bormann, "OAuth 2.0
               Attestation-Based Client Authentication", Work in
               Progress, Internet-Draft, draft-ietf-oauth-attestation-
-              based-client-auth-08, 2 March 2026,
+              based-client-auth-09, 25 May 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              attestation-based-client-auth-08>.
+              attestation-based-client-auth-09>.
 
    [I-D.draft-ietf-wimse-workload-creds]
               Campbell, B., Salowey, J. A., Schwenkschuster, A.,
               Sheffer, Y., and Y. Rosomakho, "WIMSE Workload
               Credentials", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-workload-creds-00, 3 November 2025,
+              ietf-wimse-workload-creds-01, 5 May 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              workload-creds-00>.
+              workload-creds-01>.
 
 Appendix A.  Document History
 
@@ -1028,6 +1044,8 @@ Appendix A.  Document History
    *  latest
 
    *  Added Nancy Cam-Winget (Cisco) as co-author
+
+   *  Editorial changes to clarify WIT support
 
 A.1.  draft-ietf-oauth-spiffe-client-auth-01
 
