@@ -114,10 +114,11 @@ Table of Contents
      10.1.  Normative References
      10.2.  Informative References
    Appendix A.  Document History
-     A.1.  draft-ietf-oauth-spiffe-client-auth-01
-     A.2.  draft-ietf-oauth-spiffe-client-auth-00
-     A.3.  draft-schwenkschuster-oauth-spiffe-client-auth-01
-     A.4.  draft-schwenkschuster-oauth-spiffe-client-auth-00
+     A.1.  draft-ietf-oauth-spiffe-client-auth-02
+     A.2.  draft-ietf-oauth-spiffe-client-auth-01
+     A.3.  draft-ietf-oauth-spiffe-client-auth-00
+     A.4.  draft-schwenkschuster-oauth-spiffe-client-auth-01
+     A.5.  draft-schwenkschuster-oauth-spiffe-client-auth-00
    Acknowledgments
    Authors' Addresses
 
@@ -1043,11 +1044,13 @@ Appendix A.  Document History
 
    *  latest
 
-   *  Added Nancy Cam-Winget (Cisco) as co-author
+A.1.  draft-ietf-oauth-spiffe-client-auth-02
 
-   *  Editorial changes to clarify WIT support
+   *  Add Nancy Cam-Winget as co-author.
 
-A.1.  draft-ietf-oauth-spiffe-client-auth-01
+   *  Editorial updates to clarify WIT-SVID support.
+
+A.2.  draft-ietf-oauth-spiffe-client-auth-01
 
    *  Add mechanism to use Client ID Metadata Document for SPIFFE client
       metadata discovery.
@@ -1062,12 +1065,12 @@ A.1.  draft-ietf-oauth-spiffe-client-auth-01
 
    *  Add Stian Thorgersen as co-author.
 
-A.2.  draft-ietf-oauth-spiffe-client-auth-00
+A.3.  draft-ietf-oauth-spiffe-client-auth-00
 
    *  Document name update to reflect adoption into the OAuth working
       group
 
-A.3.  draft-schwenkschuster-oauth-spiffe-client-auth-01
+A.4.  draft-schwenkschuster-oauth-spiffe-client-auth-01
 
    *  Rephrase introduction to make the focus on client authentication
       more clear.
@@ -1080,7 +1083,7 @@ A.3.  draft-schwenkschuster-oauth-spiffe-client-auth-01
 
    *  Add Scott Rose as co-author.
 
-A.4.  draft-schwenkschuster-oauth-spiffe-client-auth-00
+A.5.  draft-schwenkschuster-oauth-spiffe-client-auth-00
 
    *  Initial document
 
