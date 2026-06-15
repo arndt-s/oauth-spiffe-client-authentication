@@ -40,7 +40,7 @@ venue:
   type: "Working Group"
   mail: "oauth@ietf.org"
   arch: "https://mailarchive.ietf.org/arch/browse/oauth/"
-  github: "arndt-s/oauth-spiffe-client-authentication"
+  github: "oauth-wg/oauth-spiffe-client-authentication"
 
 author:
  -  fullname: Arndt Schwenkschuster
