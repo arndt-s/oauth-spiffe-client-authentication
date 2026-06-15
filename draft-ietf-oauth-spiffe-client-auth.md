@@ -637,8 +637,11 @@ This document requests the following entries to be added to the "OAuth Dynamic C
 <cref>RFC Editor: please remove before publication.</cref>
 
   - latest
-   * Added Nancy Cam-Winget (Cisco) as co-author
-   * Editorial changes to clarify WIT support
+
+## draft-ietf-oauth-spiffe-client-auth-02
+
+* Add Nancy Cam-Winget as co-author.
+* Editorial updates to clarify WIT-SVID support.
 
 ## draft-ietf-oauth-spiffe-client-auth-01
 
