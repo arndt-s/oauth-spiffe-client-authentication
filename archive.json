@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-16T00:45:20.905974+00:00",
+  "timestamp": "2026-06-18T00:41:11.734836+00:00",
   "repo": "oauth-wg/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -2323,24 +2323,26 @@
       "id": "PR_kwDOOml42M7mcP6o",
       "title": "Update Github location",
       "url": "https://github.com/oauth-wg/oauth-spiffe-client-authentication/pull/42",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "arndt-s",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Repo moved out of individual Github org to oauth-wg",
       "createdAt": "2026-06-15T08:18:00Z",
-      "updatedAt": "2026-06-15T08:19:04Z",
+      "updatedAt": "2026-06-16T09:31:29Z",
       "baseRepository": "oauth-wg/oauth-spiffe-client-authentication",
       "baseRefName": "main",
       "baseRefOid": "2549b12d233481374467b4e26123707efee29e05",
       "headRepository": "oauth-wg/oauth-spiffe-client-authentication",
       "headRefName": "arndt/update-repo-location",
       "headRefOid": "f60d506da41980ce8a1ffa98b57b793f426a8828",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-06-16T09:31:29Z",
+      "mergedAt": "2026-06-16T09:31:29Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "07ec2ad8b8243574fc8d9024a3cc1b8a30cc73b8"
+      },
       "comments": [],
       "reviews": [
         {
