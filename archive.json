@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-18T00:41:11.734836+00:00",
+  "timestamp": "2026-07-23T00:25:54.697800+00:00",
   "repo": "oauth-wg/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -513,6 +513,22 @@
       "body": "In the client authentication method using WIT-SVID defined in [draft 01](https://www.ietf.org/archive/id/draft-ietf-oauth-spiffe-client-auth-01.html) of the [OAuth SPIFFE Client Authentication](https://datatracker.ietf.org/doc/draft-ietf-oauth-spiffe-client-auth/) specification (hereafter referred to as `spiffe_wit`), applying the concepts of [OAuth 2.0 Attestation-Based Client Authentication](https://datatracker.ietf.org/doc/draft-ietf-oauth-attestation-based-client-auth/) (hereafter ABCA) is reasonable. However, having it encroach upon the ABCA specification raises the following issues.\n\n- According to the [WIMSE Workload Credentials](https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds/) specification, the `sub` claim of a Workload Identity Token (hereafter WIT) must be an identifier of the workload. On the other hand, in ABCA, the `sub` claim of a Client Attestation must be an identifier of the OAuth client. Since a workload and an OAuth client are not necessarily in a one-to-one relationship, using a WIT as a Client Attestation leads to a conflict in the requirements for the `sub` claim.\n- In addition, there is an attempt to make ABCA implementations accept `wit+jwt` as a value of the `typ` of a Client Attestation JWT, in addition to `oauth-client-attestation+jwt`.\n\nThese issues can be avoided by modifying the specification as follows:\n\n1. Use the `Workload-Identity-Token` HTTP header instead of the `OAuth-Client-Attestation` HTTP header. This header is defined in the WIMSE Workload Credentials specification.\n2. Introduce and use a new `Workload-Identity-Token-PoP` HTTP header instead of the `OAuth-Client-Attestation-PoP` HTTP header. (This new header would likely be better defined in the WIMSE Workload Credentials specification rather than in the OAuth SPIFFE Client Authentication specification.)\n\nSince a WIT does not contain information identifying the OAuth client, when using the revised `spiffe_wit` client authentication, a separate `client_id` request parameter would be required. The server implementation would then, similar to the case of `spiffe_jwt` client authentication, verify that the value of the `spiffe_id` client metadata parameter of the OAuth client identified by the `client_id` request parameter matches the value of the `sub` claim in the WIT.",
       "createdAt": "2026-04-27T00:54:14Z",
       "updatedAt": "2026-04-27T00:54:14Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 43,
+      "id": "I_kwDOOml42M8AAAABJuMqeA",
+      "title": "Client ID relationship with SPIFFE ID",
+      "url": "https://github.com/oauth-wg/oauth-spiffe-client-authentication/issues/43",
+      "state": "OPEN",
+      "author": "sorindumitru",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "In section 3.2 we say:\n```\nThe request MUST include the client_id parameter containing the\n   SPIFFE-ID of the client.  It MUST match the URI SAN of the presented\n   X509-SVID client credential.\n```\n\nThere's no such wording in section 3.1.\n\nBoth sections including something like the following in the validation part of them:\n```\nSPIFFE ID in the sub claim matches or is associated with a recognized client identifier\n```\n\nThis is a weaker claim than previously mentioned claim. I read as either:\n1. The client id matches the SPIFFE ID\n2. The client id is associated (authorised?) to authenticate as the given client id.\n\nIt would be good to be clarify a bit more the relationship between the client ID and the SPIFFE ID of the presented SVIDs.",
+      "createdAt": "2026-07-22T09:13:50Z",
+      "updatedAt": "2026-07-22T09:13:50Z",
       "closedAt": null,
       "comments": []
     }
