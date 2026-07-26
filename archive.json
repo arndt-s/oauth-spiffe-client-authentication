@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-23T00:25:54.697800+00:00",
+  "timestamp": "2026-07-26T00:27:56.929067+00:00",
   "repo": "oauth-wg/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -401,7 +401,7 @@
       "labels": [],
       "body": "In draft 00 of OAuth SPIFFE Client Authentication, when using Client Authentication with X509-SVID, it requires that the value of the `client_id` request parameter be the SPIFFE ID. However, I believe this requirement should be removed. The reasons are as follows:\n\n* Systems that use the [OpenID Federation 1.0](https://openid.net/specs/openid-federation-1_0.html) specification cannot use OAuth SPIFFE Client Authentication.\n* Systems that use the [OAuth Client ID Metadata Document](https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document/) specification cannot use OAuth SPIFFE Client Authentication.\n* Systems in which client IDs cannot be flexibly changed cannot use OAuth SPIFFE Client Authentication.\n\nThe client authentication method defined in RFC 8705 [Section 2.1](https://www.rfc-editor.org/rfc/rfc8705.html#section-2.1) works correctly even if the value of the `tls_client_auth_san_uri` client metadata differs from the client ID.\n",
       "createdAt": "2026-02-20T14:39:50Z",
-      "updatedAt": "2026-05-17T06:56:56Z",
+      "updatedAt": "2026-07-23T01:27:39Z",
       "closedAt": null,
       "comments": [
         {
@@ -410,6 +410,13 @@
           "body": "Coincidentally, we had implemented a working version of this before the draft was published, and we are planning to make it public soon.\n\nIn our implementation, the OAuth client_id is not required to be the SPIFFE ID. The client_id remains the OAuth client registration identifier, and the SPIFFE URI SAN validation is configured as part of the client\u2019s authentication credential/secret type. In other words, the AS resolves the OAuth client using client_id, validates the presented X.509-SVID, extracts the SPIFFE ID from the URI SAN, and then checks that the SPIFFE ID is associated with that registered client.\n\nWe have not implemented the Client ID Metadata Document part yet; this is currently configured directly on the registered client.\n\nFrom an implementer perspective, requiring client_id == SPIFFE ID feels unnecessarily restrictive. In many deployments, client_id may already be a stable application identifier, while the SPIFFE ID represents a workload/runtime identity. This distinction becomes especially useful for agentic systems, where a single OAuth client registration may represent an agent application, runtime, or class/group of clients, while individual workloads may have distinct SPIFFE IDs.\n\nThe validation rule already seems to allow the SPIFFE ID to be \u201cassociated with a registered client identifier\u201d. I think the spec would be more deployable if the X.509-SVID section made that association model explicit and did not require the request client_id itself to equal the URI SAN.",
           "createdAt": "2026-05-17T06:56:56Z",
           "updatedAt": "2026-05-17T06:56:56Z"
+        },
+        {
+          "author": "RalphBragg",
+          "authorAssociation": "NONE",
+          "body": "Adding deployment evidence in support of this issue, plus one editorial point on the -02 text.\n\nRaidiam operates OpenID Federation and directory based ecosystems in production with several thousand registered clients whose `client_id` is an https entity identifier resolved through a trust chain. Client IDs there cannot change, so under the current Section 3.2 text these deployments can never use the X509-SVID method. The JWT-SVID path already has the right model (3.1 step 5: \"matches or is associated with a recognized client identifier\"), consistent with the implementation experience reported above.\n\nSection 3.2 also appears to contradict itself: the request rule mandates that `client_id` equal the URI SAN, yet validation step 5 accepts a SPIFFE ID that \"is associated with a registered client identifier\", a branch the request rule makes unreachable.\n\nRFC 8705 Section 2.1.2 solved this for certificates: the expected identity (`tls_client_auth_san_uri`) is registered metadata and `client_id` remains the registration identifier. The draft already has the equivalent in `spiffe_id` (Section 5.1, IANA Section 9.1). Proposed replacement for the 3.2 request rule:\n\n> The request MUST include the `client_id` parameter identifying the client. The authorization server MUST verify that the SPIFFE ID in the URI SAN of the presented X509-SVID matches, or is covered by, the `spiffe_id` metadata registered for or otherwise associated with that client.\n\nSection 5.1's wildcard prose would then need to cover the URI SAN as well as the JWT `sub` claim. Deployments that use the SPIFFE ID as their `client_id` are unaffected, since the association check degenerates to equality.\n",
+          "createdAt": "2026-07-23T01:15:15Z",
+          "updatedAt": "2026-07-23T01:27:39Z"
         }
       ]
     },
