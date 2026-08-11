@@ -152,7 +152,7 @@ Based on {{RFC7523}} the following request parameters MUST be present to perform
 * client_assertion_type: MUST be set to `urn:ietf:params:oauth:client-assertion-type:jwt-spiffe`.
 * client_assertion: MUST be a single SPIFFE JWT-SVID.
 
-Requiring `client_id` makes the client identity explicit in the request, rather than leaving it to be derived from the `sub` claim of the JWT-SVID. It also allows a single SPIFFE ID to be associated with more than one registered client.
+Requiring `client_id` makes the client identity explicit in the request, rather than leaving it to be derived from the `sub` claim of the JWT-SVID.
 
 To validate JWT-SVID client authentication requests the authorization server MUST:
 
@@ -249,7 +249,7 @@ X.509-SVID based authentication uses mutual TLS as defined in OAuth 2.0 Mutual-T
 
 To authenticate using an X.509-SVID, the client establishes a mutual TLS connection with the authorization server using its X.509-SVID as the client certificate. The authorization server validates the client certificate as an X.509-SVID and extracts the SPIFFE ID from the URI SAN. The server certificate MUST be validated by the client using its system trust store, and NOT the SPIFFE trust bundle.
 
-The request MUST include the `client_id` parameter identifying the client. The `client_id` MAY be the SPIFFE ID of the client, but it MAY also be any other client identifier recognized by the authorization server, such as a URL pointing to a Client ID Metadata Document ({{I-D.ietf-oauth-client-id-metadata-document}}). In either case, the SPIFFE ID carried in the URI SAN of the presented X509-SVID MUST be authorized to authenticate as the client identified by the `client_id`, as described below.
+The request MUST include the `client_id` parameter identifying the client. The `client_id` MAY be the SPIFFE ID of the client, or other client identifier recognized by the authorization server, such as a URL pointing to a Client ID Metadata Document ({{I-D.ietf-oauth-client-id-metadata-document}}). In either case, the SPIFFE ID carried in the URI SAN of the presented X509-SVID MUST be authorized to authenticate as the client identified by the `client_id`, as described below.
 
 The server validates the client certificates according the following rules
 
