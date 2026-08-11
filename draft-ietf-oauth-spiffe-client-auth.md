@@ -245,7 +245,7 @@ X.509-SVID based authentication uses mutual TLS as defined in OAuth 2.0 Mutual-T
 
 To authenticate using an X.509-SVID, the client establishes a mutual TLS connection with the authorization server using its X.509-SVID as the client certificate. The authorization server validates the client certificate as an X.509-SVID and extracts the SPIFFE ID from the URI SAN. The server certificate MUST be validated by the client using its system trust store, and NOT the SPIFFE trust bundle.
 
-The request MUST include the `client_id` parameter containing the SPIFFE-ID of the client. It MUST match the URI SAN of the presented X509-SVID client credential.
+The request MUST include the `client_id` parameter identifying the client. The `client_id` MAY be the SPIFFE ID of the client, but it MAY also be any other client identifier recognized by the authorization server, such as a URL pointing to a Client ID Metadata Document ({{I-D.ietf-oauth-client-id-metadata-document}}). The authorization server determines the relationship between the `client_id` and the SPIFFE ID carried in the URI SAN of the presented X509-SVID as part of client authentication.
 
 The server validates the client certificates according the following rules
 
@@ -253,7 +253,7 @@ The server validates the client certificates according the following rules
 2. Verify that the certificate contains exactly one URI SAN with a valid SPIFFE ID.
 3. Verify that the certificate is a leaf certificate (Basic Constraints extension has CA=FALSE).
 4. Verify that the certificate has the `digitalSignature` key usage bit set.
-5. Verify that the SPIFFE ID in the URI SAN matches a registered client identifier or is associated with a registered client identifier.
+5. Verify that the SPIFFE ID in the URI SAN matches or is associated with a recognized client identifier. If the client authentication is presented with a `client_id` that is a URL described in {{I-D.ietf-oauth-client-id-metadata-document}}, verify that the SPIFFE ID in the URI SAN matches the `spiffe_id` value in the Client ID Metadata Document as described in {{client-registration-metadata}}.
 
 ### X509-SVID Example
 
@@ -412,12 +412,12 @@ Similar to the trust establishment, corresponding OAuth clients need to be regis
 This specification defines the following client metadata parameters for use in Client ID Metadata Documents {{I-D.ietf-oauth-client-id-metadata-document}}:
 
 spiffe_id
-: REQUIRED. The SPIFFE ID of the client, e.g. `spiffe://example.org/my-oauth-client`. The value MAY include a trailing `/*` character sequence (e.g. `spiffe://example.org/workloads/*`) indicating that a prefix match against the SPIFFE ID in the `sub` claim of the JWT-SVID is acceptable rather than requiring an exact match.
+: REQUIRED. The SPIFFE ID of the client, e.g. `spiffe://example.org/my-oauth-client`. The value MAY include a trailing `/*` character sequence (e.g. `spiffe://example.org/workloads/*`) indicating that a prefix match against the SPIFFE ID of the presented SVID is acceptable rather than requiring an exact match.
 
 spiffe_bundle_endpoint
 : OPTIONAL. The URL of the SPIFFE Bundle Endpoint for the client's trust domain, which the authorization server can use to retrieve the signing keys for validating the client's SVIDs. If not provided, the authorization server MUST obtain the signing keys for the client's trust domain through some other established mechanism, such as a pre-configured SPIFFE bundle.
 
-If the `spiffe_id` value uses a wildcard, it MUST end with the two-character sequence "`/*`". In this case, the authorization server MUST perform a path-segment prefix match: the `sub` claim value MUST begin with the `spiffe_id` value excluding the trailing "`*`" (i.e., up to and including the final "`/`"), and this prefix MUST correspond to complete path segment(s) of the SPIFFE ID (for example, `spiffe://example.org/client/*` matches `spiffe://example.org/client/123` but does not match `spiffe://example.org/client123`). Otherwise, the `sub` claim MUST be an exact match of the `spiffe_id` value.
+If the `spiffe_id` value uses a wildcard, it MUST end with the two-character sequence "`/*`". In this case, the authorization server MUST perform a path-segment prefix match: the SPIFFE ID of the presented SVID MUST begin with the `spiffe_id` value excluding the trailing "`*`" (i.e., up to and including the final "`/`"), and this prefix MUST correspond to complete path segment(s) of the SPIFFE ID (for example, `spiffe://example.org/client/*` matches `spiffe://example.org/client/123` but does not match `spiffe://example.org/client123`). Otherwise, the SPIFFE ID of the presented SVID MUST be an exact match of the `spiffe_id` value.
 
 # SPIFFE Key Distribution and Validation {#spiffe-bundle-validation}
 
@@ -637,6 +637,8 @@ This document requests the following entries to be added to the "OAuth Dynamic C
 <cref>RFC Editor: please remove before publication.</cref>
 
   - latest
+
+* Remove the requirement that the `client_id` must match the URI SAN of the presented X509-SVID and align client identifier validation across authentication methods.
 
 ## draft-ietf-oauth-spiffe-client-auth-02
 
