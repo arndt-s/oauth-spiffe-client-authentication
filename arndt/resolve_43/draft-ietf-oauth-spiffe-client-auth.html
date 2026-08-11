@@ -1379,28 +1379,32 @@ urn:ietf:params:oauth:client-assertion-type:jwt-spiffe
 <p id="section-3.1-4">Based on <span>[<a href="#RFC7523" class="cite xref">RFC7523</a>]</span> the following request parameters <span class="bcp14">MUST</span> be present to perform client authentication in the context of this specification:<a href="#section-3.1-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.1-5.1">
-            <p id="section-3.1-5.1.1">client_assertion_type: <span class="bcp14">MUST</span> be set to <code>urn:ietf:params:oauth:client-assertion-type:jwt-spiffe</code>.<a href="#section-3.1-5.1.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-5.1.1">client_id: <span class="bcp14">MUST</span> identify the client. The <code>client_id</code> <span class="bcp14">MAY</span> be the SPIFFE ID of the client, but it <span class="bcp14">MAY</span> also be any other client identifier recognized by the authorization server, such as a URL pointing to a Client ID Metadata Document (<span>[<a href="#I-D.ietf-oauth-client-id-metadata-document" class="cite xref">I-D.ietf-oauth-client-id-metadata-document</a>]</span>). In either case, the SPIFFE ID carried in the <code>sub</code> claim of the JWT-SVID <span class="bcp14">MUST</span> be authorized to authenticate as the client identified by the <code>client_id</code>, as described below.<a href="#section-3.1-5.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-5.2">
-            <p id="section-3.1-5.2.1">client_assertion: <span class="bcp14">MUST</span> be a single SPIFFE JWT-SVID.<a href="#section-3.1-5.2.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-5.2.1">client_assertion_type: <span class="bcp14">MUST</span> be set to <code>urn:ietf:params:oauth:client-assertion-type:jwt-spiffe</code>.<a href="#section-3.1-5.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-3.1-5.3">
+            <p id="section-3.1-5.3.1">client_assertion: <span class="bcp14">MUST</span> be a single SPIFFE JWT-SVID.<a href="#section-3.1-5.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-3.1-6">To validate JWT-SVID client authentication requests the authorization server <span class="bcp14">MUST</span>:<a href="#section-3.1-6" class="pilcrow">¶</a></p>
-<ol start="1" type="1" class="normal type-1" id="section-3.1-7">
-<li id="section-3.1-7.1">
-            <p id="section-3.1-7.1.1">Verify that the JWT is well-formed and contains all required claims (SPIFFE ID in <code>sub</code>, <code>aud</code>, and <code>exp</code>).<a href="#section-3.1-7.1.1" class="pilcrow">¶</a></p>
+<p id="section-3.1-6">Requiring <code>client_id</code> makes the client identity explicit in the request, rather than leaving it to be derived from the <code>sub</code> claim of the JWT-SVID. It also allows a single SPIFFE ID to be associated with more than one registered client.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
+<p id="section-3.1-7">To validate JWT-SVID client authentication requests the authorization server <span class="bcp14">MUST</span>:<a href="#section-3.1-7" class="pilcrow">¶</a></p>
+<ol start="1" type="1" class="normal type-1" id="section-3.1-8">
+<li id="section-3.1-8.1">
+            <p id="section-3.1-8.1.1">Verify that the JWT is well-formed and contains all required claims (SPIFFE ID in <code>sub</code>, <code>aud</code>, and <code>exp</code>).<a href="#section-3.1-8.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-3.1-7.2">
-            <p id="section-3.1-7.2.1">Verify that the JWT has not expired (check the <code>exp</code> claim).<a href="#section-3.1-7.2.1" class="pilcrow">¶</a></p>
+          <li id="section-3.1-8.2">
+            <p id="section-3.1-8.2.1">Verify that the JWT has not expired (check the <code>exp</code> claim).<a href="#section-3.1-8.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-3.1-7.3">
-            <p id="section-3.1-7.3.1">Verify that the <code>aud</code> claim contains only the issuer identifier of the authorization server as its sole value. See <span>[<a href="#I-D.draft-ietf-oauth-rfc7523bis" class="cite xref">I-D.draft-ietf-oauth-rfc7523bis</a>]</span> for details.<a href="#section-3.1-7.3.1" class="pilcrow">¶</a></p>
+          <li id="section-3.1-8.3">
+            <p id="section-3.1-8.3.1">Verify that the <code>aud</code> claim contains only the issuer identifier of the authorization server as its sole value. See <span>[<a href="#I-D.draft-ietf-oauth-rfc7523bis" class="cite xref">I-D.draft-ietf-oauth-rfc7523bis</a>]</span> for details.<a href="#section-3.1-8.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-3.1-7.4">
-            <p id="section-3.1-7.4.1">Verify the JWT signature using the signing keys of the trust domains according to <a href="#spiffe-bundle-validation" class="auto internal xref">Section 6</a>.<a href="#section-3.1-7.4.1" class="pilcrow">¶</a></p>
+          <li id="section-3.1-8.4">
+            <p id="section-3.1-8.4.1">Verify the JWT signature using the signing keys of the trust domains according to <a href="#spiffe-bundle-validation" class="auto internal xref">Section 6</a>.<a href="#section-3.1-8.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-3.1-7.5">
-            <p id="section-3.1-7.5.1">Verify that the SPIFFE ID in the <code>sub</code> claim matches or is associated with a recognized client identifier. If the client authentication is presented with a <code>client_id</code> that is a URL described in <span>[<a href="#I-D.ietf-oauth-client-id-metadata-document" class="cite xref">I-D.ietf-oauth-client-id-metadata-document</a>]</span>, verify that the SPIFFE ID in the <code>sub</code> claim matches the <code>spiffe_id</code> value in the Client ID Metadata Document as described in <a href="#client-registration-metadata" class="auto internal xref">Section 5.1</a>.<a href="#section-3.1-7.5.1" class="pilcrow">¶</a></p>
+          <li id="section-3.1-8.5">
+            <p id="section-3.1-8.5.1">Verify that the SPIFFE ID in the <code>sub</code> claim matches, or is associated with, the client identified by the <code>client_id</code> parameter of the request. If the <code>client_id</code> is a URL described in <span>[<a href="#I-D.ietf-oauth-client-id-metadata-document" class="cite xref">I-D.ietf-oauth-client-id-metadata-document</a>]</span>, verify that the SPIFFE ID in the <code>sub</code> claim matches the <code>spiffe_id</code> value in the Client ID Metadata Document as described in <a href="#client-registration-metadata" class="auto internal xref">Section 5.1</a>. Otherwise, the SPIFFE ID <span class="bcp14">MUST</span> be associated with the <code>client_id</code> through the client's registration with the authorization server. An authorization server <span class="bcp14">MUST</span> reject the request if the <code>client_id</code> parameter is missing, or if the SPIFFE ID in the <code>sub</code> claim is not authorized to authenticate as the client identified by the <code>client_id</code>.<a href="#section-3.1-8.5.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
 <div id="jwt-svid-example">
@@ -1417,6 +1421,7 @@ Content-Type: application/x-www-form-urlencoded
 
 grant_type=authorization_code&amp;
 code=n0esc3NRze7LTCu7iYzS6a5acc3f0ogp4&amp;
+client_id=spiffe://example.org/my-oauth-client&amp;
 client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3A
 client-assertion-type=jwt-spiffe&amp;
 client_assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjR2QzhhZ3ljSHU2cm5rRUVKWUFINlZ1Q2U0Sm9Ta1BWIiwidHlwIjoiSldUIn0.eyJhdWQiOlsiaHR0cHM6Ly9hcy5leGFtcGxlLmNvbS8iXSwiZXhwIjoxNzQ3MTI0NTQzLCJpYXQiOjE3NDcxMjQyNDMsInN1YiI6InNwaWZmZTovL2V4YW1wbGUub3JnL215LW9hdXRoLWNsaWVudCJ9.Xlv5lW4cbxDsQk4l0paewG4nXOR7MxF_FMn_c27DX45Bxr2HUZf9a6Untfq5S47xpwbw495HBL6_1Lc6TMJxmw
@@ -1501,7 +1506,7 @@ client_assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjR2QzhhZ3ljSHU2cm5rRUVKWUFINlZ1Q2U
         </h3>
 <p id="section-3.2-1">X.509-SVID based authentication uses mutual TLS as defined in OAuth 2.0 Mutual-TLS Client Authentication <span>[<a href="#RFC8705" class="cite xref">RFC8705</a>]</span>, with specific adaptations for SPIFFE X.509-SVIDs.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.2-2">To authenticate using an X.509-SVID, the client establishes a mutual TLS connection with the authorization server using its X.509-SVID as the client certificate. The authorization server validates the client certificate as an X.509-SVID and extracts the SPIFFE ID from the URI SAN. The server certificate <span class="bcp14">MUST</span> be validated by the client using its system trust store, and NOT the SPIFFE trust bundle.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
-<p id="section-3.2-3">The request <span class="bcp14">MUST</span> include the <code>client_id</code> parameter identifying the client. The <code>client_id</code> <span class="bcp14">MAY</span> be the SPIFFE ID of the client, but it <span class="bcp14">MAY</span> also be any other client identifier recognized by the authorization server, such as a URL pointing to a Client ID Metadata Document (<span>[<a href="#I-D.ietf-oauth-client-id-metadata-document" class="cite xref">I-D.ietf-oauth-client-id-metadata-document</a>]</span>). The authorization server determines the relationship between the <code>client_id</code> and the SPIFFE ID carried in the URI SAN of the presented X509-SVID as part of client authentication.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">The request <span class="bcp14">MUST</span> include the <code>client_id</code> parameter identifying the client. The <code>client_id</code> <span class="bcp14">MAY</span> be the SPIFFE ID of the client, but it <span class="bcp14">MAY</span> also be any other client identifier recognized by the authorization server, such as a URL pointing to a Client ID Metadata Document (<span>[<a href="#I-D.ietf-oauth-client-id-metadata-document" class="cite xref">I-D.ietf-oauth-client-id-metadata-document</a>]</span>). In either case, the SPIFFE ID carried in the URI SAN of the presented X509-SVID <span class="bcp14">MUST</span> be authorized to authenticate as the client identified by the <code>client_id</code>, as described below.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 <p id="section-3.2-4">The server validates the client certificates according the following rules<a href="#section-3.2-4" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-3.2-5">
 <li id="section-3.2-5.1">
@@ -1517,7 +1522,7 @@ client_assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjR2QzhhZ3ljSHU2cm5rRUVKWUFINlZ1Q2U
             <p id="section-3.2-5.4.1">Verify that the certificate has the <code>digitalSignature</code> key usage bit set.<a href="#section-3.2-5.4.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-3.2-5.5">
-            <p id="section-3.2-5.5.1">Verify that the SPIFFE ID in the URI SAN matches or is associated with a recognized client identifier. If the client authentication is presented with a <code>client_id</code> that is a URL described in <span>[<a href="#I-D.ietf-oauth-client-id-metadata-document" class="cite xref">I-D.ietf-oauth-client-id-metadata-document</a>]</span>, verify that the SPIFFE ID in the URI SAN matches the <code>spiffe_id</code> value in the Client ID Metadata Document as described in <a href="#client-registration-metadata" class="auto internal xref">Section 5.1</a>.<a href="#section-3.2-5.5.1" class="pilcrow">¶</a></p>
+            <p id="section-3.2-5.5.1">Verify that the SPIFFE ID in the URI SAN matches, or is associated with, the client identified by the <code>client_id</code> parameter of the request. If the <code>client_id</code> is a URL described in <span>[<a href="#I-D.ietf-oauth-client-id-metadata-document" class="cite xref">I-D.ietf-oauth-client-id-metadata-document</a>]</span>, verify that the SPIFFE ID in the URI SAN matches the <code>spiffe_id</code> value in the Client ID Metadata Document as described in <a href="#client-registration-metadata" class="auto internal xref">Section 5.1</a>. Otherwise, the SPIFFE ID <span class="bcp14">MUST</span> be associated with the <code>client_id</code> through the client's registration with the authorization server. An authorization server <span class="bcp14">MUST</span> reject the request if the SPIFFE ID in the URI SAN is not authorized to authenticate as the client identified by the <code>client_id</code>.<a href="#section-3.2-5.5.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
 <div id="x509-svid-example">
@@ -2149,6 +2154,9 @@ trust stores configured to validate the client SVID. This could result in an inc
 </li>
         <li class="normal" id="appendix-A-2.2">
           <p id="appendix-A-2.2.1">Remove the requirement that the <code>client_id</code> must match the URI SAN of the presented X509-SVID and align client identifier validation across authentication methods.<a href="#appendix-A-2.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-2.3">
+          <p id="appendix-A-2.3.1">Require the <code>client_id</code> parameter for JWT-SVID client authentication.<a href="#appendix-A-2.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <div id="draft-ietf-oauth-spiffe-client-auth-02">

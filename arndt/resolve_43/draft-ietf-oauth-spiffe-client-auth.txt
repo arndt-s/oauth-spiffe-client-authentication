@@ -223,10 +223,24 @@ Table of Contents
    to perform client authentication in the context of this
    specification:
 
+   *  client_id: MUST identify the client.  The client_id MAY be the
+      SPIFFE ID of the client, but it MAY also be any other client
+      identifier recognized by the authorization server, such as a URL
+      pointing to a Client ID Metadata Document
+      ([I-D.ietf-oauth-client-id-metadata-document]).  In either case,
+      the SPIFFE ID carried in the sub claim of the JWT-SVID MUST be
+      authorized to authenticate as the client identified by the
+      client_id, as described below.
+
    *  client_assertion_type: MUST be set to
       urn:ietf:params:oauth:client-assertion-type:jwt-spiffe.
 
    *  client_assertion: MUST be a single SPIFFE JWT-SVID.
+
+   Requiring client_id makes the client identity explicit in the
+   request, rather than leaving it to be derived from the sub claim of
+   the JWT-SVID.  It also allows a single SPIFFE ID to be associated
+   with more than one registered client.
 
    To validate JWT-SVID client authentication requests the authorization
    server MUST:
@@ -243,12 +257,18 @@ Table of Contents
    4.  Verify the JWT signature using the signing keys of the trust
        domains according to Section 6.
 
-   5.  Verify that the SPIFFE ID in the sub claim matches or is
-       associated with a recognized client identifier.  If the client
-       authentication is presented with a client_id that is a URL
-       described in [I-D.ietf-oauth-client-id-metadata-document], verify
-       that the SPIFFE ID in the sub claim matches the spiffe_id value
-       in the Client ID Metadata Document as described in Section 5.1.
+   5.  Verify that the SPIFFE ID in the sub claim matches, or is
+       associated with, the client identified by the client_id parameter
+       of the request.  If the client_id is a URL described in
+       [I-D.ietf-oauth-client-id-metadata-document], verify that the
+       SPIFFE ID in the sub claim matches the spiffe_id value in the
+       Client ID Metadata Document as described in Section 5.1.
+       Otherwise, the SPIFFE ID MUST be associated with the client_id
+       through the client's registration with the authorization server.
+       An authorization server MUST reject the request if the client_id
+       parameter is missing, or if the SPIFFE ID in the sub claim is not
+       authorized to authenticate as the client identified by the
+       client_id.
 
 3.1.1.  JWT-SVID example
 
@@ -262,6 +282,7 @@ Content-Type: application/x-www-form-urlencoded
 
 grant_type=authorization_code&
 code=n0esc3NRze7LTCu7iYzS6a5acc3f0ogp4&
+client_id=spiffe://example.org/my-oauth-client&
 client_assertion_type=urn%3Aietf%3Aparams%3Aoauth%3A
 client-assertion-type=jwt-spiffe&
 client_assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjR2QzhhZ3ljSHU2cm5rRUVKWUFINlZ1Q2U0Sm9Ta1BWIiwidHlwIjoiSldUIn0.eyJhdWQiOlsiaHR0cHM6Ly9hcy5leGFtcGxlLmNvbS8iXSwiZXhwIjoxNzQ3MTI0NTQzLCJpYXQiOjE3NDcxMjQyNDMsInN1YiI6InNwaWZmZTovL2V4YW1wbGUub3JnL215LW9hdXRoLWNsaWVudCJ9.Xlv5lW4cbxDsQk4l0paewG4nXOR7MxF_FMn_c27DX45Bxr2HUZf9a6Untfq5S47xpwbw495HBL6_1Lc6TMJxmw
@@ -342,10 +363,10 @@ client_assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjR2QzhhZ3ljSHU2cm5rRUVKWUFINlZ1Q2U
    client.  The client_id MAY be the SPIFFE ID of the client, but it MAY
    also be any other client identifier recognized by the authorization
    server, such as a URL pointing to a Client ID Metadata Document
-   ([I-D.ietf-oauth-client-id-metadata-document]).  The authorization
-   server determines the relationship between the client_id and the
-   SPIFFE ID carried in the URI SAN of the presented X509-SVID as part
-   of client authentication.
+   ([I-D.ietf-oauth-client-id-metadata-document]).  In either case, the
+   SPIFFE ID carried in the URI SAN of the presented X509-SVID MUST be
+   authorized to authenticate as the client identified by the client_id,
+   as described below.
 
    The server validates the client certificates according the following
    rules
@@ -362,12 +383,17 @@ client_assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjR2QzhhZ3ljSHU2cm5rRUVKWUFINlZ1Q2U
    4.  Verify that the certificate has the digitalSignature key usage
        bit set.
 
-   5.  Verify that the SPIFFE ID in the URI SAN matches or is associated
-       with a recognized client identifier.  If the client
-       authentication is presented with a client_id that is a URL
-       described in [I-D.ietf-oauth-client-id-metadata-document], verify
-       that the SPIFFE ID in the URI SAN matches the spiffe_id value in
-       the Client ID Metadata Document as described in Section 5.1.
+   5.  Verify that the SPIFFE ID in the URI SAN matches, or is
+       associated with, the client identified by the client_id parameter
+       of the request.  If the client_id is a URL described in
+       [I-D.ietf-oauth-client-id-metadata-document], verify that the
+       SPIFFE ID in the URI SAN matches the spiffe_id value in the
+       Client ID Metadata Document as described in Section 5.1.
+       Otherwise, the SPIFFE ID MUST be associated with the client_id
+       through the client's registration with the authorization server.
+       An authorization server MUST reject the request if the SPIFFE ID
+       in the URI SAN is not authorized to authenticate as the client
+       identified by the client_id.
 
 3.2.1.  X509-SVID Example
 
@@ -1056,6 +1082,9 @@ Appendix A.  Document History
    *  Remove the requirement that the client_id must match the URI SAN
       of the presented X509-SVID and align client identifier validation
       across authentication methods.
+
+   *  Require the client_id parameter for JWT-SVID client
+      authentication.
 
 A.1.  draft-ietf-oauth-spiffe-client-auth-02
 
