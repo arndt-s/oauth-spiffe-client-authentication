@@ -13,25 +13,26 @@
 <meta content="
        This specification profiles the Assertion Framework for OAuth 2.0 Client Authentication and Authorization Grants  , the JWT Profile for OAuth 2.0 Client Authentication and Authorization Grants  , and OAuth 2.0 Attestation-Based Client Authentication   to enable the use of SPIFFE Verifiable Identity Documents (SVIDs) as client credentials in OAuth 2.0. It defines how OAuth clients with SPIFFE credentials can authenticate to OAuth authorization servers using their JWT-SVIDs, WIT-SVIDs, or X.509-SVIDs without the need for client secrets. This approach enhances security by enabling seamless integration between SPIFFE-enabled workloads and OAuth authorization servers while eliminating the need to distribute and manage shared secrets such as static client secrets. 
     " name="description">
-<meta content="xml2rfc 3.33.0" name="generator">
+<meta content="xml2rfc 3.34.0" name="generator">
 <meta content="workload" name="keyword">
 <meta content="identity" name="keyword">
 <meta content="credential" name="keyword">
 <meta content="exchange" name="keyword">
 <meta content="draft-ietf-oauth-spiffe-client-auth-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.33.0
-    Python 3.12.13
-    ConfigArgParse 1.7
+  xml2rfc 3.34.0
+    Python 3.14.5
+    ConfigArgParse 1.7.5
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
-    lxml 6.0.2
-    platformdirs 4.9.6
+    lxml 6.1.1
+    natsort 8.4.0
+    platformdirs 4.11.0
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
-    wcwidth 0.7.0
+    wcwidth 0.8.2
 -->
 <link href="draft-ietf-oauth-spiffe-client-auth.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -67,7 +68,6 @@
   src: local('Lora Italic'), local('Lora-Italic'), url('https://martinthomson.github.io/rfc-css/fonts/lora-italic-latin-ext.woff2') format('woff2');
   unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
-
 @font-face {
   font-family: 'Lora';
   font-style: italic;
@@ -116,7 +116,6 @@
   src: local('Lora Regular'), local('Lora-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/lora-regular-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-
 @font-face {
   font-family: 'Lora';
   font-style: normal;
@@ -181,7 +180,6 @@
   font-display: swap;
   src: local('Oxygen Mono'), local('OxygenMono-Regular'), url('https://martinthomson.github.io/rfc-css/fonts/oxygenmono-regular-latin.woff2') format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
 }
 
 @font-face {
@@ -1050,11 +1048,11 @@ svg {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">OAuth SPIFFE Client Authentication</td>
-<td class="right">June 2026</td>
+<td class="right">August 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">Schwenkschuster, et al.</td>
-<td class="center">Expires 17 December 2026</td>
+<td class="center">Expires 12 February 2027</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1067,12 +1065,12 @@ svg {
 <dd class="internet-draft">draft-ietf-oauth-spiffe-client-auth-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-06-15" class="published">15 June 2026</time>
+<time datetime="2026-08-11" class="published">11 August 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Standards Track</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-12-17">17 December 2026</time></dd>
+<dd class="expires"><time datetime="2027-02-12">12 February 2027</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1116,7 +1114,7 @@ svg {
         which is archived at <span><a href="https://mailarchive.ietf.org/arch/browse/oauth/">https://mailarchive.ietf.org/arch/browse/oauth/</a></span>.
         Subscribe at <span><a href="https://www.ietf.org/mailman/listinfo/oauth/">https://www.ietf.org/mailman/listinfo/oauth/</a></span>.<a href="#section-note.1-3" class="pilcrow">¶</a></p>
 <p id="section-note.1-4">Source for this draft and an issue tracker can be found at
-        <span><a href="https://github.com/arndt-s/oauth-spiffe-client-authentication">https://github.com/arndt-s/oauth-spiffe-client-authentication</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
+        <span><a href="https://github.com/oauth-wg/oauth-spiffe-client-authentication">https://github.com/oauth-wg/oauth-spiffe-client-authentication</a></span>.<a href="#section-note.1-4" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1137,7 +1135,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 17 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 12 February 2027.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1503,7 +1501,7 @@ client_assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjR2QzhhZ3ljSHU2cm5rRUVKWUFINlZ1Q2U
         </h3>
 <p id="section-3.2-1">X.509-SVID based authentication uses mutual TLS as defined in OAuth 2.0 Mutual-TLS Client Authentication <span>[<a href="#RFC8705" class="cite xref">RFC8705</a>]</span>, with specific adaptations for SPIFFE X.509-SVIDs.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.2-2">To authenticate using an X.509-SVID, the client establishes a mutual TLS connection with the authorization server using its X.509-SVID as the client certificate. The authorization server validates the client certificate as an X.509-SVID and extracts the SPIFFE ID from the URI SAN. The server certificate <span class="bcp14">MUST</span> be validated by the client using its system trust store, and NOT the SPIFFE trust bundle.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
-<p id="section-3.2-3">The request <span class="bcp14">MUST</span> include the <code>client_id</code> parameter containing the SPIFFE-ID of the client. It <span class="bcp14">MUST</span> match the URI SAN of the presented X509-SVID client credential.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">The request <span class="bcp14">MUST</span> include the <code>client_id</code> parameter identifying the client. The <code>client_id</code> <span class="bcp14">MAY</span> be the SPIFFE ID of the client, but it <span class="bcp14">MAY</span> also be any other client identifier recognized by the authorization server, such as a URL pointing to a Client ID Metadata Document (<span>[<a href="#I-D.ietf-oauth-client-id-metadata-document" class="cite xref">I-D.ietf-oauth-client-id-metadata-document</a>]</span>). The authorization server determines the relationship between the <code>client_id</code> and the SPIFFE ID carried in the URI SAN of the presented X509-SVID as part of client authentication.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 <p id="section-3.2-4">The server validates the client certificates according the following rules<a href="#section-3.2-4" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-3.2-5">
 <li id="section-3.2-5.1">
@@ -1519,7 +1517,7 @@ client_assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjR2QzhhZ3ljSHU2cm5rRUVKWUFINlZ1Q2U
             <p id="section-3.2-5.4.1">Verify that the certificate has the <code>digitalSignature</code> key usage bit set.<a href="#section-3.2-5.4.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-3.2-5.5">
-            <p id="section-3.2-5.5.1">Verify that the SPIFFE ID in the URI SAN matches a registered client identifier or is associated with a registered client identifier.<a href="#section-3.2-5.5.1" class="pilcrow">¶</a></p>
+            <p id="section-3.2-5.5.1">Verify that the SPIFFE ID in the URI SAN matches or is associated with a recognized client identifier. If the client authentication is presented with a <code>client_id</code> that is a URL described in <span>[<a href="#I-D.ietf-oauth-client-id-metadata-document" class="cite xref">I-D.ietf-oauth-client-id-metadata-document</a>]</span>, verify that the SPIFFE ID in the URI SAN matches the <code>spiffe_id</code> value in the Client ID Metadata Document as described in <a href="#client-registration-metadata" class="auto internal xref">Section 5.1</a>.<a href="#section-3.2-5.5.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
 <div id="x509-svid-example">
@@ -1716,7 +1714,7 @@ client_id=spiffe://example.org/my-oauth-client
 <span class="break"></span><dl class="dlParallel" id="section-5.1-2">
           <dt id="section-5.1-2.1">spiffe_id</dt>
           <dd style="margin-left: 1.5em" id="section-5.1-2.2">
-            <p id="section-5.1-2.2.1"><span class="bcp14">REQUIRED</span>. The SPIFFE ID of the client, e.g. <code>spiffe://example.org/my-oauth-client</code>. The value <span class="bcp14">MAY</span> include a trailing <code>/*</code> character sequence (e.g. <code>spiffe://example.org/workloads/*</code>) indicating that a prefix match against the SPIFFE ID in the <code>sub</code> claim of the JWT-SVID is acceptable rather than requiring an exact match.<a href="#section-5.1-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-5.1-2.2.1"><span class="bcp14">REQUIRED</span>. The SPIFFE ID of the client, e.g. <code>spiffe://example.org/my-oauth-client</code>. The value <span class="bcp14">MAY</span> include a trailing <code>/*</code> character sequence (e.g. <code>spiffe://example.org/workloads/*</code>) indicating that a prefix match against the SPIFFE ID of the presented SVID is acceptable rather than requiring an exact match.<a href="#section-5.1-2.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 <dt id="section-5.1-2.3">spiffe_bundle_endpoint</dt>
@@ -1725,7 +1723,7 @@ client_id=spiffe://example.org/my-oauth-client
 </dd>
         <dd class="break"></dd>
 </dl>
-<p id="section-5.1-3">If the <code>spiffe_id</code> value uses a wildcard, it <span class="bcp14">MUST</span> end with the two-character sequence "<code>/*</code>". In this case, the authorization server <span class="bcp14">MUST</span> perform a path-segment prefix match: the <code>sub</code> claim value <span class="bcp14">MUST</span> begin with the <code>spiffe_id</code> value excluding the trailing "<code>*</code>" (i.e., up to and including the final "<code>/</code>"), and this prefix <span class="bcp14">MUST</span> correspond to complete path segment(s) of the SPIFFE ID (for example, <code>spiffe://example.org/client/*</code> matches <code>spiffe://example.org/client/123</code> but does not match <code>spiffe://example.org/client123</code>). Otherwise, the <code>sub</code> claim <span class="bcp14">MUST</span> be an exact match of the <code>spiffe_id</code> value.<a href="#section-5.1-3" class="pilcrow">¶</a></p>
+<p id="section-5.1-3">If the <code>spiffe_id</code> value uses a wildcard, it <span class="bcp14">MUST</span> end with the two-character sequence "<code>/*</code>". In this case, the authorization server <span class="bcp14">MUST</span> perform a path-segment prefix match: the SPIFFE ID of the presented SVID <span class="bcp14">MUST</span> begin with the <code>spiffe_id</code> value excluding the trailing "<code>*</code>" (i.e., up to and including the final "<code>/</code>"), and this prefix <span class="bcp14">MUST</span> correspond to complete path segment(s) of the SPIFFE ID (for example, <code>spiffe://example.org/client/*</code> matches <code>spiffe://example.org/client/123</code> but does not match <code>spiffe://example.org/client123</code>). Otherwise, the SPIFFE ID of the presented SVID <span class="bcp14">MUST</span> be an exact match of the <code>spiffe_id</code> value.<a href="#section-5.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2047,7 +2045,7 @@ trust stores configured to validate the client SVID. This could result in an inc
 <dd class="break"></dd>
 <dt id="I-D.ietf-oauth-client-id-metadata-document">[I-D.ietf-oauth-client-id-metadata-document]</dt>
         <dd>
-<span class="refAuthor">Parecki, A.</span> and <span class="refAuthor">E. Smith</span>, <span class="refTitle">"OAuth Client ID Metadata Document"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-client-id-metadata-document-01</span>, <time datetime="2026-03-01" class="refDate">1 March 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-01">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-01</a>&gt;</span>. </dd>
+<span class="refAuthor">Parecki, A.</span> and <span class="refAuthor">E. Smith</span>, <span class="refTitle">"OAuth Client ID Metadata Document"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-client-id-metadata-document-02</span>, <time datetime="2026-07-06" class="refDate">6 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-02">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-client-id-metadata-document-02</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
@@ -2128,11 +2126,11 @@ trust stores configured to validate the client SVID. This could result in an inc
 <dl class="references">
 <dt id="I-D.draft-ietf-oauth-attestation-based-client-auth">[I-D.draft-ietf-oauth-attestation-based-client-auth]</dt>
         <dd>
-<span class="refAuthor">Looker, T.</span>, <span class="refAuthor">Bastian, P.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"OAuth 2.0 Attestation-Based Client Authentication"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-attestation-based-client-auth-09</span>, <time datetime="2026-05-25" class="refDate">25 May 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-attestation-based-client-auth-09">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-attestation-based-client-auth-09</a>&gt;</span>. </dd>
+<span class="refAuthor">Looker, T.</span>, <span class="refAuthor">Bastian, P.</span>, and <span class="refAuthor">C. Bormann</span>, <span class="refTitle">"OAuth 2.0 Attestation-Based Client Authentication"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-oauth-attestation-based-client-auth-10</span>, <time datetime="2026-07-06" class="refDate">6 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-oauth-attestation-based-client-auth-10">https://datatracker.ietf.org/doc/html/draft-ietf-oauth-attestation-based-client-auth-10</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.draft-ietf-wimse-workload-creds">[I-D.draft-ietf-wimse-workload-creds]</dt>
       <dd>
-<span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Schwenkschuster, A.</span>, <span class="refAuthor">Sheffer, Y.</span>, and <span class="refAuthor">Y. Rosomakho</span>, <span class="refTitle">"WIMSE Workload Credentials"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-workload-creds-01</span>, <time datetime="2026-05-05" class="refDate">5 May 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-01">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-01</a>&gt;</span>. </dd>
+<span class="refAuthor">Campbell, B.</span>, <span class="refAuthor">Salowey, J. A.</span>, <span class="refAuthor">Schwenkschuster, A.</span>, <span class="refAuthor">Sheffer, Y.</span>, and <span class="refAuthor">Y. Rosomakho</span>, <span class="refTitle">"WIMSE Workload Credentials"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-wimse-workload-creds-02</span>, <time datetime="2026-07-02" class="refDate">2 July 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02">https://datatracker.ietf.org/doc/html/draft-ietf-wimse-workload-creds-02</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -2148,6 +2146,9 @@ trust stores configured to validate the client SVID. This could result in an inc
 <ul class="normal">
 <li class="normal" id="appendix-A-2.1">
           <p id="appendix-A-2.1.1">latest<a href="#appendix-A-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-A-2.2">
+          <p id="appendix-A-2.2.1">Remove the requirement that the <code>client_id</code> must match the URI SAN of the presented X509-SVID and align client identifier validation across authentication methods.<a href="#appendix-A-2.2.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <div id="draft-ietf-oauth-spiffe-client-auth-02">

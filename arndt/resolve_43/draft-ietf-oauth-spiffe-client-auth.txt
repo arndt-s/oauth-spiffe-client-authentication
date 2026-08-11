@@ -5,13 +5,13 @@
 Web Authorization Protocol                            A. Schwenkschuster
 Internet-Draft                                             P. Kasselmann
 Intended status: Standards Track                        Defakto Security
-Expires: 17 December 2026                                        S. Rose
+Expires: 12 February 2027                                        S. Rose
                                                                     NIST
                                                            S. Thorgersen
                                                                      IBM
                                                            N. Cam-Winget
                                                            Cisco Systems
-                                                            15 June 2026
+                                                          11 August 2026
 
 
                    OAuth SPIFFE Client Authentication
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 December 2026.
+   This Internet-Draft will expire on 12 February 2027.
 
 Copyright Notice
 
@@ -338,9 +338,14 @@ client_assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjR2QzhhZ3ljSHU2cm5rRUVKWUFINlZ1Q2U
    the URI SAN.  The server certificate MUST be validated by the client
    using its system trust store, and NOT the SPIFFE trust bundle.
 
-   The request MUST include the client_id parameter containing the
-   SPIFFE-ID of the client.  It MUST match the URI SAN of the presented
-   X509-SVID client credential.
+   The request MUST include the client_id parameter identifying the
+   client.  The client_id MAY be the SPIFFE ID of the client, but it MAY
+   also be any other client identifier recognized by the authorization
+   server, such as a URL pointing to a Client ID Metadata Document
+   ([I-D.ietf-oauth-client-id-metadata-document]).  The authorization
+   server determines the relationship between the client_id and the
+   SPIFFE ID carried in the URI SAN of the presented X509-SVID as part
+   of client authentication.
 
    The server validates the client certificates according the following
    rules
@@ -357,9 +362,12 @@ client_assertion=eyJhbGciOiJFUzI1NiIsImtpZCI6IjR2QzhhZ3ljSHU2cm5rRUVKWUFINlZ1Q2U
    4.  Verify that the certificate has the digitalSignature key usage
        bit set.
 
-   5.  Verify that the SPIFFE ID in the URI SAN matches a registered
-       client identifier or is associated with a registered client
-       identifier.
+   5.  Verify that the SPIFFE ID in the URI SAN matches or is associated
+       with a recognized client identifier.  If the client
+       authentication is presented with a client_id that is a URL
+       described in [I-D.ietf-oauth-client-id-metadata-document], verify
+       that the SPIFFE ID in the URI SAN matches the spiffe_id value in
+       the Client ID Metadata Document as described in Section 5.1.
 
 3.2.1.  X509-SVID Example
 
@@ -564,8 +572,8 @@ client_id=spiffe://example.org/my-oauth-client
       spiffe://example.org/my-oauth-client.  The value MAY include a
       trailing /* character sequence (e.g. spiffe://example.org/
       workloads/*) indicating that a prefix match against the SPIFFE ID
-      in the sub claim of the JWT-SVID is acceptable rather than
-      requiring an exact match.
+      of the presented SVID is acceptable rather than requiring an exact
+      match.
 
    spiffe_bundle_endpoint  OPTIONAL.  The URL of the SPIFFE Bundle
       Endpoint for the client's trust domain, which the authorization
@@ -577,13 +585,14 @@ client_id=spiffe://example.org/my-oauth-client
 
    If the spiffe_id value uses a wildcard, it MUST end with the two-
    character sequence "/*".  In this case, the authorization server MUST
-   perform a path-segment prefix match: the sub claim value MUST begin
-   with the spiffe_id value excluding the trailing "*" (i.e., up to and
-   including the final "/"), and this prefix MUST correspond to complete
-   path segment(s) of the SPIFFE ID (for example, spiffe://example.org/
-   client/* matches spiffe://example.org/client/123 but does not match
-   spiffe://example.org/client123).  Otherwise, the sub claim MUST be an
-   exact match of the spiffe_id value.
+   perform a path-segment prefix match: the SPIFFE ID of the presented
+   SVID MUST begin with the spiffe_id value excluding the trailing "*"
+   (i.e., up to and including the final "/"), and this prefix MUST
+   correspond to complete path segment(s) of the SPIFFE ID (for example,
+   spiffe://example.org/client/* matches spiffe://example.org/client/123
+   but does not match spiffe://example.org/client123).  Otherwise, the
+   SPIFFE ID of the presented SVID MUST be an exact match of the
+   spiffe_id value.
 
 6.  SPIFFE Key Distribution and Validation
 
@@ -934,9 +943,9 @@ Certificate:
    [I-D.ietf-oauth-client-id-metadata-document]
               Parecki, A. and E. Smith, "OAuth Client ID Metadata
               Document", Work in Progress, Internet-Draft, draft-ietf-
-              oauth-client-id-metadata-document-01, 1 March 2026,
+              oauth-client-id-metadata-document-02, 6 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              client-id-metadata-document-01>.
+              client-id-metadata-document-02>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -1025,17 +1034,17 @@ Certificate:
               Looker, T., Bastian, P., and C. Bormann, "OAuth 2.0
               Attestation-Based Client Authentication", Work in
               Progress, Internet-Draft, draft-ietf-oauth-attestation-
-              based-client-auth-09, 25 May 2026,
+              based-client-auth-10, 6 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-oauth-
-              attestation-based-client-auth-09>.
+              attestation-based-client-auth-10>.
 
    [I-D.draft-ietf-wimse-workload-creds]
               Campbell, B., Salowey, J. A., Schwenkschuster, A.,
               Sheffer, Y., and Y. Rosomakho, "WIMSE Workload
               Credentials", Work in Progress, Internet-Draft, draft-
-              ietf-wimse-workload-creds-01, 5 May 2026,
+              ietf-wimse-workload-creds-02, 2 July 2026,
               <https://datatracker.ietf.org/doc/html/draft-ietf-wimse-
-              workload-creds-01>.
+              workload-creds-02>.
 
 Appendix A.  Document History
 
@@ -1043,6 +1052,10 @@ Appendix A.  Document History
    // RFC Editor: please remove before publication.
 
    *  latest
+
+   *  Remove the requirement that the client_id must match the URI SAN
+      of the presented X509-SVID and align client identifier validation
+      across authentication methods.
 
 A.1.  draft-ietf-oauth-spiffe-client-auth-02
 
