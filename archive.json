@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-26T00:27:56.929067+00:00",
+  "timestamp": "2026-08-13T00:17:07.167216+00:00",
   "repo": "oauth-wg/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -320,16 +320,24 @@
       "id": "I_kwDOOml42M7jhtYU",
       "title": "Should we include WIT-SVID usage in this draft?",
       "url": "https://github.com/oauth-wg/oauth-spiffe-client-authentication/issues/24",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "PieterKas",
       "authorAssociation": "COLLABORATOR",
       "assignees": [],
       "labels": [],
       "body": "SPIFFE is including support for WIMSE WIT tokens. WIMSE is wrapping up the WIT/WPT/HTTP sig specs that uses WITs, which I expect will all conclude before we finish this draft. \n\nIETF\nWIMSE WIT: https://datatracker.ietf.org/doc/draft-ietf-wimse-workload-creds/00/\nWIMSE WPT: https://datatracker.ietf.org/doc/draft-ietf-wimse-http-signature/01/\nWIMSE HTTP Sig: https://datatracker.ietf.org/doc/draft-ietf-wimse-wpt/00/\n\nCNCF\nWIT-SVID SPIFFE support: https://github.com/spiffe/spiffe/pull/327\nWIT-SVID support in SPIRE: https://github.com/spiffe/spire/issues/6326",
       "createdAt": "2026-01-15T12:07:08Z",
-      "updatedAt": "2026-01-15T12:07:08Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-08-11T12:47:20Z",
+      "closedAt": "2026-08-11T12:47:20Z",
+      "comments": [
+        {
+          "author": "arndt-s",
+          "authorAssociation": "MEMBER",
+          "body": "WIT-SVID is now supported in the draft.",
+          "createdAt": "2026-08-11T12:47:20Z",
+          "updatedAt": "2026-08-11T12:47:20Z"
+        }
+      ]
     },
     {
       "number": 25,
@@ -394,15 +402,17 @@
       "id": "I_kwDOOml42M7skC7H",
       "title": "Client ID for Client Authentication using X509-SVID",
       "url": "https://github.com/oauth-wg/oauth-spiffe-client-authentication/issues/29",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "TakahikoKawasaki",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "arndt-s"
+      ],
       "labels": [],
       "body": "In draft 00 of OAuth SPIFFE Client Authentication, when using Client Authentication with X509-SVID, it requires that the value of the `client_id` request parameter be the SPIFFE ID. However, I believe this requirement should be removed. The reasons are as follows:\n\n* Systems that use the [OpenID Federation 1.0](https://openid.net/specs/openid-federation-1_0.html) specification cannot use OAuth SPIFFE Client Authentication.\n* Systems that use the [OAuth Client ID Metadata Document](https://datatracker.ietf.org/doc/draft-ietf-oauth-client-id-metadata-document/) specification cannot use OAuth SPIFFE Client Authentication.\n* Systems in which client IDs cannot be flexibly changed cannot use OAuth SPIFFE Client Authentication.\n\nThe client authentication method defined in RFC 8705 [Section 2.1](https://www.rfc-editor.org/rfc/rfc8705.html#section-2.1) works correctly even if the value of the `tls_client_auth_san_uri` client metadata differs from the client ID.\n",
       "createdAt": "2026-02-20T14:39:50Z",
-      "updatedAt": "2026-07-23T01:27:39Z",
-      "closedAt": null,
+      "updatedAt": "2026-08-11T12:46:52Z",
+      "closedAt": "2026-08-11T12:46:52Z",
       "comments": [
         {
           "author": "maganuk",
@@ -417,6 +427,13 @@
           "body": "Adding deployment evidence in support of this issue, plus one editorial point on the -02 text.\n\nRaidiam operates OpenID Federation and directory based ecosystems in production with several thousand registered clients whose `client_id` is an https entity identifier resolved through a trust chain. Client IDs there cannot change, so under the current Section 3.2 text these deployments can never use the X509-SVID method. The JWT-SVID path already has the right model (3.1 step 5: \"matches or is associated with a recognized client identifier\"), consistent with the implementation experience reported above.\n\nSection 3.2 also appears to contradict itself: the request rule mandates that `client_id` equal the URI SAN, yet validation step 5 accepts a SPIFFE ID that \"is associated with a registered client identifier\", a branch the request rule makes unreachable.\n\nRFC 8705 Section 2.1.2 solved this for certificates: the expected identity (`tls_client_auth_san_uri`) is registered metadata and `client_id` remains the registration identifier. The draft already has the equivalent in `spiffe_id` (Section 5.1, IANA Section 9.1). Proposed replacement for the 3.2 request rule:\n\n> The request MUST include the `client_id` parameter identifying the client. The authorization server MUST verify that the SPIFFE ID in the URI SAN of the presented X509-SVID matches, or is covered by, the `spiffe_id` metadata registered for or otherwise associated with that client.\n\nSection 5.1's wildcard prose would then need to cover the URI SAN as well as the JWT `sub` claim. Deployments that use the SPIFFE ID as their `client_id` are unaffected, since the association check degenerates to equality.\n",
           "createdAt": "2026-07-23T01:15:15Z",
           "updatedAt": "2026-07-23T01:27:39Z"
+        },
+        {
+          "author": "arndt-s",
+          "authorAssociation": "MEMBER",
+          "body": "Thank you @TakahikoKawasaki @maganuk @RalphBragg for the input. This was a left over from an early version of the doc and never got straightened up. Fully agree that it's too permissive and doesn't match topologies deployed today. \n\nhttps://github.com/oauth-wg/oauth-spiffe-client-authentication/pull/44 fixes it and improves overall text regarding SPIFFE ID and client ID relationship.",
+          "createdAt": "2026-08-11T07:45:47Z",
+          "updatedAt": "2026-08-11T07:45:47Z"
         }
       ]
     },
@@ -528,14 +545,46 @@
       "id": "I_kwDOOml42M8AAAABJuMqeA",
       "title": "Client ID relationship with SPIFFE ID",
       "url": "https://github.com/oauth-wg/oauth-spiffe-client-authentication/issues/43",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "sorindumitru",
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
       "body": "In section 3.2 we say:\n```\nThe request MUST include the client_id parameter containing the\n   SPIFFE-ID of the client.  It MUST match the URI SAN of the presented\n   X509-SVID client credential.\n```\n\nThere's no such wording in section 3.1.\n\nBoth sections including something like the following in the validation part of them:\n```\nSPIFFE ID in the sub claim matches or is associated with a recognized client identifier\n```\n\nThis is a weaker claim than previously mentioned claim. I read as either:\n1. The client id matches the SPIFFE ID\n2. The client id is associated (authorised?) to authenticate as the given client id.\n\nIt would be good to be clarify a bit more the relationship between the client ID and the SPIFFE ID of the presented SVIDs.",
       "createdAt": "2026-07-22T09:13:50Z",
-      "updatedAt": "2026-07-22T09:13:50Z",
+      "updatedAt": "2026-08-11T12:46:52Z",
+      "closedAt": "2026-08-11T12:46:52Z",
+      "comments": []
+    },
+    {
+      "number": 45,
+      "id": "I_kwDOOml42M8AAAABMQ8n4A",
+      "title": "X.509 vs X509",
+      "url": "https://github.com/oauth-wg/oauth-spiffe-client-authentication/issues/45",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Align terms across the document. See https://github.com/oauth-wg/oauth-spiffe-client-authentication/pull/44#discussion_r3756116678",
+      "createdAt": "2026-08-11T08:06:41Z",
+      "updatedAt": "2026-08-11T08:06:41Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 46,
+      "id": "I_kwDOOml42M8AAAABMSmOGA",
+      "title": "SPIFFE-ID to multiple clients",
+      "url": "https://github.com/oauth-wg/oauth-spiffe-client-authentication/issues/46",
+      "state": "OPEN",
+      "author": "arndt-s",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "See https://github.com/oauth-wg/oauth-spiffe-client-authentication/pull/44#discussion_r3757288911.\n\nIs this something we want to talk about/allow? If not, deny? If yes, what about security considerations?",
+      "createdAt": "2026-08-11T11:42:42Z",
+      "updatedAt": "2026-08-11T11:42:42Z",
       "closedAt": null,
       "comments": []
     }
@@ -2379,6 +2428,207 @@
           "body": "## Pull request overview\n\nUpdates the Internet-Draft metadata to reflect the repository\u2019s new GitHub organization location under `oauth-wg`, keeping the draft\u2019s venue information in sync with the repo move.\n\n**Changes:**\n- Updated the `venue.github` field to `oauth-wg/oauth-spiffe-client-authentication`.\n\n\n\n\n\n\n---\n\n\ud83d\udca1 <a href=\"/oauth-wg/oauth-spiffe-client-authentication/new/main?filename=.github/instructions/*.instructions.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Add Copilot custom instructions</a> for smarter, more guided reviews. <a href=\"https://docs.github.com/en/copilot/customizing-copilot/adding-repository-custom-instructions-for-github-copilot\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn how to get started</a>.",
           "createdAt": "2026-06-15T08:19:04Z",
           "updatedAt": "2026-06-15T08:19:04Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 44,
+      "id": "PR_kwDOOml42M79ZDe4",
+      "title": "Clean up SPIFFE-ID and client_id relations",
+      "url": "https://github.com/oauth-wg/oauth-spiffe-client-authentication/pull/44",
+      "state": "MERGED",
+      "author": "arndt-s",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Removes unnecessary restriction that URI SAN of presented certificate needs to match the client ID. Align other parts of the document with that change.\r\n\r\nResolves #43 \r\nResolves #29",
+      "createdAt": "2026-08-11T07:42:23Z",
+      "updatedAt": "2026-08-11T12:46:51Z",
+      "baseRepository": "oauth-wg/oauth-spiffe-client-authentication",
+      "baseRefName": "main",
+      "baseRefOid": "07ec2ad8b8243574fc8d9024a3cc1b8a30cc73b8",
+      "headRepository": "oauth-wg/oauth-spiffe-client-authentication",
+      "headRefName": "arndt/resolve_43",
+      "headRefOid": "cd154b79e4a4a8cf77406a06a4f60df823448364",
+      "closedAt": "2026-08-11T12:46:50Z",
+      "mergedAt": "2026-08-11T12:46:50Z",
+      "mergedBy": "arndt-s",
+      "mergeCommit": {
+        "oid": "23d64eaaf11bf952183f03bc9ba4062c7fe792b7"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOOml42M8AAAABJE0NKQ",
+          "commit": {
+            "abbreviatedOid": "dd8bef9"
+          },
+          "author": "copilot-pull-request-reviewer",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "## Pull request overview\n\nThis PR updates the OAuth SPIFFE Client Authentication draft to remove the strict requirement that `client_id` equals the SPIFFE ID (URI SAN) for X509-SVID-based client authentication, aligning the document with the intended \u201cclient_id \u2194 SPIFFE ID association\u201d model discussed in #43 and #29.\n\n**Changes:**\n- Relax X509-SVID client authentication text to allow `client_id` values that are not the SPIFFE ID (including Client ID Metadata Document URLs).\n- Extend the X509-SVID validation rule to describe how Client ID Metadata Documents relate `client_id` and `spiffe_id`.\n- Update client registration metadata wording to refer to the presented SVID\u2019s SPIFFE ID (not specifically the JWT `sub` claim) and record the change in document history.\n\n\n\n\n\n\n\n---\n\n\ud83d\udca1 <a href=\"/oauth-wg/oauth-spiffe-client-authentication/new/main?filename=.github/skills/code-review/SKILL.md\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Add a `code-review` agent skill</a> or configure MCP servers for context-aware, tailored reviews. <a href=\"https://docs.github.com/en/copilot/how-tos/use-copilot-agents/request-a-code-review/use-code-review#mcp-servers-and-agent-skills\" class=\"Link--inTextBlock\" target=\"_blank\" rel=\"noopener noreferrer\">Learn more in the docs.</a>",
+          "createdAt": "2026-08-11T07:45:22Z",
+          "updatedAt": "2026-08-11T07:45:23Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "Step 5 currently only requires that the presented SPIFFE ID is linked to *some* recognized client identifier, but it doesn't explicitly bind it to the client indicated by the request's `client_id` (except for the URL/metadata-document case). If implemented literally, this could allow a request to name one `client_id` while authenticating as a different registered client whose SPIFFE ID is recognized.",
+              "createdAt": "2026-08-11T07:45:22Z",
+              "updatedAt": "2026-08-11T07:45:23Z"
+            },
+            {
+              "originalPosition": 5,
+              "body": "The term \"X509-SVID\" here is inconsistent with the surrounding paragraph that uses \"X.509-SVID\". Using a single spelling within the same section will reduce ambiguity for readers and implementers.",
+              "createdAt": "2026-08-11T07:45:22Z",
+              "updatedAt": "2026-08-11T07:45:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M8AAAABJE5IYA",
+          "commit": {
+            "abbreviatedOid": "dd8bef9"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-11T07:57:06Z",
+          "updatedAt": "2026-08-11T07:57:07Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "Copilot has a point here and I believe it also applies to JWT-SVID too ..",
+              "createdAt": "2026-08-11T07:57:07Z",
+              "updatedAt": "2026-08-11T07:57:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M8AAAABJE80vA",
+          "commit": {
+            "abbreviatedOid": "dd8bef9"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-11T08:05:34Z",
+          "updatedAt": "2026-08-11T08:05:34Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "Fixed with [8a07edf](https://github.com/oauth-wg/oauth-spiffe-client-authentication/pull/44/commits/8a07edfe66863fb6961b74ff831e4fd47826537e)",
+              "createdAt": "2026-08-11T08:05:34Z",
+              "updatedAt": "2026-08-11T08:05:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M8AAAABJE9Z0Q",
+          "commit": {
+            "abbreviatedOid": "dd8bef9"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-11T08:06:50Z",
+          "updatedAt": "2026-08-11T08:06:50Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Created https://github.com/oauth-wg/oauth-spiffe-client-authentication/issues/45 for this.",
+              "createdAt": "2026-08-11T08:06:50Z",
+              "updatedAt": "2026-08-11T08:06:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M8AAAABJGLfzQ",
+          "commit": {
+            "abbreviatedOid": "8a07edf"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-11T10:52:21Z",
+          "updatedAt": "2026-08-11T10:52:21Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "Perhaps the \"single SPIFFE ID with multiple clients\" and \"single client_id with multiple SPIFFE IDs should probably get its own section or be discussed in security considerations or as implementation options rather than a single sentence here? \n\n```suggestion\nRequiring `client_id` makes the client identity explicit in the request, rather than leaving it to be derived from the `sub` claim of the JWT-SVID.\n```",
+              "createdAt": "2026-08-11T10:52:21Z",
+              "updatedAt": "2026-08-11T10:52:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M8AAAABJGMiYw",
+          "commit": {
+            "abbreviatedOid": "8a07edf"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-11T10:54:26Z",
+          "updatedAt": "2026-08-11T10:54:26Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "Editorial suggestion\n\n```suggestion\nThe request MUST include the `client_id` parameter identifying the client. The `client_id` MAY be the SPIFFE ID of the client, or other client identifier recognized by the authorization server, such as a URL pointing to a Client ID Metadata Document ({{I-D.ietf-oauth-client-id-metadata-document}}). In either case, the SPIFFE ID carried in the URI SAN of the presented X509-SVID MUST be authorized to authenticate as the client identified by the `client_id`, as described below.\n```",
+              "createdAt": "2026-08-11T10:54:26Z",
+              "updatedAt": "2026-08-11T10:54:26Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M8AAAABJGOtqA",
+          "commit": {
+            "abbreviatedOid": "8a07edf"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "I like this direction as it starts more clearly decoupling the cclinet_id from the SPIFFE ID. I can see how this will help in cases where an AS already has a client_id naming scheme or registration scheme (ala CIMD), but also want to support SPIFFE credentials.\n\nA few small suggestions/comments for consideration.",
+          "createdAt": "2026-08-11T10:58:52Z",
+          "updatedAt": "2026-08-11T10:58:52Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOOml42M8AAAABJGkFeA",
+          "commit": {
+            "abbreviatedOid": "8a07edf"
+          },
+          "author": "arndt-s",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-08-11T11:42:53Z",
+          "updatedAt": "2026-08-11T11:42:54Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "Fair, I created https://github.com/oauth-wg/oauth-spiffe-client-authentication/issues/46 for it.",
+              "createdAt": "2026-08-11T11:42:54Z",
+              "updatedAt": "2026-08-11T11:42:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOOml42M8AAAABJHDj9A",
+          "commit": {
+            "abbreviatedOid": "cd154b7"
+          },
+          "author": "PieterKas",
+          "authorAssociation": "COLLABORATOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-08-11T12:45:51Z",
+          "updatedAt": "2026-08-11T12:45:51Z",
           "comments": []
         }
       ]
