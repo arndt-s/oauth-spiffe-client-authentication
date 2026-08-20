@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-08-13T00:17:07.167216+00:00",
+  "timestamp": "2026-08-20T00:07:37.228445+00:00",
   "repo": "oauth-wg/oauth-spiffe-client-authentication",
   "labels": [
     {
@@ -585,6 +585,54 @@
       "body": "See https://github.com/oauth-wg/oauth-spiffe-client-authentication/pull/44#discussion_r3757288911.\n\nIs this something we want to talk about/allow? If not, deny? If yes, what about security considerations?",
       "createdAt": "2026-08-11T11:42:42Z",
       "updatedAt": "2026-08-11T11:42:42Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 47,
+      "id": "I_kwDOOml42M8AAAABNYcvKA",
+      "title": "Update \"About this draft link\"",
+      "url": "https://github.com/oauth-wg/oauth-spiffe-client-authentication/issues/47",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Link still points to old repository",
+      "createdAt": "2026-08-19T13:13:40Z",
+      "updatedAt": "2026-08-19T13:13:40Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 48,
+      "id": "I_kwDOOml42M8AAAABNYuCFg",
+      "title": "Do we need IANA registrations for spiffe_jwt, spiffe_wit and spiffe_x509?",
+      "url": "https://github.com/oauth-wg/oauth-spiffe-client-authentication/issues/48",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 4 describes how the AS advertise support for spiffe_jwt, spiffe_wit and spiffe_x509 using token_endpoint_auth_methods_supported. Should these be registered with IANA?",
+      "createdAt": "2026-08-19T13:42:54Z",
+      "updatedAt": "2026-08-19T13:42:54Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 49,
+      "id": "I_kwDOOml42M8AAAABNY9BBw",
+      "title": "Should we describe the use of token_endpoint_auth_methods_supported for client metadata?",
+      "url": "https://github.com/oauth-wg/oauth-spiffe-client-authentication/issues/49",
+      "state": "OPEN",
+      "author": "PieterKas",
+      "authorAssociation": "COLLABORATOR",
+      "assignees": [],
+      "labels": [],
+      "body": "We describe how the AS use token_endpoint_auth_methods_supported to advertise its capabilities, but we do not describe how a client would describe which of these mechanisms it supports in the client ID metadata document. By letting the client describe the mechanisms it supports, it reduces the number of CIMD docs it may have to publish (e.g. if it works with several AS's with different levelss of SPIFFE suport). \n\nOpenID Connect RP Metadata Choices defines it already (https://openid.net/specs/openid-connect-rp-metadata-choices-1_0-final.html) and MCP is adopting it for the same reason (modelcontextprotocol/modelcontextprotocol#3149).\n\nThere was a CIMD issue tracing this (which is closed now) oauth-wg/draft-ietf-oauth-client-id-metadata-document#87 \n\nIf it goes into CIMD we can probably limit the spec work here to refrencing the values that should be used for token_endpoint_auth_methods_supported",
+      "createdAt": "2026-08-19T14:07:58Z",
+      "updatedAt": "2026-08-19T14:09:55Z",
       "closedAt": null,
       "comments": []
     }
