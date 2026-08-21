@@ -5,13 +5,13 @@
 Web Authorization Protocol                            A. Schwenkschuster
 Internet-Draft                                             P. Kasselmann
 Intended status: Standards Track                        Defakto Security
-Expires: 12 February 2027                                        S. Rose
+Expires: 22 February 2027                                        S. Rose
                                                                     NIST
                                                            S. Thorgersen
                                                                      IBM
                                                            N. Cam-Winget
                                                            Cisco Systems
-                                                          11 August 2026
+                                                          21 August 2026
 
 
                    OAuth SPIFFE Client Authentication
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 February 2027.
+   This Internet-Draft will expire on 22 February 2027.
 
 Copyright Notice
 
