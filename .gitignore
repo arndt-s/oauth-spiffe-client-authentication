@@ -17,7 +17,7 @@
 /node_modules/
 /versioned/
 archive.json
-draft-schwenkschuster-oauth-spiffe-client-auth.xml
+draft-ietf-oauth-spiffe-client-auth.xml
 Gemfile.lock
 package-lock.json
 report.xml
