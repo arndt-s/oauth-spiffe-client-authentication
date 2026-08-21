@@ -4,10 +4,10 @@
 
 This is the working area for the IETF [OAUTH Working Group](https://datatracker.ietf.org/group/oauth/documents/) Internet-Draft, "OAuth SPIFFE Client Authentication".
 
-* [Editor's Copy](https://arndt-s.github.io/oauth-spiffe-client-authentication/#go.draft-ietf-oauth-spiffe-client-auth.html)
+* [Editor's Copy](https://oauth-wg.github.io/oauth-spiffe-client-authentication/#go.draft-ietf-oauth-spiffe-client-auth.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-ietf-oauth-spiffe-client-auth)
 * [Working Group Draft](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-spiffe-client-auth)
-* [Compare Editor's Copy to Working Group Draft](https://arndt-s.github.io/oauth-spiffe-client-authentication/#go.draft-ietf-oauth-spiffe-client-auth.diff)
+* [Compare Editor's Copy to Working Group Draft](https://oauth-wg.github.io/oauth-spiffe-client-authentication/#go.draft-ietf-oauth-spiffe-client-auth.diff)
 
 
 ## Contributing
